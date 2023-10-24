@@ -1,8 +1,5 @@
 from ai2thor.controller import Controller
-
-
-
-class Supervisor:
+class World:
     def __init__(self):
         self._controller = Controller(
             agentMode="default",
@@ -21,13 +18,14 @@ class Supervisor:
             fieldOfView=90
         )
 
-    def rotateRight(self):
-        event = self._controller.step(action="RotateRight")
+    def execute_action(self, action):
+        event = self._controller.step(action=action)
         metadata = event.metadata
-        print(event, event.metadata.keys())
+        #print(event, event.metadata)
+        #return metadata
+        return event
 
 if __name__ == '__main__':
-    supervisor = Supervisor()
+    supervisor = World()
     while True:
         supervisor.rotateRight()
-
