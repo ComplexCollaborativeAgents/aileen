@@ -1,3 +1,4 @@
+import logging, coloredlogs
 from ai2thor.controller import Controller
 class World:
     def __init__(self):
@@ -18,14 +19,10 @@ class World:
             fieldOfView=90
         )
 
-    def execute_action(self, action):
-        event = self._controller.step(action=action)
-        metadata = event.metadata
-        #print(event, event.metadata)
-        #return metadata
-        return event
+        self._logger = logging.getLogger(__name__)
+        coloredlogs.install(level='DEBUG', logger=self._logger)
 
-if __name__ == '__main__':
-    supervisor = World()
-    while True:
-        supervisor.rotateRight()
+    def execute_action(self, action):
+        self._logger.info("executing action request: {}".format(action))
+        event = self._controller.step(action=action)
+        return event.metadata

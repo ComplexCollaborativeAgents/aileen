@@ -1,6 +1,5 @@
 import random
-from enum import Enum
-
+import logging, coloredlogs
 
 ACTION_MOVE_RIGHT = "MoveRight"
 ACTION_MOVE_LEFT = "MoveLeft"
@@ -9,10 +8,12 @@ ACTION_MOVE_BACK = "MoveBack"
 
 class Agent():
     def __init__(self):
-        pass
+        self._logger = logging.getLogger(__name__)
+        coloredlogs.install(level='DEBUG', logger=self._logger)
+
     def perceive_symbolic_state(self, event):
         if event is not None:
-            print(event.metadata["objects"])
+            self._logger.info("received state: {}".format(event["objects"]))
 
     def perceive(self, event):
         if event is not None:

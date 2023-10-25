@@ -1,0 +1,4 @@
+WORLD_HOST = 'localhost'
+WORLD_PORT = 30000
+AGENT_HOST = 'localhost'
+AGENT_PORT = 40001
