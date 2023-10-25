@@ -5,6 +5,8 @@ ACTION_MOVE_RIGHT = "MoveRight"
 ACTION_MOVE_LEFT = "MoveLeft"
 ACTION_MOVE_AHEAD = "MoveAhead"
 ACTION_MOVE_BACK = "MoveBack"
+ACTION_ROTATE_RIGHT = "RotateRight"
+ACTION_ROTATE_LEFT = "RotateLeft"
 
 class Agent():
     def __init__(self):

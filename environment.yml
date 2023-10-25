@@ -153,4 +153,5 @@ dependencies:
       - coloredlogs==15.0.1
       - humanfriendly==10.0
       - jsonrpclib==0.2.1
+      - keyboard==0.13.5
 prefix: /home/smohan/miniconda3/envs/elaborate
