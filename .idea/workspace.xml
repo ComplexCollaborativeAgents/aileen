@@ -5,12 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="db6f91f8-ee46-485a-a2a3-ca2aa868b04c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/agent/SoarAgent/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/world/video.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/agent/BaseAgent.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/BaseAgent.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/agent/__main__.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent/__main__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/world/World.py" beforeDir="false" afterPath="$PROJECT_DIR$/world/World.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/image.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/image.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/world/thor.mp4.mp4" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -206,7 +204,7 @@
       <workItem from="1698169587984" duration="3323000" />
       <workItem from="1698181104493" duration="1270000" />
       <workItem from="1698182396043" duration="7242000" />
-      <workItem from="1698250917393" duration="14671000" />
+      <workItem from="1698250917393" duration="14873000" />
     </task>
     <servers />
   </component>
