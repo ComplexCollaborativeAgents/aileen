@@ -28,7 +28,7 @@ class World:
 
     def execute_action(self, action):
         self._logger.info("executing action request: {}".format(action))
-        event = self._controller.step(action=action)
+        event = self._controller.step(**action)
         self.display_frame(self.get_topdown_map_view())
         return event.metadata
 

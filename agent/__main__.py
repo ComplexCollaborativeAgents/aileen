@@ -1,6 +1,8 @@
-import agent.BaseAgent
+import time
+
+from agent.planning_agent.nyx_agent import PlanningAgent
 from world.WorldServer import WorldServer
-from BaseAgent import Agent
+from BaseAgent import *
 import settings
 import jsonrpclib
 import logging, coloredlogs
@@ -14,14 +16,31 @@ def create_connection_with_world():
     server = jsonrpclib.jsonrpc.ServerProxy(url)
     return server
 
+def execute_planning_agent(world_server):
+    agent = PlanningAgent()
+    action = None
+    event = None
+    while True:
+        action = agent.choose_action(event)
+        if action is None:
+            break
+        event = world_server.execute_action(action)
+        print(event["agent"])
+        print(event["errorMessage"])
+
+
 def execute_random_actions(world_server):
     agent = Agent()
     event = None
     for i in range(1, 100):
         print(i)
         action = agent.choose_action(event)
-        logger.info("executing action: {}".format(action))
-        event = world_server.execute_action(action)
+        logger.info("executing action: {}".format(ACTION_ROTATE_RIGHT))
+        event = world_server.execute_action({"action": ACTION_ROTATE_RIGHT, "degrees": 90})
+        # event = world_server.execute_action({"action": ACTION_MOVE_AHEAD})
+        # print(event)
+        print(event["agent"])
+        break
 
 def execute_keyboard_actions(world_server):
     import curses
@@ -29,12 +48,12 @@ def execute_keyboard_actions(world_server):
     screen.keypad(1)
 
     ACTION_MAP = {
-        curses.KEY_UP: agent.BaseAgent.ACTION_MOVE_AHEAD,
-        curses.KEY_DOWN: agent.BaseAgent.ACTION_MOVE_BACK,
-        curses.KEY_LEFT: agent.BaseAgent.ACTION_MOVE_LEFT,
-        curses.KEY_RIGHT: agent.BaseAgent.ACTION_MOVE_RIGHT,
-        114: agent.BaseAgent.ACTION_ROTATE_RIGHT,
-        108: agent.BaseAgent.ACTION_ROTATE_LEFT
+        curses.KEY_UP: ACTION_MOVE_AHEAD,
+        curses.KEY_DOWN: ACTION_MOVE_BACK,
+        curses.KEY_LEFT: ACTION_MOVE_LEFT,
+        curses.KEY_RIGHT: ACTION_MOVE_RIGHT,
+        114: ACTION_ROTATE_RIGHT,
+        108: ACTION_ROTATE_LEFT
     }
 
     while True:
@@ -50,5 +69,6 @@ if __name__ == '__main__':
     world_server = create_connection_with_world()
     logger = logging.getLogger(__name__)
     coloredlogs.install(level='DEBUG', logger=logger)
-    #execute_random_actions(world_server)
-    execute_keyboard_actions(world_server)
+    execute_planning_agent(world_server)
+    # execute_random_actions(world_server)
+    # execute_keyboard_actions(world_server)
