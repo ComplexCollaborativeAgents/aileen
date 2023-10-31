@@ -8,17 +8,29 @@ class InputWriter(object):
             self._input_link = soar_agent.get_input_link()
             self._world_link = self._input_link.CreateIdWME("world")
             self._objects_link = self._world_link.CreateIdWME("objects")
+            self._positions_link = self._world_link.CreateIdWME("reachable-positions")
         pass
 
     def generate_input(self):
         metadata = self._world_server.execute_action("Done")
         objects_list = metadata['objects']
         self.add_objects_to_working_memory(objects_list)
+        positions = self._world_server.execute_action(action="GetReachablePositions")["actionReturn"]
+        self.add_reachable_positions_to_working_memory(positions)
+
+    def add_reachable_positions_to_working_memory(self, positions):
+        self._soar_agent.delete_all_children(self._positions_link)
+        for position in positions:
+            position_id = self._positions_link.CreateIdWME("position")
+            position_id.CreateFloatWME("x", position['x'])
+            position_id.CreateFloatWME("y", position['y'])
+            position_id.CreateFloatWME("z", position['z'])
+
 
     def add_objects_to_working_memory(self, objects_list):
         self._soar_agent.delete_all_children(self._objects_link)
         for w_object in objects_list:
-            print(w_object)
+            #print(w_object)
             object_id = self._objects_link.CreateIdWME("object")
             object_id.CreateStringWME('id', w_object['name'])
             if 'position' in w_object:
