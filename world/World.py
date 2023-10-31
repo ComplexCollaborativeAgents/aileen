@@ -37,5 +37,5 @@ class World:
 
     def execute_action(self, action):
         self._logger.info("executing action request: {}".format(action))
-        event = self._controller.step(action=action)
+        event = self._controller.step(**action)
         return event.metadata
