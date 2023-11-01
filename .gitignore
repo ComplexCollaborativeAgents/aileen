@@ -13,6 +13,7 @@
 .idea/**/usage.statistics.xml
 .idea/**/dictionaries
 .idea/**/shelf
+.idea/*
 
 # Generated files
 .idea/**/contentModel.xml
@@ -198,3 +199,6 @@ dmypy.json
 .jpg
 .mov
 .png
+
+.*.*.sw* # vim files removed
+*__pycache__*
