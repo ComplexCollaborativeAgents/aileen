@@ -65,5 +65,5 @@ class World:
             )
 
         event = self._controller.step({"action": "Done"})
-        self._controller.step("HideVisualizedPath")
+        # self._controller.step("HideVisualizedPath")
         return event.third_party_camera_frames[-1]
