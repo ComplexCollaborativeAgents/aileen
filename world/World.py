@@ -67,3 +67,79 @@ class World:
         event = self._controller.step({"action": "Done"})
         # self._controller.step("HideVisualizedPath")
         return event.third_party_camera_frames[-1]
+
+    def get_recent_event(self):
+        _event = self._controller.last_event()
+        return _event.metadata
+
+    def get_objects(self, _event=None):
+        if _event is None:
+            _event = self.get_recent_event()
+
+        objects = _event.metadata["objects"]
+        return objects
+
+    def get_object_ids(self, _event=None):
+        objects = self.get_objects(_event)
+
+        object_IDs = dict()
+
+        for obj in objects:
+            _type = obj["objectType"]
+            if _type not in object_IDs:
+                object_IDs[_type] = list()
+
+            object_IDs[_type].append(obj["objectId"])
+
+        return object_IDs
+
+    def get_object(self, objectID, _event=None):
+        objects = self.get_objects(_event)
+
+        for obj in objects:
+            if objectID == obj["objectId"]:
+                return obj
+
+        return None
+
+    def get_object_location(self, objectID, _event=None):
+        obj = self.get_object(objectID, _event)
+
+        return obj["position"]
+
+    def get_receptacle_objects(self, objectID, _event=None):
+        obj = self.get_object(objectID, _event)
+
+        return obj["receptacleObjectIds"]
+
+    def get_all_object_location(self, _event=None):
+        objects = self.get_objects(_event)
+        locations = dict()
+        for obj in objects:
+            obj_id = obj["objectId"]
+            locations[obj_id] = obj["position"]
+            locations[obj_id]["receptacle"] = False
+            for receptacle_obj_id in obj["receptacleObjectIds"]:
+                locations[receptacle_obj_id] = obj["position"]
+                locations[receptacle_obj_id]["receptacle"] = True
+
+        return locations
+
+    def get_agent_information(self, _event=None):
+        if _event is None:
+            _event = self.get_recent_event()
+
+        return _event["agent"]
+
+    def get_agent_location(self, _event=None):
+        _agent = self.get_agent_information(_event)
+
+        return _agent["position"]
+
+
+    def get_reachable_positions(self):
+        positions = self._controller.step(
+            action="GetReachablePositions"
+        )
+        return positions.metadata["actionReturn"]
+    
