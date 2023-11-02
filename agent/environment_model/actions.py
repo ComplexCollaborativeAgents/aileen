@@ -145,3 +145,23 @@ class CloseObjectAction(Action):
         interface["forceAction"] = self.forceAction
 
         return interface
+
+
+class GetInteractablePoses(Action):
+    def __init__(self, _objectID, _standing=True):
+        super().__init__()
+        self.name = "GetInteractablePoses"
+        self.set_action_parameters(_objectID, _standing)
+
+    def get_conditions(self):
+        pass
+
+    def set_action_parameters(self, _objectID, _standing):
+        self.objectID = _objectID
+        self.standing = _standing
+
+    def to_interface(self):
+        interface = super().to_interface()
+        interface["objectId"] = self.objectID
+        interface["standings"] = [self.standing]
+        return interface

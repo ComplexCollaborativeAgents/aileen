@@ -81,3 +81,11 @@ sp {aileen*elaborate*objects*remove
 -->
     (<wobjs>    ^object  <wobj> -)
     }
+
+sp {aileen*elaborate*holding
+    (state <s>    ^name aileen
+                  ^world.objects.object <obj>)
+    (<obj>    ^is_picked_up True)
+-->
+    (<s>    ^holding <obj>)
+    }

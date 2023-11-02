@@ -22,7 +22,6 @@ class SoarAgent(object):
     def __init__(self, world_server, kernel_port=None, agent_params={}):
         self._logger = logging.getLogger(__name__)
         self._world_server = world_server
-        print(__name__)
         coloredlogs.install(level='DEBUG', logger=self._logger)
 
         self.setup_soar_agent()
@@ -150,7 +149,7 @@ class SoarAgent(object):
             self._wmes_to_delete = []
 
     def delete_all_children(self, id):
-        logging.debug("[input_writer] :: deleting children of {}".format(id.GetValueAsString()))
+        self._logger.debug("deleting children of {}".format(id.GetValueAsString()))
         if id.GetNumberChildren() is not None:
             for i in range(0, id.GetNumberChildren()):
                 child = id.GetChild(i)
