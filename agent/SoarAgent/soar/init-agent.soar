@@ -20,3 +20,12 @@ sp {topstate*apply*init-agent*name
             ^world <w>)
     (<w>    ^objects <obj>)
     }
+
+sp {topstate*apply*init-agent*goals
+    (state <s>    ^superstate nil
+                  ^operator <op>)
+    (<op>    ^name initialize-agent)
+-->
+    (<s>    ^argument1 Apple
+            ^argument2 Cabinet)
+    }

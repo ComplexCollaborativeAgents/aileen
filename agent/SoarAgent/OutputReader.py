@@ -1,4 +1,6 @@
 import logging, coloredlogs
+from agent.environment_model import actions
+import random
 
 class OutputReader(object):
     def __init__(self, world_server, soar_agent):
@@ -15,6 +17,7 @@ class OutputReader(object):
 
             if commandName == 'action':
                 self.process_action_description(commandID)
+                pass
 
             if commandName == 'language':
                 self.process_language_command(commandID)
@@ -28,5 +31,40 @@ class OutputReader(object):
         for i in range(0, commandID.GetNumberChildren()):
             child = commandID.GetChild(i)
             if child.GetAttribute() == 'name':
-                if child.GetValueAsString() == 'teleport':
-                    pass
+                # if child.GetValueAsString() == 'teleport':
+                #     self._logger.debug('received teleport command')
+                #     self.process_teleport_command(commandID)
+                if child.GetValueAsString() == 'go-to':
+                    self._logger.debug('received goto')
+                    self.process_goto_command(commandID)
+                if child.GetValueAsString() == 'pick-up':
+                    self._logger.debug('received pick-up')
+                    self.process_pickup_command(commandID)
+
+
+    def process_goto_command(self, commandID):
+        for i in range(0, commandID.GetNumberChildren()):
+            child = commandID.GetChild(i)
+            if child.GetAttribute() == 'id':
+                id = child.GetValueAsString()
+        action_def = actions.GetInteractablePoses(_objectID=id).to_interface()
+        self._logger.debug('requesting {}'.format(action_def))
+        metadata = self._world_server.execute_action(action_def)
+        possible_pose = random.choice(metadata['actionReturn'])
+        position = dict(x=possible_pose['x'],y=possible_pose['y'],z=possible_pose['z'])
+        action = actions.TeleportAction(_position=position,
+                                _rotation=possible_pose['rotation'],
+                                _horizon=possible_pose['horizon'],
+                                _standing=possible_pose['standing']).to_interface()
+        self._world_server.execute_action(action)
+        commandID.AddStatusComplete()
+
+    def process_pickup_command(self, commandID):
+        for i in range(0, commandID.GetNumberChildren()):
+            child = commandID.GetChild(i)
+            if child.GetAttribute() == 'id':
+                id = child.GetValueAsString()
+        action = actions.PickObjectAction(_objectID=id).to_interface()
+        self._logger.debug('requesting {}'.format(action))
+        self._world_server.execute_action(action)
+        commandID.AddStatusComplete()

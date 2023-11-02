@@ -1,0 +1,30 @@
+##!
+# @file
+#
+# @created smohan 20231031
+
+
+sp {action*propose*pick-up
+    (state <s>    ^name aileen
+                  ^world.objects.object <obj>)
+    (<obj>    ^object_type Apple
+              ^is_interactable True
+              -^is_picked_up True)
+-->
+    (<s>    ^operator <op> +)
+    (<op>    ^name pick-up
+             ^object <obj>)
+    }
+
+sp {action*apply*pick-up
+    (state <s>    ^name aileen
+                  ^operator <op> +
+                  ^io.output-link <ol>)
+    (<op>    ^name pick-up
+             ^object.id <objid>)
+-->
+    (<ol>    ^action <act>)
+    (<act>    ^name pick-up
+              ^id <objid>)
+    }
+   

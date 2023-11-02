@@ -1,0 +1,45 @@
+##!
+# @file
+#
+# @created smohan 20231030
+
+
+sp {action*propose*goto*apple
+    (state <s>    ^name aileen
+                  ^world.objects.object <obj>)
+    (<obj>    ^object_type Apple
+              -^is_interactable True
+              -^is_picked_up True)
+    
+-->
+    (<s>    ^operator <op> +)
+    (<op>    ^name go-to
+             ^object <obj>)
+    } 
+
+sp {action*apply*goto
+    (state <s>    ^name aileen
+                  ^operator <op> +
+                  ^io.output-link <ol>)
+    (<op>    ^name go-to
+             ^object.id <objid>)
+-->
+    (<ol>    ^action <act>)
+    (<act>    ^name go-to
+              ^id <objid>)
+    }
+
+sp {action*propose*goto*fridge
+    (state <s>    ^name aileen
+                  ^world.objects.object <obj>
+                  ^holding <any>)
+    (<obj>    ^object_type Fridge
+              ^is_interactable False)
+    
+-->
+    (<s>    ^operator <op> +)
+    (<op>    ^name go-to
+             ^object <obj>)
+    } 
+
+    

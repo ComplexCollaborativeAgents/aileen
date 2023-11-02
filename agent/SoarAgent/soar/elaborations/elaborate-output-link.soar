@@ -1,0 +1,15 @@
+##!
+# @file
+#
+# @created smohan 20231031
+
+
+sp {topstate*elaborate*output-link
+    :o-support
+    (state <s>    ^name aileen
+                  ^io.output-link <ol>)
+    (<ol>    ^<command> <com>)
+    (<com>    ^status complete)
+-->
+    (<ol>    ^<command> <com> -)
+    }
