@@ -4,3 +4,5 @@
 # @created smohan 20231030
 
 source "elaborate-world-state.soar"
+
+source "elaborate-output-link.soar"
