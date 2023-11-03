@@ -6,3 +6,5 @@
 source "goto.soar"
 
 source "pickup.soar"
+
+source "open.soar"
