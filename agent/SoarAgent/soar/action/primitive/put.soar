@@ -1,29 +1,28 @@
 ##!
 # @file
 #
-# @created smohan 20231102
-sp {action*propose*open
+# @created smohan 20231103
+
+sp {action*propose*put
     (state <s>    ^name aileen
                   ^world.objects.object <obj>
-                  ^holding <any>)
+                  ^holding <obj2>)
     (<obj>    ^object_type Fridge
-              ^is_interactable True
-              ^openable True
-              -^openness 1.0)
+              ^openness 1.00)
 -->
     (<s>    ^operator <op> +)
-    (<op>   ^name open
-            ^object <obj>)
+    (<op>    ^name put
+             ^object <obj>)
     }
 
-sp {action*apply*open
+sp {action*apply*put
     (state <s>    ^name aileen
                   ^operator <op>
                   ^io.output-link <ol>)
-    (<op>    ^name open
+    (<op>    ^name put
              ^object.id <objid>)
 -->
     (<ol>    ^action <act>)
-    (<act>    ^name open
+    (<act>    ^name put
               ^id <objid>)
     }

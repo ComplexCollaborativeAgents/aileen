@@ -43,7 +43,12 @@ class OutputReader(object):
                 if child.GetValueAsString() == 'open':
                     self._logger.debug('received open')
                     self.process_open_command(commandID)
-
+                if child.GetValueAsString() == 'close':
+                    self._logger.debug('received close')
+                    self.process_close_command(commandID)
+                if child.GetValueAsString() == 'put':
+                    self._logger.debug('received open')
+                    self.process_put_command(commandID)
 
     def process_goto_command(self, commandID):
         for i in range(0, commandID.GetNumberChildren()):
@@ -75,6 +80,27 @@ class OutputReader(object):
             if child.GetAttribute() == 'id':
                 id = child.GetValueAsString()
         action = actions.OpenObjectAction(_objectID=id).to_interface()
+        self._logger.info('requesting {}'.format(action))
+        self._world_server.execute_action(action)
+        commandID.AddStatusComplete()
+
+
+    def process_close_command(self, commandID):
+        for i in range(0, commandID.GetNumberChildren()):
+            child = commandID.GetChild(i)
+            if child.GetAttribute() == 'id':
+                id = child.GetValueAsString()
+        action = actions.CloseObjectAction(_objectID=id).to_interface()
+        self._logger.info('requesting {}'.format(action))
+        self._world_server.execute_action(action)
+        commandID.AddStatusComplete()
+
+    def process_put_command(self, commandID):
+        for i in range(0, commandID.GetNumberChildren()):
+            child = commandID.GetChild(i)
+            if child.GetAttribute() == 'id':
+                id = child.GetValueAsString()
+        action = actions.PutObjectAction(_objectID=id).to_interface()
         self._logger.info('requesting {}'.format(action))
         self._world_server.execute_action(action)
         commandID.AddStatusComplete()

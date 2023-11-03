@@ -8,3 +8,7 @@ source "goto.soar"
 source "pickup.soar"
 
 source "open.soar"
+
+source "put.soar"
+
+source "close.soar"
