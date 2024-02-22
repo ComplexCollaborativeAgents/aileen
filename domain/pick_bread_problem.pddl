@@ -1,7 +1,7 @@
 (define (problem pick_bread)
 (domain thor_interact)
 (:objects
-cell_1_1 cell_1_2 cell_1_3 cell_2_1 cell_2_2 cell_2_3 cell_3_1 cell_3_2 cell_3_3 - cells
+cell_1_1 cell_1_2 cell_1_3 cell_2_1 cell_2_2 cell_2_3 cell_3_1 cell_3_2 cell_3_3 - cell
 bread1 - interactable
 )
 
@@ -27,9 +27,14 @@ bread1 - interactable
 (is_pickable bread1)
 (= (robot_x) 1)
 (= (robot_y) 1)
+(= (prev_robot_x) -10)
+(= (prev_robot_y) -10)
 (location bread1 cell_3_3)
+(is_reachable cell_2_3)
 )
 
-(:goal)
-(holding bread1)
+(:goal (and
+    (holding bread1)
+)
+)
 )

@@ -1,15 +1,12 @@
 (define (domain thor_interact)
 (:requirements
     :durative-actions
-    :equality
     :negative-preconditions
-    :numeric-fluents
-    :object-fluents
     :typing
 )
 
 (:types
-cells
+cell
 interactable
 )
 
@@ -31,6 +28,8 @@ interactable
 (:functions
 (robot_x)
 (robot_y)
+(prev_robot_x)
+(prev_robot_y)
 (cell_x ?c - cell)
 (cell_y ?c - cell)
 (location_x ?p - interactable)
@@ -45,6 +44,8 @@ interactable
         (= (robot_y) (cell_y ?from))
     )
     :effect (and 
+        (assign (prev_robot_x) (robot_x))
+        (assign (prev_robot_y) (robot_y))
         (assign (robot_x) (cell_x ?to))
         (assign (robot_y) (cell_y ?to))
     )
@@ -104,6 +105,7 @@ interactable
     :precondition (and 
         (location ?p ?c)
         (is_near ?c)
+        (is_openable ?p)
         (not (opened ?p))
     )
     :effect (and
@@ -118,8 +120,53 @@ interactable
         (opened ?p)
         (is_near ?c)
     )
-    :effect (
+    :effect (and
         (not (opened ?p))
     )
 )
+
+(:event cell_near
+    :parameters (?c - cell)
+    :precondition (and
+        (not (is_near ?c))
+        (or (and (= (cell_x ?c) (robot_x))
+            (= (cell_y ?c) (+ (robot_y) 1)))
+
+            (and (= (cell_x ?c) (robot_x))
+            (= (cell_y ?c) (- (robot_y) 1)))
+
+            (and (= (cell_x ?c) (+ (robot_x) 1))
+            (= (cell_y ?c) (robot_y)))
+
+            (and (= (cell_x ?c) (- (robot_x) 1))
+            (= (cell_y ?c) (robot_y)))
+        )
+    )
+    :effect (and
+        (is_near ?c)
+    )
+)
+
+(:event remove_cell_near
+    :parameters (?c - cell)
+    :precondition (and
+        (is_near ?c)
+        (or (and (= (cell_x ?c) (prev_robot_x))
+            (= (cell_y ?c) (+ (prev_robot_y) 1)))
+
+            (and (= (cell_x ?c) (prev_robot_x))
+            (= (cell_y ?c) (- (prev_robot_y) 1)))
+
+            (and (= (cell_x ?c) (+ (prev_robot_x) 1))
+            (= (cell_y ?c) (prev_robot_y)))
+
+            (and (= (cell_x ?c) (- (prev_robot_x) 1))
+            (= (cell_y ?c) (prev_robot_y)))
+        )
+    )
+    :effect (and
+        (not (is_near ?c))
+    )
+)
+
 )
