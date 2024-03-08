@@ -1,0 +1,29 @@
+###############################################################################
+# Sample srimeta.yaml file
+###############################################################################
+# Comments start with a # character.
+# yaml reference http://yaml.org/spec/1.2/spec.html
+# yaml validator http://beautifytools.com/yaml-validator.php
+
+# This is a list of all SRI projects that can be (have been) charged against this project.
+# It's important to keep historical SRI information, not just current active projects.
+sriProjects:
+- 'MKHMO5.A.6007.CHMI'
+- 'MKHMO5.A.6006.0004'
+
+# Who's responsible for this project? Please include PI and technical lead.
+# The first entry should be project leader or supervisor of the project.
+sriContacts:
+- 'shiwali.mohan@sri.com'
+- 'octavia.sulea@sri.com'
+- 'sachin.grover@sri.com'
+- 'yonghui.fan@sri.com'
+- 'wiktor.piotrowski@sri.com'
+
+# A friendly description of the project.
+# Syntax note - do not use any single quotes within the description below unless you remove the surrounding single quotes.
+description: 'This is work to support Collaborative HMI project, EMBRACE.'
+
+# What SRI orgs are involved in this work ?
+sriOrgs:
+- '01710'
