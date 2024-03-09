@@ -1,6 +1,8 @@
 import time
 
 from agent.planning_agent.nyx_agent import PlanningAgent
+from agent import BaseAgent
+from AgentServer import AgentServer
 from world.WorldServer import WorldServer
 from BaseAgent import *
 import settings
@@ -15,6 +17,10 @@ def create_connection_with_world():
     logging.info("connecting to world server at host: {}, port: {}".format(settings.WORLD_HOST, settings.WORLD_PORT))
     server = jsonrpclib.jsonrpc.ServerProxy(url)
     return server
+
+def create_and_run_agent_server(agent):
+    server = AgentServer(agent)
+    server.run_in_background()
 
 def execute_planning_agent(world_server):
     agent = PlanningAgent()
@@ -67,8 +73,12 @@ def execute_keyboard_actions(world_server):
 
 if __name__ == '__main__':
     world_server = create_connection_with_world()
+    agent = Agent()
+    create_and_run_agent_server(agent)
     logger = logging.getLogger(__name__)
     coloredlogs.install(level='DEBUG', logger=logger)
-    execute_planning_agent(world_server)
+    while True:
+        pass
+    #execute_planning_agent(world_server)
     # execute_random_actions(world_server)
-    # execute_keyboard_actions(world_server)
+    #execute_keyboard_actions(world_server)

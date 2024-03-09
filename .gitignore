@@ -207,3 +207,4 @@ dmypy.json
 
 .*.*.sw* # vim files removed
 *__pycache__*
+*.metadata/*

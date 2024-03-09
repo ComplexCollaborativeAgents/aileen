@@ -1,5 +1,6 @@
 import random
 import logging, coloredlogs
+from language.Interpreter import Interpreter
 
 ACTION_MOVE_RIGHT = "MoveRight"
 ACTION_MOVE_LEFT = "MoveLeft"
@@ -23,6 +24,7 @@ ROTATE_OBJECT = "RotateHeldObject"
 class Agent():
     def __init__(self):
         self._logger = logging.getLogger(__name__)
+        self._interpreter = Interpreter()
         coloredlogs.install(level='DEBUG', logger=self._logger)
 
     def perceive_symbolic_state(self, event):
@@ -39,3 +41,7 @@ class Agent():
         list_actions = [ACTION_MOVE_BACK, ACTION_MOVE_AHEAD, ACTION_MOVE_RIGHT, ACTION_MOVE_LEFT]
         action = random.choice(list_actions)
         return action
+
+    def process_utterance(self, utterance):
+        json_string = self._interpreter.interpret(utterance)
+        return json_string
