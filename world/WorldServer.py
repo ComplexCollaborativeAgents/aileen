@@ -26,13 +26,26 @@ class WorldServer:
             self._logger.error("serving action request: {}".format(action))
             return self._world.execute_action(action)
 
+        def get_reachable_positions():
+            positions = self._world.get_reachable_positions()
+            return positions
+
+        def get_recent_event():
+            event = self._world.get_recent_event()
+            return event
+
 
         self._server.register_function(execute_action, "execute_action")
+        self._server.register_function(get_reachable_positions, "get_reachable_positions")
+        self._server.register_function(get_reachable_positions, "get_recent_event")
+
 
     def run(self):
         while True:
             self._logger.info("serving")
             self._server.serve_forever()
+
+
     def run_in_background(self):
         self._thread = Thread(target=self.run)
         self._thread.daemon = True

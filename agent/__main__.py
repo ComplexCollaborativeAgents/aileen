@@ -1,6 +1,6 @@
 import time
 
-from agent.planning_agent.nyx_agent import PlanningAgent
+from agent.planning_agent.nyx_interface import PlanningAgent
 from world.WorldServer import WorldServer
 from BaseAgent import *
 import settings
@@ -9,6 +9,7 @@ import logging, coloredlogs
 logger = logging.getLogger(__name__)
 coloredlogs.install(level='DEBUG', logger=logger)
 
+goal = "put bread in the refrigerator and close the door"
 
 def create_connection_with_world():
     url = 'http://{}:{}'.format(settings.WORLD_HOST, settings.WORLD_PORT)
@@ -16,12 +17,18 @@ def create_connection_with_world():
     server = jsonrpclib.jsonrpc.ServerProxy(url)
     return server
 
+def initialize(world_server):
+    world_server.execute_action({"action": 'Done'})
+    event = world_server.execute_action({"action": 'Done'})
+
+    return event
+
 def execute_planning_agent(world_server):
     agent = PlanningAgent()
     action = None
-    event = None
+    event = initialize(world_server)
     while True:
-        action = agent.choose_action(event)
+        action = agent.get_next_action(world_server, event, goal)
         if action is None:
             break
         event = world_server.execute_action(action)
@@ -69,6 +76,8 @@ if __name__ == '__main__':
     world_server = create_connection_with_world()
     logger = logging.getLogger(__name__)
     coloredlogs.install(level='DEBUG', logger=logger)
+    # initialize(world_server)
+    # time.sleep(2.0)
     execute_planning_agent(world_server)
     # execute_random_actions(world_server)
     # execute_keyboard_actions(world_server)
