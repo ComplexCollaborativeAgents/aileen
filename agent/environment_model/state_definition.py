@@ -43,12 +43,12 @@ class DomainPredicate(Predicate):
             else:
                 temp = f"?{self.lifted_variables[prop]}"
 
-            prop_string += f"{temp.strip()} - {prop}"
+            prop_string += f" {temp.strip()} - {prop}"
 
         if self.name == "":
             return f"({prop_string})"
         else:
-            return f"({self.name} {prop_string})"
+            return f"({self.name}{prop_string})"
 
 
 class GroundedPredicate(Predicate):
@@ -157,7 +157,7 @@ class EnvironmentState(State):
         near = DomainPredicate("is_near", ["cell"], {"cell": "c"})
         self.predicates["near"] = near
 
-        location = DomainPredicate("location", ["cell", "interactable"], {"cell": "c", "interactable": "p"})
+        location = DomainPredicate("location", ["interactable", "cell"], {"cell": "c", "interactable": "p"})
         self.predicates["location"] = location
 
         holding = DomainPredicate("holding", ["interactable"], {"interactable": "p"})
@@ -174,6 +174,9 @@ class EnvironmentState(State):
 
         closed = DomainPredicate("closed", ["interactable"], {"interactable": "p"})
         self.predicates["closed"] = closed
+
+        robot_location = DomainPredicate("robot_location", ["cell"], {"cell": "c"})
+        self.predicates["robot"] = robot_location
 
 
     def set_functions(self):

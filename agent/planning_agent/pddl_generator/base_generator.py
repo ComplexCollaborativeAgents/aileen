@@ -13,7 +13,7 @@ class BaseGenerator():
 
 
 class PDDLDomain:
-    TEMPLATE = "(define (domain {NAME})\n(:requirements\n{REQUIREMENTS}\n)\n\n(:types\n{TYPES}\n)\n\n(:predicates\n{PREDICATES}\n)\n\n(:functions\n{FUNCTIONS}\n)\n\n{ACTIONS}\n\n{PROCESSES}\n\n{EVENTS}\n)"
+    TEMPLATE = "(define (domain {NAME})\n\n(:requirements\n{REQUIREMENTS}\n)\n\n(:types\n{TYPES}\n)\n\n(:predicates\n{PREDICATES}\n)\n\n(:functions\n{FUNCTIONS}\n)\n\n{ACTIONS}\n\n{PROCESSES}\n\n{EVENTS}\n)"
     
     def __init__(self, name):
         self.name = name
@@ -50,7 +50,7 @@ class PDDLDomain:
 
 
     def set_types(self, _types: Dict):
-        self.types = dict()
+        self.types = _types
 
 
     def get_types(self):

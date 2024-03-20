@@ -1,11 +1,12 @@
 (define (domain ai_thor)
+
 (:requirements
 :negative-preconditions
 :typing
 )
 
 (:types
-
+cell interactable - object
 )
 
 (:predicates
@@ -22,31 +23,21 @@
 (is_moveable ?p - interactable)
 (is_holdable ?p - interactable)
 (is_near ?c - cell)
-(location ?c - cell?p - interactable)
+(location ?p - interactable ?c - cell)
 (holding ?p - interactable)
 (opened ?p - interactable)
 (in ?p1 ?p2 - interactable)
 (on ?p1 ?p2 - interactable)
 (closed ?p - interactable)
+(robot_location ?c - cell)
 )
 
 (:functions
-(robot_x )
-(robot_y )
-(robot_z )
-(prev_robot_x )
-(prev_robot_y )
-(prev_robot_z )
-(cell_x ?c - cell)
-(cell_y ?c - cell)
-(cell_z ?c - cell)
-(location_x ?p - interactable)
-(location_y ?p - interactable)
-(location_z ?p - interactable)
+
 )
 
 (:action teleport
-	:parameters (?from ?to - cell)
+	:parameters ( ?from ?to - cell)
 	:precondition (and
 		(is_reachable ?to)
 		(= (robot_x) (cell_x ?from))
@@ -61,11 +52,11 @@
 )
 
 (:action pickup_Lettuce|+01.46|+01.01|+01.68
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_pickable Lettuce|+01.46|+01.01|+01.68)
 		(is_near ?c)
-		(location ?c Lettuce|+01.46|+01.01|+01.68)
+		(location Lettuce|+01.46|+01.01|+01.68 ?c)
 		(not (holding Lettuce|+01.46|+01.01|+01.68))
 	)
 	:effect (and
@@ -77,11 +68,11 @@
 )
 
 (:action pickup_SoapBottle|+01.67|+00.93|+01.11
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_pickable SoapBottle|+01.67|+00.93|+01.11)
 		(is_near ?c)
-		(location ?c SoapBottle|+01.67|+00.93|+01.11)
+		(location SoapBottle|+01.67|+00.93|+01.11 ?c)
 		(not (holding SoapBottle|+01.67|+00.93|+01.11))
 	)
 	:effect (and
@@ -93,11 +84,11 @@
 )
 
 (:action pickup_Bread|-00.92|+00.99|+02.27
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_pickable Bread|-00.92|+00.99|+02.27)
 		(is_near ?c)
-		(location ?c Bread|-00.92|+00.99|+02.27)
+		(location Bread|-00.92|+00.99|+02.27 ?c)
 		(not (holding Bread|-00.92|+00.99|+02.27))
 	)
 	:effect (and
@@ -109,11 +100,11 @@
 )
 
 (:action pickup_Fork|+01.35|+00.74|+02.50
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_pickable Fork|+01.35|+00.74|+02.50)
 		(is_near ?c)
-		(location ?c Fork|+01.35|+00.74|+02.50)
+		(location Fork|+01.35|+00.74|+02.50 ?c)
 		(not (holding Fork|+01.35|+00.74|+02.50))
 	)
 	:effect (and
@@ -125,11 +116,11 @@
 )
 
 (:action pickup_Tomato|+01.44|+00.99|+00.84
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_pickable Tomato|+01.44|+00.99|+00.84)
 		(is_near ?c)
-		(location ?c Tomato|+01.44|+00.99|+00.84)
+		(location Tomato|+01.44|+00.99|+00.84 ?c)
 		(not (holding Tomato|+01.44|+00.99|+00.84))
 	)
 	:effect (and
@@ -141,11 +132,11 @@
 )
 
 (:action pickup_Bowl|-01.06|+01.49|+00.88
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_pickable Bowl|-01.06|+01.49|+00.88)
 		(is_near ?c)
-		(location ?c Bowl|-01.06|+01.49|+00.88)
+		(location Bowl|-01.06|+01.49|+00.88 ?c)
 		(not (holding Bowl|-01.06|+01.49|+00.88))
 	)
 	:effect (and
@@ -157,11 +148,11 @@
 )
 
 (:action pickup_Pot|-00.82|+00.93|+00.82
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_pickable Pot|-00.82|+00.93|+00.82)
 		(is_near ?c)
-		(location ?c Pot|-00.82|+00.93|+00.82)
+		(location Pot|-00.82|+00.93|+00.82 ?c)
 		(not (holding Pot|-00.82|+00.93|+00.82))
 	)
 	:effect (and
@@ -173,11 +164,11 @@
 )
 
 (:action pickup_Spatula|+01.34|+00.93|+02.40
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_pickable Spatula|+01.34|+00.93|+02.40)
 		(is_near ?c)
-		(location ?c Spatula|+01.34|+00.93|+02.40)
+		(location Spatula|+01.34|+00.93|+02.40 ?c)
 		(not (holding Spatula|+01.34|+00.93|+02.40))
 	)
 	:effect (and
@@ -189,11 +180,11 @@
 )
 
 (:action pickup_Knife|+01.36|+00.74|+00.87
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_pickable Knife|+01.36|+00.74|+00.87)
 		(is_near ?c)
-		(location ?c Knife|+01.36|+00.74|+00.87)
+		(location Knife|+01.36|+00.74|+00.87 ?c)
 		(not (holding Knife|+01.36|+00.74|+00.87))
 	)
 	:effect (and
@@ -205,11 +196,11 @@
 )
 
 (:action pickup_SaltShaker|+01.67|+00.93|+02.05
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_pickable SaltShaker|+01.67|+00.93|+02.05)
 		(is_near ?c)
-		(location ?c SaltShaker|+01.67|+00.93|+02.05)
+		(location SaltShaker|+01.67|+00.93|+02.05 ?c)
 		(not (holding SaltShaker|+01.67|+00.93|+02.05))
 	)
 	:effect (and
@@ -221,11 +212,11 @@
 )
 
 (:action pickup_Apple|+01.41|+00.98|+02.13
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_pickable Apple|+01.41|+00.98|+02.13)
 		(is_near ?c)
-		(location ?c Apple|+01.41|+00.98|+02.13)
+		(location Apple|+01.41|+00.98|+02.13 ?c)
 		(not (holding Apple|+01.41|+00.98|+02.13))
 	)
 	:effect (and
@@ -237,11 +228,11 @@
 )
 
 (:action pickup_PepperShaker|+01.60|+00.93|+02.16
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_pickable PepperShaker|+01.60|+00.93|+02.16)
 		(is_near ?c)
-		(location ?c PepperShaker|+01.60|+00.93|+02.16)
+		(location PepperShaker|+01.60|+00.93|+02.16 ?c)
 		(not (holding PepperShaker|+01.60|+00.93|+02.16))
 	)
 	:effect (and
@@ -253,11 +244,11 @@
 )
 
 (:action pickup_ButterKnife|+01.37|+00.74|+02.24
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_pickable ButterKnife|+01.37|+00.74|+02.24)
 		(is_near ?c)
-		(location ?c ButterKnife|+01.37|+00.74|+02.24)
+		(location ButterKnife|+01.37|+00.74|+02.24 ?c)
 		(not (holding ButterKnife|+01.37|+00.74|+02.24))
 	)
 	:effect (and
@@ -269,11 +260,11 @@
 )
 
 (:action pickup_Potato|-00.76|+00.96|+02.36
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_pickable Potato|-00.76|+00.96|+02.36)
 		(is_near ?c)
-		(location ?c Potato|-00.76|+00.96|+02.36)
+		(location Potato|-00.76|+00.96|+02.36 ?c)
 		(not (holding Potato|-00.76|+00.96|+02.36))
 	)
 	:effect (and
@@ -285,11 +276,11 @@
 )
 
 (:action pickup_Plate|+01.38|+01.06|+00.01
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_pickable Plate|+01.38|+01.06|+00.01)
 		(is_near ?c)
-		(location ?c Plate|+01.38|+01.06|+00.01)
+		(location Plate|+01.38|+01.06|+00.01 ?c)
 		(not (holding Plate|+01.38|+01.06|+00.01))
 	)
 	:effect (and
@@ -301,11 +292,11 @@
 )
 
 (:action pickup_DishSponge|+01.51|+00.84|+01.37
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_pickable DishSponge|+01.51|+00.84|+01.37)
 		(is_near ?c)
-		(location ?c DishSponge|+01.51|+00.84|+01.37)
+		(location DishSponge|+01.51|+00.84|+01.37 ?c)
 		(not (holding DishSponge|+01.51|+00.84|+01.37))
 	)
 	:effect (and
@@ -317,11 +308,11 @@
 )
 
 (:action pickup_Egg|+01.32|+00.96|+01.75
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_pickable Egg|+01.32|+00.96|+01.75)
 		(is_near ?c)
-		(location ?c Egg|+01.32|+00.96|+01.75)
+		(location Egg|+01.32|+00.96|+01.75 ?c)
 		(not (holding Egg|+01.32|+00.96|+01.75))
 	)
 	:effect (and
@@ -333,11 +324,11 @@
 )
 
 (:action pickup_Cup|+01.31|+00.93|+00.78
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_pickable Cup|+01.31|+00.93|+00.78)
 		(is_near ?c)
-		(location ?c Cup|+01.31|+00.93|+00.78)
+		(location Cup|+01.31|+00.93|+00.78 ?c)
 		(not (holding Cup|+01.31|+00.93|+00.78))
 	)
 	:effect (and
@@ -349,11 +340,11 @@
 )
 
 (:action pickup_Pan|+01.38|+01.74|+00.39
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_pickable Pan|+01.38|+01.74|+00.39)
 		(is_near ?c)
-		(location ?c Pan|+01.38|+01.74|+00.39)
+		(location Pan|+01.38|+01.74|+00.39 ?c)
 		(not (holding Pan|+01.38|+01.74|+00.39))
 	)
 	:effect (and
@@ -365,11 +356,11 @@
 )
 
 (:action pickup_Spoon|+01.41|+00.74|+02.43
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_pickable Spoon|+01.41|+00.74|+02.43)
 		(is_near ?c)
-		(location ?c Spoon|+01.41|+00.74|+02.43)
+		(location Spoon|+01.41|+00.74|+02.43 ?c)
 		(not (holding Spoon|+01.41|+00.74|+02.43))
 	)
 	:effect (and
@@ -381,11 +372,11 @@
 )
 
 (:action pickup_Mug|+01.46|+00.93|+01.09
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_pickable Mug|+01.46|+00.93|+01.09)
 		(is_near ?c)
-		(location ?c Mug|+01.46|+00.93|+01.09)
+		(location Mug|+01.46|+00.93|+01.09 ?c)
 		(not (holding Mug|+01.46|+00.93|+01.09))
 	)
 	:effect (and
@@ -397,10 +388,10 @@
 )
 
 (:action put_Lettuce|+01.46|+01.01|+01.68
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_near c)
-		(location c Lettuce|+01.46|+01.01|+01.68)
+		(location Lettuce|+01.46|+01.01|+01.68 c)
 		(not (holding Lettuce|+01.46|+01.01|+01.68))
 	)
 	:effect (and
@@ -412,10 +403,10 @@
 )
 
 (:action put_SoapBottle|+01.67|+00.93|+01.11
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_near c)
-		(location c SoapBottle|+01.67|+00.93|+01.11)
+		(location SoapBottle|+01.67|+00.93|+01.11 c)
 		(not (holding SoapBottle|+01.67|+00.93|+01.11))
 	)
 	:effect (and
@@ -427,10 +418,10 @@
 )
 
 (:action put_Bread|-00.92|+00.99|+02.27
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_near c)
-		(location c Bread|-00.92|+00.99|+02.27)
+		(location Bread|-00.92|+00.99|+02.27 c)
 		(not (holding Bread|-00.92|+00.99|+02.27))
 	)
 	:effect (and
@@ -442,10 +433,10 @@
 )
 
 (:action put_Fork|+01.35|+00.74|+02.50
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_near c)
-		(location c Fork|+01.35|+00.74|+02.50)
+		(location Fork|+01.35|+00.74|+02.50 c)
 		(not (holding Fork|+01.35|+00.74|+02.50))
 	)
 	:effect (and
@@ -457,10 +448,10 @@
 )
 
 (:action put_Tomato|+01.44|+00.99|+00.84
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_near c)
-		(location c Tomato|+01.44|+00.99|+00.84)
+		(location Tomato|+01.44|+00.99|+00.84 c)
 		(not (holding Tomato|+01.44|+00.99|+00.84))
 	)
 	:effect (and
@@ -472,10 +463,10 @@
 )
 
 (:action put_Bowl|-01.06|+01.49|+00.88
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_near c)
-		(location c Bowl|-01.06|+01.49|+00.88)
+		(location Bowl|-01.06|+01.49|+00.88 c)
 		(not (holding Bowl|-01.06|+01.49|+00.88))
 	)
 	:effect (and
@@ -487,10 +478,10 @@
 )
 
 (:action put_Pot|-00.82|+00.93|+00.82
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_near c)
-		(location c Pot|-00.82|+00.93|+00.82)
+		(location Pot|-00.82|+00.93|+00.82 c)
 		(not (holding Pot|-00.82|+00.93|+00.82))
 	)
 	:effect (and
@@ -502,10 +493,10 @@
 )
 
 (:action put_Spatula|+01.34|+00.93|+02.40
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_near c)
-		(location c Spatula|+01.34|+00.93|+02.40)
+		(location Spatula|+01.34|+00.93|+02.40 c)
 		(not (holding Spatula|+01.34|+00.93|+02.40))
 	)
 	:effect (and
@@ -517,10 +508,10 @@
 )
 
 (:action put_Knife|+01.36|+00.74|+00.87
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_near c)
-		(location c Knife|+01.36|+00.74|+00.87)
+		(location Knife|+01.36|+00.74|+00.87 c)
 		(not (holding Knife|+01.36|+00.74|+00.87))
 	)
 	:effect (and
@@ -532,10 +523,10 @@
 )
 
 (:action put_SaltShaker|+01.67|+00.93|+02.05
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_near c)
-		(location c SaltShaker|+01.67|+00.93|+02.05)
+		(location SaltShaker|+01.67|+00.93|+02.05 c)
 		(not (holding SaltShaker|+01.67|+00.93|+02.05))
 	)
 	:effect (and
@@ -547,10 +538,10 @@
 )
 
 (:action put_Apple|+01.41|+00.98|+02.13
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_near c)
-		(location c Apple|+01.41|+00.98|+02.13)
+		(location Apple|+01.41|+00.98|+02.13 c)
 		(not (holding Apple|+01.41|+00.98|+02.13))
 	)
 	:effect (and
@@ -562,10 +553,10 @@
 )
 
 (:action put_PepperShaker|+01.60|+00.93|+02.16
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_near c)
-		(location c PepperShaker|+01.60|+00.93|+02.16)
+		(location PepperShaker|+01.60|+00.93|+02.16 c)
 		(not (holding PepperShaker|+01.60|+00.93|+02.16))
 	)
 	:effect (and
@@ -577,10 +568,10 @@
 )
 
 (:action put_ButterKnife|+01.37|+00.74|+02.24
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_near c)
-		(location c ButterKnife|+01.37|+00.74|+02.24)
+		(location ButterKnife|+01.37|+00.74|+02.24 c)
 		(not (holding ButterKnife|+01.37|+00.74|+02.24))
 	)
 	:effect (and
@@ -592,10 +583,10 @@
 )
 
 (:action put_Potato|-00.76|+00.96|+02.36
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_near c)
-		(location c Potato|-00.76|+00.96|+02.36)
+		(location Potato|-00.76|+00.96|+02.36 c)
 		(not (holding Potato|-00.76|+00.96|+02.36))
 	)
 	:effect (and
@@ -607,10 +598,10 @@
 )
 
 (:action put_Plate|+01.38|+01.06|+00.01
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_near c)
-		(location c Plate|+01.38|+01.06|+00.01)
+		(location Plate|+01.38|+01.06|+00.01 c)
 		(not (holding Plate|+01.38|+01.06|+00.01))
 	)
 	:effect (and
@@ -622,10 +613,10 @@
 )
 
 (:action put_DishSponge|+01.51|+00.84|+01.37
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_near c)
-		(location c DishSponge|+01.51|+00.84|+01.37)
+		(location DishSponge|+01.51|+00.84|+01.37 c)
 		(not (holding DishSponge|+01.51|+00.84|+01.37))
 	)
 	:effect (and
@@ -637,10 +628,10 @@
 )
 
 (:action put_Egg|+01.32|+00.96|+01.75
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_near c)
-		(location c Egg|+01.32|+00.96|+01.75)
+		(location Egg|+01.32|+00.96|+01.75 c)
 		(not (holding Egg|+01.32|+00.96|+01.75))
 	)
 	:effect (and
@@ -652,10 +643,10 @@
 )
 
 (:action put_Cup|+01.31|+00.93|+00.78
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_near c)
-		(location c Cup|+01.31|+00.93|+00.78)
+		(location Cup|+01.31|+00.93|+00.78 c)
 		(not (holding Cup|+01.31|+00.93|+00.78))
 	)
 	:effect (and
@@ -667,10 +658,10 @@
 )
 
 (:action put_Pan|+01.38|+01.74|+00.39
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_near c)
-		(location c Pan|+01.38|+01.74|+00.39)
+		(location Pan|+01.38|+01.74|+00.39 c)
 		(not (holding Pan|+01.38|+01.74|+00.39))
 	)
 	:effect (and
@@ -682,10 +673,10 @@
 )
 
 (:action put_Spoon|+01.41|+00.74|+02.43
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_near c)
-		(location c Spoon|+01.41|+00.74|+02.43)
+		(location Spoon|+01.41|+00.74|+02.43 c)
 		(not (holding Spoon|+01.41|+00.74|+02.43))
 	)
 	:effect (and
@@ -697,10 +688,10 @@
 )
 
 (:action put_Mug|+01.46|+00.93|+01.09
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_near c)
-		(location c Mug|+01.46|+00.93|+01.09)
+		(location Mug|+01.46|+00.93|+01.09 c)
 		(not (holding Mug|+01.46|+00.93|+01.09))
 	)
 	:effect (and
@@ -715,7 +706,7 @@
 	:parameters None
 	:precondition (and
 		(is_near c)
-		(location c p CounterTop|-00.97|+00.97|+02.39)
+		(location p CounterTop|-00.97|+00.97|+02.39 c)
 		(not (holding p CounterTop|-00.97|+00.97|+02.39))
 		(opened CounterTop|-00.97|+00.97|+02.39)
 	)
@@ -732,7 +723,7 @@
 	:parameters None
 	:precondition (and
 		(is_near c)
-		(location c p Drawer|-00.78|+00.77|+02.38)
+		(location p Drawer|-00.78|+00.77|+02.38 c)
 		(not (holding p Drawer|-00.78|+00.77|+02.38))
 		(opened Drawer|-00.78|+00.77|+02.38)
 	)
@@ -749,7 +740,7 @@
 	:parameters None
 	:precondition (and
 		(is_near c)
-		(location c p StoveBurner|-01.11|+00.92|+01.47)
+		(location p StoveBurner|-01.11|+00.92|+01.47 c)
 		(not (holding p StoveBurner|-01.11|+00.92|+01.47))
 		(opened StoveBurner|-01.11|+00.92|+01.47)
 	)
@@ -766,7 +757,7 @@
 	:parameters None
 	:precondition (and
 		(is_near c)
-		(location c p Drawer|+01.37|+00.77|+02.39)
+		(location p Drawer|+01.37|+00.77|+02.39 c)
 		(not (holding p Drawer|+01.37|+00.77|+02.39))
 		(opened Drawer|+01.37|+00.77|+02.39)
 	)
@@ -783,7 +774,7 @@
 	:parameters None
 	:precondition (and
 		(is_near c)
-		(location c p Stool|-00.75|+00.01|+03.12)
+		(location p Stool|-00.75|+00.01|+03.12 c)
 		(not (holding p Stool|-00.75|+00.01|+03.12))
 		(opened Stool|-00.75|+00.01|+03.12)
 	)
@@ -800,7 +791,7 @@
 	:parameters None
 	:precondition (and
 		(is_near c)
-		(location c p CounterTop|+01.51|+00.97|+02.31)
+		(location p CounterTop|+01.51|+00.97|+02.31 c)
 		(not (holding p CounterTop|+01.51|+00.97|+02.31))
 		(opened CounterTop|+01.51|+00.97|+02.31)
 	)
@@ -817,7 +808,7 @@
 	:parameters None
 	:precondition (and
 		(is_near c)
-		(location c p Cabinet|+01.22|+01.39|+00.59)
+		(location p Cabinet|+01.22|+01.39|+00.59 c)
 		(not (holding p Cabinet|+01.22|+01.39|+00.59))
 		(opened Cabinet|+01.22|+01.39|+00.59)
 	)
@@ -834,7 +825,7 @@
 	:parameters None
 	:precondition (and
 		(is_near c)
-		(location c p Cabinet|+01.50|+02.11|+01.16)
+		(location p Cabinet|+01.50|+02.11|+01.16 c)
 		(not (holding p Cabinet|+01.50|+02.11|+01.16))
 		(opened Cabinet|+01.50|+02.11|+01.16)
 	)
@@ -851,7 +842,7 @@
 	:parameters None
 	:precondition (and
 		(is_near c)
-		(location c p Cabinet|+01.22|+02.01|+00.59)
+		(location p Cabinet|+01.22|+02.01|+00.59 c)
 		(not (holding p Cabinet|+01.22|+02.01|+00.59))
 		(opened Cabinet|+01.22|+02.01|+00.59)
 	)
@@ -868,7 +859,7 @@
 	:parameters None
 	:precondition (and
 		(is_near c)
-		(location c p Cabinet|+01.22|+00.39|+02.11)
+		(location p Cabinet|+01.22|+00.39|+02.11 c)
 		(not (holding p Cabinet|+01.22|+00.39|+02.11))
 		(opened Cabinet|+01.22|+00.39|+02.11)
 	)
@@ -885,7 +876,7 @@
 	:parameters None
 	:precondition (and
 		(is_near c)
-		(location c p Cabinet|+01.22|+00.55|+00.59)
+		(location p Cabinet|+01.22|+00.55|+00.59 c)
 		(not (holding p Cabinet|+01.22|+00.55|+00.59))
 		(opened Cabinet|+01.22|+00.55|+00.59)
 	)
@@ -902,7 +893,7 @@
 	:parameters None
 	:precondition (and
 		(is_near c)
-		(location c p Cabinet|-00.91|+02.11|+01.16)
+		(location p Cabinet|-00.91|+02.11|+01.16 c)
 		(not (holding p Cabinet|-00.91|+02.11|+01.16))
 		(opened Cabinet|-00.91|+02.11|+01.16)
 	)
@@ -919,7 +910,7 @@
 	:parameters None
 	:precondition (and
 		(is_near c)
-		(location c p Cabinet|-00.63|+00.39|+00.63)
+		(location p Cabinet|-00.63|+00.39|+00.63 c)
 		(not (holding p Cabinet|-00.63|+00.39|+00.63))
 		(opened Cabinet|-00.63|+00.39|+00.63)
 	)
@@ -936,7 +927,7 @@
 	:parameters None
 	:precondition (and
 		(is_near c)
-		(location c p Cabinet|-00.91|+02.05|-00.33)
+		(location p Cabinet|-00.91|+02.05|-00.33 c)
 		(not (holding p Cabinet|-00.91|+02.05|-00.33))
 		(opened Cabinet|-00.91|+02.05|-00.33)
 	)
@@ -953,7 +944,7 @@
 	:parameters None
 	:precondition (and
 		(is_near c)
-		(location c p Cabinet|-00.91|+02.11|+00.58)
+		(location p Cabinet|-00.91|+02.11|+00.58 c)
 		(not (holding p Cabinet|-00.91|+02.11|+00.58))
 		(opened Cabinet|-00.91|+02.11|+00.58)
 	)
@@ -970,7 +961,7 @@
 	:parameters None
 	:precondition (and
 		(is_near c)
-		(location c p Cabinet|-00.91|+02.11|+02.08)
+		(location p Cabinet|-00.91|+02.11|+02.08 c)
 		(not (holding p Cabinet|-00.91|+02.11|+02.08))
 		(opened Cabinet|-00.91|+02.11|+02.08)
 	)
@@ -987,7 +978,7 @@
 	:parameters None
 	:precondition (and
 		(is_near c)
-		(location c p Cabinet|-00.91|+02.11|+01.21)
+		(location p Cabinet|-00.91|+02.11|+01.21 c)
 		(not (holding p Cabinet|-00.91|+02.11|+01.21))
 		(opened Cabinet|-00.91|+02.11|+01.21)
 	)
@@ -1004,7 +995,7 @@
 	:parameters None
 	:precondition (and
 		(is_near c)
-		(location c p Cabinet|+01.50|+02.11|+02.08)
+		(location p Cabinet|+01.50|+02.11|+02.08 c)
 		(not (holding p Cabinet|+01.50|+02.11|+02.08))
 		(opened Cabinet|+01.50|+02.11|+02.08)
 	)
@@ -1021,7 +1012,7 @@
 	:parameters None
 	:precondition (and
 		(is_near c)
-		(location c p Cabinet|+01.50|+02.11|+01.21)
+		(location p Cabinet|+01.50|+02.11|+01.21 c)
 		(not (holding p Cabinet|+01.50|+02.11|+01.21))
 		(opened Cabinet|+01.50|+02.11|+01.21)
 	)
@@ -1038,7 +1029,7 @@
 	:parameters None
 	:precondition (and
 		(is_near c)
-		(location c p Cabinet|+01.50|+01.81|+02.69)
+		(location p Cabinet|+01.50|+01.81|+02.69 c)
 		(not (holding p Cabinet|+01.50|+01.81|+02.69))
 		(opened Cabinet|+01.50|+01.81|+02.69)
 	)
@@ -1055,7 +1046,7 @@
 	:parameters None
 	:precondition (and
 		(is_near c)
-		(location c p Cabinet|+01.50|+01.81|+02.10)
+		(location p Cabinet|+01.50|+01.81|+02.10 c)
 		(not (holding p Cabinet|+01.50|+01.81|+02.10))
 		(opened Cabinet|+01.50|+01.81|+02.10)
 	)
@@ -1072,7 +1063,7 @@
 	:parameters None
 	:precondition (and
 		(is_near c)
-		(location c p Cabinet|-00.63|+00.39|+02.11)
+		(location p Cabinet|-00.63|+00.39|+02.11 c)
 		(not (holding p Cabinet|-00.63|+00.39|+02.11))
 		(opened Cabinet|-00.63|+00.39|+02.11)
 	)
@@ -1089,7 +1080,7 @@
 	:parameters None
 	:precondition (and
 		(is_near c)
-		(location c p Cabinet|-00.91|+01.81|+02.70)
+		(location p Cabinet|-00.91|+01.81|+02.70 c)
 		(not (holding p Cabinet|-00.91|+01.81|+02.70))
 		(opened Cabinet|-00.91|+01.81|+02.70)
 	)
@@ -1106,7 +1097,7 @@
 	:parameters None
 	:precondition (and
 		(is_near c)
-		(location c p Drawer|-00.78|+00.77|+00.92)
+		(location p Drawer|-00.78|+00.77|+00.92 c)
 		(not (holding p Drawer|-00.78|+00.77|+00.92))
 		(opened Drawer|-00.78|+00.77|+00.92)
 	)
@@ -1123,7 +1114,7 @@
 	:parameters None
 	:precondition (and
 		(is_near c)
-		(location c p StoveBurner|-01.11|+00.92|+01.87)
+		(location p StoveBurner|-01.11|+00.92|+01.87 c)
 		(not (holding p StoveBurner|-01.11|+00.92|+01.87))
 		(opened StoveBurner|-01.11|+00.92|+01.87)
 	)
@@ -1140,7 +1131,7 @@
 	:parameters None
 	:precondition (and
 		(is_near c)
-		(location c p CounterTop|-00.97|+00.97|+00.92)
+		(location p CounterTop|-00.97|+00.97|+00.92 c)
 		(not (holding p CounterTop|-00.97|+00.97|+00.92))
 		(opened CounterTop|-00.97|+00.97|+00.92)
 	)
@@ -1157,7 +1148,7 @@
 	:parameters None
 	:precondition (and
 		(is_near c)
-		(location c p Cabinet|+01.22|+00.39|+00.63)
+		(location p Cabinet|+01.22|+00.39|+00.63 c)
 		(not (holding p Cabinet|+01.22|+00.39|+00.63))
 		(opened Cabinet|+01.22|+00.39|+00.63)
 	)
@@ -1174,7 +1165,7 @@
 	:parameters None
 	:precondition (and
 		(is_near c)
-		(location c p Floor|+01.23|+00.00|-00.84)
+		(location p Floor|+01.23|+00.00|-00.84 c)
 		(not (holding p Floor|+01.23|+00.00|-00.84))
 		(opened Floor|+01.23|+00.00|-00.84)
 	)
@@ -1191,7 +1182,7 @@
 	:parameters None
 	:precondition (and
 		(is_near c)
-		(location c p Sink|+01.54|+00.87|+01.64)
+		(location p Sink|+01.54|+00.87|+01.64 c)
 		(not (holding p Sink|+01.54|+00.87|+01.64))
 		(opened Sink|+01.54|+00.87|+01.64)
 	)
@@ -1208,7 +1199,7 @@
 	:parameters None
 	:precondition (and
 		(is_near c)
-		(location c p StoveBurner|-00.83|+00.92|+01.87)
+		(location p StoveBurner|-00.83|+00.92|+01.87 c)
 		(not (holding p StoveBurner|-00.83|+00.92|+01.87))
 		(opened StoveBurner|-00.83|+00.92|+01.87)
 	)
@@ -1225,7 +1216,7 @@
 	:parameters None
 	:precondition (and
 		(is_near c)
-		(location c p StoveBurner|-00.83|+00.92|+01.47)
+		(location p StoveBurner|-00.83|+00.92|+01.47 c)
 		(not (holding p StoveBurner|-00.83|+00.92|+01.47))
 		(opened StoveBurner|-00.83|+00.92|+01.47)
 	)
@@ -1242,7 +1233,7 @@
 	:parameters None
 	:precondition (and
 		(is_near c)
-		(location c p Drawer|+01.37|+00.77|+00.92)
+		(location p Drawer|+01.37|+00.77|+00.92 c)
 		(not (holding p Drawer|+01.37|+00.77|+00.92))
 		(opened Drawer|+01.37|+00.77|+00.92)
 	)
@@ -1259,7 +1250,7 @@
 	:parameters None
 	:precondition (and
 		(is_near c)
-		(location c p Cabinet|-00.91|+01.81|+02.11)
+		(location p Cabinet|-00.91|+01.81|+02.11 c)
 		(not (holding p Cabinet|-00.91|+01.81|+02.11))
 		(opened Cabinet|-00.91|+01.81|+02.11)
 	)
@@ -1276,7 +1267,7 @@
 	:parameters None
 	:precondition (and
 		(is_near c)
-		(location c p Fridge|-01.00|+00.00|+00.12)
+		(location p Fridge|-01.00|+00.00|+00.12 c)
 		(not (holding p Fridge|-01.00|+00.00|+00.12))
 		(opened Fridge|-01.00|+00.00|+00.12)
 	)
@@ -1293,7 +1284,7 @@
 	:parameters None
 	:precondition (and
 		(is_near c)
-		(location c p Toaster|-01.00|+00.93|+02.56)
+		(location p Toaster|-01.00|+00.93|+02.56 c)
 		(not (holding p Toaster|-01.00|+00.93|+02.56))
 		(opened Toaster|-01.00|+00.93|+02.56)
 	)
@@ -1310,7 +1301,7 @@
 	:parameters None
 	:precondition (and
 		(is_near c)
-		(location c p GarbageCan|+01.45|-00.03|+02.91)
+		(location p GarbageCan|+01.45|-00.03|+02.91 c)
 		(not (holding p GarbageCan|+01.45|-00.03|+02.91))
 		(opened GarbageCan|+01.45|-00.03|+02.91)
 	)
@@ -1327,7 +1318,7 @@
 	:parameters None
 	:precondition (and
 		(is_near c)
-		(location c p Microwave|+01.63|+01.48|+01.65)
+		(location p Microwave|+01.63|+01.48|+01.65 c)
 		(not (holding p Microwave|+01.63|+01.48|+01.65))
 		(opened Microwave|+01.63|+01.48|+01.65)
 	)
@@ -1344,7 +1335,7 @@
 	:parameters None
 	:precondition (and
 		(is_near c)
-		(location c p Bowl|-01.06|+01.49|+00.88)
+		(location p Bowl|-01.06|+01.49|+00.88 c)
 		(not (holding p Bowl|-01.06|+01.49|+00.88))
 		(opened Bowl|-01.06|+01.49|+00.88)
 	)
@@ -1361,7 +1352,7 @@
 	:parameters None
 	:precondition (and
 		(is_near c)
-		(location c p Pot|-00.82|+00.93|+00.82)
+		(location p Pot|-00.82|+00.93|+00.82 c)
 		(not (holding p Pot|-00.82|+00.93|+00.82))
 		(opened Pot|-00.82|+00.93|+00.82)
 	)
@@ -1378,7 +1369,7 @@
 	:parameters None
 	:precondition (and
 		(is_near c)
-		(location c p CoffeeMachine|+01.69|+00.93|+02.45)
+		(location p CoffeeMachine|+01.69|+00.93|+02.45 c)
 		(not (holding p CoffeeMachine|+01.69|+00.93|+02.45))
 		(opened CoffeeMachine|+01.69|+00.93|+02.45)
 	)
@@ -1395,7 +1386,7 @@
 	:parameters None
 	:precondition (and
 		(is_near c)
-		(location c p Sink|+01.54|+00.87|+01.64|SinkBasin)
+		(location p Sink|+01.54|+00.87|+01.64|SinkBasin c)
 		(not (holding p Sink|+01.54|+00.87|+01.64|SinkBasin))
 		(opened Sink|+01.54|+00.87|+01.64|SinkBasin)
 	)
@@ -1412,7 +1403,7 @@
 	:parameters None
 	:precondition (and
 		(is_near c)
-		(location c p Plate|+01.38|+01.06|+00.01)
+		(location p Plate|+01.38|+01.06|+00.01 c)
 		(not (holding p Plate|+01.38|+01.06|+00.01))
 		(opened Plate|+01.38|+01.06|+00.01)
 	)
@@ -1429,7 +1420,7 @@
 	:parameters None
 	:precondition (and
 		(is_near c)
-		(location c p Cup|+01.31|+00.93|+00.78)
+		(location p Cup|+01.31|+00.93|+00.78 c)
 		(not (holding p Cup|+01.31|+00.93|+00.78))
 		(opened Cup|+01.31|+00.93|+00.78)
 	)
@@ -1446,7 +1437,7 @@
 	:parameters None
 	:precondition (and
 		(is_near c)
-		(location c p Pan|+01.38|+01.74|+00.39)
+		(location p Pan|+01.38|+01.74|+00.39 c)
 		(not (holding p Pan|+01.38|+01.74|+00.39))
 		(opened Pan|+01.38|+01.74|+00.39)
 	)
@@ -1463,7 +1454,7 @@
 	:parameters None
 	:precondition (and
 		(is_near c)
-		(location c p Mug|+01.46|+00.93|+01.09)
+		(location p Mug|+01.46|+00.93|+01.09 c)
 		(not (holding p Mug|+01.46|+00.93|+01.09))
 		(opened Mug|+01.46|+00.93|+01.09)
 	)
@@ -1477,11 +1468,11 @@
 )
 
 (:action open_Drawer|-00.78|+00.77|+02.38
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_openable Drawer|-00.78|+00.77|+02.38)
 		(is_near c)
-		(location c Drawer|-00.78|+00.77|+02.38)
+		(location Drawer|-00.78|+00.77|+02.38 c)
 		(not (opened Drawer|-00.78|+00.77|+02.38))
 	)
 	:effect (and
@@ -1490,11 +1481,11 @@
 )
 
 (:action open_Drawer|+01.37|+00.77|+02.39
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_openable Drawer|+01.37|+00.77|+02.39)
 		(is_near c)
-		(location c Drawer|+01.37|+00.77|+02.39)
+		(location Drawer|+01.37|+00.77|+02.39 c)
 		(not (opened Drawer|+01.37|+00.77|+02.39))
 	)
 	:effect (and
@@ -1503,11 +1494,11 @@
 )
 
 (:action open_Cabinet|+01.22|+01.39|+00.59
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_openable Cabinet|+01.22|+01.39|+00.59)
 		(is_near c)
-		(location c Cabinet|+01.22|+01.39|+00.59)
+		(location Cabinet|+01.22|+01.39|+00.59 c)
 		(not (opened Cabinet|+01.22|+01.39|+00.59))
 	)
 	:effect (and
@@ -1516,11 +1507,11 @@
 )
 
 (:action open_Cabinet|+01.50|+02.11|+01.16
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_openable Cabinet|+01.50|+02.11|+01.16)
 		(is_near c)
-		(location c Cabinet|+01.50|+02.11|+01.16)
+		(location Cabinet|+01.50|+02.11|+01.16 c)
 		(not (opened Cabinet|+01.50|+02.11|+01.16))
 	)
 	:effect (and
@@ -1529,11 +1520,11 @@
 )
 
 (:action open_Cabinet|+01.22|+02.01|+00.59
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_openable Cabinet|+01.22|+02.01|+00.59)
 		(is_near c)
-		(location c Cabinet|+01.22|+02.01|+00.59)
+		(location Cabinet|+01.22|+02.01|+00.59 c)
 		(not (opened Cabinet|+01.22|+02.01|+00.59))
 	)
 	:effect (and
@@ -1542,11 +1533,11 @@
 )
 
 (:action open_Cabinet|+01.22|+00.39|+02.11
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_openable Cabinet|+01.22|+00.39|+02.11)
 		(is_near c)
-		(location c Cabinet|+01.22|+00.39|+02.11)
+		(location Cabinet|+01.22|+00.39|+02.11 c)
 		(not (opened Cabinet|+01.22|+00.39|+02.11))
 	)
 	:effect (and
@@ -1555,11 +1546,11 @@
 )
 
 (:action open_Cabinet|+01.22|+00.55|+00.59
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_openable Cabinet|+01.22|+00.55|+00.59)
 		(is_near c)
-		(location c Cabinet|+01.22|+00.55|+00.59)
+		(location Cabinet|+01.22|+00.55|+00.59 c)
 		(not (opened Cabinet|+01.22|+00.55|+00.59))
 	)
 	:effect (and
@@ -1568,11 +1559,11 @@
 )
 
 (:action open_Cabinet|-00.91|+02.11|+01.16
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_openable Cabinet|-00.91|+02.11|+01.16)
 		(is_near c)
-		(location c Cabinet|-00.91|+02.11|+01.16)
+		(location Cabinet|-00.91|+02.11|+01.16 c)
 		(not (opened Cabinet|-00.91|+02.11|+01.16))
 	)
 	:effect (and
@@ -1581,11 +1572,11 @@
 )
 
 (:action open_Cabinet|-00.63|+00.39|+00.63
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_openable Cabinet|-00.63|+00.39|+00.63)
 		(is_near c)
-		(location c Cabinet|-00.63|+00.39|+00.63)
+		(location Cabinet|-00.63|+00.39|+00.63 c)
 		(not (opened Cabinet|-00.63|+00.39|+00.63))
 	)
 	:effect (and
@@ -1594,11 +1585,11 @@
 )
 
 (:action open_Cabinet|-00.91|+02.05|-00.33
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_openable Cabinet|-00.91|+02.05|-00.33)
 		(is_near c)
-		(location c Cabinet|-00.91|+02.05|-00.33)
+		(location Cabinet|-00.91|+02.05|-00.33 c)
 		(not (opened Cabinet|-00.91|+02.05|-00.33))
 	)
 	:effect (and
@@ -1607,11 +1598,11 @@
 )
 
 (:action open_Cabinet|-00.91|+02.11|+00.58
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_openable Cabinet|-00.91|+02.11|+00.58)
 		(is_near c)
-		(location c Cabinet|-00.91|+02.11|+00.58)
+		(location Cabinet|-00.91|+02.11|+00.58 c)
 		(not (opened Cabinet|-00.91|+02.11|+00.58))
 	)
 	:effect (and
@@ -1620,11 +1611,11 @@
 )
 
 (:action open_Cabinet|-00.91|+02.11|+02.08
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_openable Cabinet|-00.91|+02.11|+02.08)
 		(is_near c)
-		(location c Cabinet|-00.91|+02.11|+02.08)
+		(location Cabinet|-00.91|+02.11|+02.08 c)
 		(not (opened Cabinet|-00.91|+02.11|+02.08))
 	)
 	:effect (and
@@ -1633,11 +1624,11 @@
 )
 
 (:action open_Cabinet|-00.91|+02.11|+01.21
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_openable Cabinet|-00.91|+02.11|+01.21)
 		(is_near c)
-		(location c Cabinet|-00.91|+02.11|+01.21)
+		(location Cabinet|-00.91|+02.11|+01.21 c)
 		(not (opened Cabinet|-00.91|+02.11|+01.21))
 	)
 	:effect (and
@@ -1646,11 +1637,11 @@
 )
 
 (:action open_Cabinet|+01.50|+02.11|+02.08
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_openable Cabinet|+01.50|+02.11|+02.08)
 		(is_near c)
-		(location c Cabinet|+01.50|+02.11|+02.08)
+		(location Cabinet|+01.50|+02.11|+02.08 c)
 		(not (opened Cabinet|+01.50|+02.11|+02.08))
 	)
 	:effect (and
@@ -1659,11 +1650,11 @@
 )
 
 (:action open_Cabinet|+01.50|+02.11|+01.21
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_openable Cabinet|+01.50|+02.11|+01.21)
 		(is_near c)
-		(location c Cabinet|+01.50|+02.11|+01.21)
+		(location Cabinet|+01.50|+02.11|+01.21 c)
 		(not (opened Cabinet|+01.50|+02.11|+01.21))
 	)
 	:effect (and
@@ -1672,11 +1663,11 @@
 )
 
 (:action open_Cabinet|+01.50|+01.81|+02.69
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_openable Cabinet|+01.50|+01.81|+02.69)
 		(is_near c)
-		(location c Cabinet|+01.50|+01.81|+02.69)
+		(location Cabinet|+01.50|+01.81|+02.69 c)
 		(not (opened Cabinet|+01.50|+01.81|+02.69))
 	)
 	:effect (and
@@ -1685,11 +1676,11 @@
 )
 
 (:action open_Cabinet|+01.50|+01.81|+02.10
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_openable Cabinet|+01.50|+01.81|+02.10)
 		(is_near c)
-		(location c Cabinet|+01.50|+01.81|+02.10)
+		(location Cabinet|+01.50|+01.81|+02.10 c)
 		(not (opened Cabinet|+01.50|+01.81|+02.10))
 	)
 	:effect (and
@@ -1698,11 +1689,11 @@
 )
 
 (:action open_Cabinet|-00.63|+00.39|+02.11
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_openable Cabinet|-00.63|+00.39|+02.11)
 		(is_near c)
-		(location c Cabinet|-00.63|+00.39|+02.11)
+		(location Cabinet|-00.63|+00.39|+02.11 c)
 		(not (opened Cabinet|-00.63|+00.39|+02.11))
 	)
 	:effect (and
@@ -1711,11 +1702,11 @@
 )
 
 (:action open_Cabinet|-00.91|+01.81|+02.70
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_openable Cabinet|-00.91|+01.81|+02.70)
 		(is_near c)
-		(location c Cabinet|-00.91|+01.81|+02.70)
+		(location Cabinet|-00.91|+01.81|+02.70 c)
 		(not (opened Cabinet|-00.91|+01.81|+02.70))
 	)
 	:effect (and
@@ -1724,11 +1715,11 @@
 )
 
 (:action open_Drawer|-00.78|+00.77|+00.92
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_openable Drawer|-00.78|+00.77|+00.92)
 		(is_near c)
-		(location c Drawer|-00.78|+00.77|+00.92)
+		(location Drawer|-00.78|+00.77|+00.92 c)
 		(not (opened Drawer|-00.78|+00.77|+00.92))
 	)
 	:effect (and
@@ -1737,11 +1728,11 @@
 )
 
 (:action open_Cabinet|+01.22|+00.39|+00.63
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_openable Cabinet|+01.22|+00.39|+00.63)
 		(is_near c)
-		(location c Cabinet|+01.22|+00.39|+00.63)
+		(location Cabinet|+01.22|+00.39|+00.63 c)
 		(not (opened Cabinet|+01.22|+00.39|+00.63))
 	)
 	:effect (and
@@ -1750,11 +1741,11 @@
 )
 
 (:action open_Drawer|+01.37|+00.77|+00.92
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_openable Drawer|+01.37|+00.77|+00.92)
 		(is_near c)
-		(location c Drawer|+01.37|+00.77|+00.92)
+		(location Drawer|+01.37|+00.77|+00.92 c)
 		(not (opened Drawer|+01.37|+00.77|+00.92))
 	)
 	:effect (and
@@ -1763,11 +1754,11 @@
 )
 
 (:action open_Cabinet|-00.91|+01.81|+02.11
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_openable Cabinet|-00.91|+01.81|+02.11)
 		(is_near c)
-		(location c Cabinet|-00.91|+01.81|+02.11)
+		(location Cabinet|-00.91|+01.81|+02.11 c)
 		(not (opened Cabinet|-00.91|+01.81|+02.11))
 	)
 	:effect (and
@@ -1776,11 +1767,11 @@
 )
 
 (:action open_Fridge|-01.00|+00.00|+00.12
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_openable Fridge|-01.00|+00.00|+00.12)
 		(is_near c)
-		(location c Fridge|-01.00|+00.00|+00.12)
+		(location Fridge|-01.00|+00.00|+00.12 c)
 		(not (opened Fridge|-01.00|+00.00|+00.12))
 	)
 	:effect (and
@@ -1789,11 +1780,11 @@
 )
 
 (:action open_Microwave|+01.63|+01.48|+01.65
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_openable Microwave|+01.63|+01.48|+01.65)
 		(is_near c)
-		(location c Microwave|+01.63|+01.48|+01.65)
+		(location Microwave|+01.63|+01.48|+01.65 c)
 		(not (opened Microwave|+01.63|+01.48|+01.65))
 	)
 	:effect (and
@@ -1802,11 +1793,11 @@
 )
 
 (:action close_Drawer|-00.78|+00.77|+02.38
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_openable Drawer|-00.78|+00.77|+02.38)
 		(is_near c)
-		(location c Drawer|-00.78|+00.77|+02.38)
+		(location Drawer|-00.78|+00.77|+02.38 c)
 		(opened Drawer|-00.78|+00.77|+02.38)
 	)
 	:effect (and
@@ -1815,11 +1806,11 @@
 )
 
 (:action close_Drawer|+01.37|+00.77|+02.39
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_openable Drawer|+01.37|+00.77|+02.39)
 		(is_near c)
-		(location c Drawer|+01.37|+00.77|+02.39)
+		(location Drawer|+01.37|+00.77|+02.39 c)
 		(opened Drawer|+01.37|+00.77|+02.39)
 	)
 	:effect (and
@@ -1828,11 +1819,11 @@
 )
 
 (:action close_Cabinet|+01.22|+01.39|+00.59
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_openable Cabinet|+01.22|+01.39|+00.59)
 		(is_near c)
-		(location c Cabinet|+01.22|+01.39|+00.59)
+		(location Cabinet|+01.22|+01.39|+00.59 c)
 		(opened Cabinet|+01.22|+01.39|+00.59)
 	)
 	:effect (and
@@ -1841,11 +1832,11 @@
 )
 
 (:action close_Cabinet|+01.50|+02.11|+01.16
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_openable Cabinet|+01.50|+02.11|+01.16)
 		(is_near c)
-		(location c Cabinet|+01.50|+02.11|+01.16)
+		(location Cabinet|+01.50|+02.11|+01.16 c)
 		(opened Cabinet|+01.50|+02.11|+01.16)
 	)
 	:effect (and
@@ -1854,11 +1845,11 @@
 )
 
 (:action close_Cabinet|+01.22|+02.01|+00.59
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_openable Cabinet|+01.22|+02.01|+00.59)
 		(is_near c)
-		(location c Cabinet|+01.22|+02.01|+00.59)
+		(location Cabinet|+01.22|+02.01|+00.59 c)
 		(opened Cabinet|+01.22|+02.01|+00.59)
 	)
 	:effect (and
@@ -1867,11 +1858,11 @@
 )
 
 (:action close_Cabinet|+01.22|+00.39|+02.11
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_openable Cabinet|+01.22|+00.39|+02.11)
 		(is_near c)
-		(location c Cabinet|+01.22|+00.39|+02.11)
+		(location Cabinet|+01.22|+00.39|+02.11 c)
 		(opened Cabinet|+01.22|+00.39|+02.11)
 	)
 	:effect (and
@@ -1880,11 +1871,11 @@
 )
 
 (:action close_Cabinet|+01.22|+00.55|+00.59
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_openable Cabinet|+01.22|+00.55|+00.59)
 		(is_near c)
-		(location c Cabinet|+01.22|+00.55|+00.59)
+		(location Cabinet|+01.22|+00.55|+00.59 c)
 		(opened Cabinet|+01.22|+00.55|+00.59)
 	)
 	:effect (and
@@ -1893,11 +1884,11 @@
 )
 
 (:action close_Cabinet|-00.91|+02.11|+01.16
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_openable Cabinet|-00.91|+02.11|+01.16)
 		(is_near c)
-		(location c Cabinet|-00.91|+02.11|+01.16)
+		(location Cabinet|-00.91|+02.11|+01.16 c)
 		(opened Cabinet|-00.91|+02.11|+01.16)
 	)
 	:effect (and
@@ -1906,11 +1897,11 @@
 )
 
 (:action close_Cabinet|-00.63|+00.39|+00.63
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_openable Cabinet|-00.63|+00.39|+00.63)
 		(is_near c)
-		(location c Cabinet|-00.63|+00.39|+00.63)
+		(location Cabinet|-00.63|+00.39|+00.63 c)
 		(opened Cabinet|-00.63|+00.39|+00.63)
 	)
 	:effect (and
@@ -1919,11 +1910,11 @@
 )
 
 (:action close_Cabinet|-00.91|+02.05|-00.33
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_openable Cabinet|-00.91|+02.05|-00.33)
 		(is_near c)
-		(location c Cabinet|-00.91|+02.05|-00.33)
+		(location Cabinet|-00.91|+02.05|-00.33 c)
 		(opened Cabinet|-00.91|+02.05|-00.33)
 	)
 	:effect (and
@@ -1932,11 +1923,11 @@
 )
 
 (:action close_Cabinet|-00.91|+02.11|+00.58
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_openable Cabinet|-00.91|+02.11|+00.58)
 		(is_near c)
-		(location c Cabinet|-00.91|+02.11|+00.58)
+		(location Cabinet|-00.91|+02.11|+00.58 c)
 		(opened Cabinet|-00.91|+02.11|+00.58)
 	)
 	:effect (and
@@ -1945,11 +1936,11 @@
 )
 
 (:action close_Cabinet|-00.91|+02.11|+02.08
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_openable Cabinet|-00.91|+02.11|+02.08)
 		(is_near c)
-		(location c Cabinet|-00.91|+02.11|+02.08)
+		(location Cabinet|-00.91|+02.11|+02.08 c)
 		(opened Cabinet|-00.91|+02.11|+02.08)
 	)
 	:effect (and
@@ -1958,11 +1949,11 @@
 )
 
 (:action close_Cabinet|-00.91|+02.11|+01.21
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_openable Cabinet|-00.91|+02.11|+01.21)
 		(is_near c)
-		(location c Cabinet|-00.91|+02.11|+01.21)
+		(location Cabinet|-00.91|+02.11|+01.21 c)
 		(opened Cabinet|-00.91|+02.11|+01.21)
 	)
 	:effect (and
@@ -1971,11 +1962,11 @@
 )
 
 (:action close_Cabinet|+01.50|+02.11|+02.08
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_openable Cabinet|+01.50|+02.11|+02.08)
 		(is_near c)
-		(location c Cabinet|+01.50|+02.11|+02.08)
+		(location Cabinet|+01.50|+02.11|+02.08 c)
 		(opened Cabinet|+01.50|+02.11|+02.08)
 	)
 	:effect (and
@@ -1984,11 +1975,11 @@
 )
 
 (:action close_Cabinet|+01.50|+02.11|+01.21
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_openable Cabinet|+01.50|+02.11|+01.21)
 		(is_near c)
-		(location c Cabinet|+01.50|+02.11|+01.21)
+		(location Cabinet|+01.50|+02.11|+01.21 c)
 		(opened Cabinet|+01.50|+02.11|+01.21)
 	)
 	:effect (and
@@ -1997,11 +1988,11 @@
 )
 
 (:action close_Cabinet|+01.50|+01.81|+02.69
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_openable Cabinet|+01.50|+01.81|+02.69)
 		(is_near c)
-		(location c Cabinet|+01.50|+01.81|+02.69)
+		(location Cabinet|+01.50|+01.81|+02.69 c)
 		(opened Cabinet|+01.50|+01.81|+02.69)
 	)
 	:effect (and
@@ -2010,11 +2001,11 @@
 )
 
 (:action close_Cabinet|+01.50|+01.81|+02.10
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_openable Cabinet|+01.50|+01.81|+02.10)
 		(is_near c)
-		(location c Cabinet|+01.50|+01.81|+02.10)
+		(location Cabinet|+01.50|+01.81|+02.10 c)
 		(opened Cabinet|+01.50|+01.81|+02.10)
 	)
 	:effect (and
@@ -2023,11 +2014,11 @@
 )
 
 (:action close_Cabinet|-00.63|+00.39|+02.11
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_openable Cabinet|-00.63|+00.39|+02.11)
 		(is_near c)
-		(location c Cabinet|-00.63|+00.39|+02.11)
+		(location Cabinet|-00.63|+00.39|+02.11 c)
 		(opened Cabinet|-00.63|+00.39|+02.11)
 	)
 	:effect (and
@@ -2036,11 +2027,11 @@
 )
 
 (:action close_Cabinet|-00.91|+01.81|+02.70
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_openable Cabinet|-00.91|+01.81|+02.70)
 		(is_near c)
-		(location c Cabinet|-00.91|+01.81|+02.70)
+		(location Cabinet|-00.91|+01.81|+02.70 c)
 		(opened Cabinet|-00.91|+01.81|+02.70)
 	)
 	:effect (and
@@ -2049,11 +2040,11 @@
 )
 
 (:action close_Drawer|-00.78|+00.77|+00.92
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_openable Drawer|-00.78|+00.77|+00.92)
 		(is_near c)
-		(location c Drawer|-00.78|+00.77|+00.92)
+		(location Drawer|-00.78|+00.77|+00.92 c)
 		(opened Drawer|-00.78|+00.77|+00.92)
 	)
 	:effect (and
@@ -2062,11 +2053,11 @@
 )
 
 (:action close_Cabinet|+01.22|+00.39|+00.63
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_openable Cabinet|+01.22|+00.39|+00.63)
 		(is_near c)
-		(location c Cabinet|+01.22|+00.39|+00.63)
+		(location Cabinet|+01.22|+00.39|+00.63 c)
 		(opened Cabinet|+01.22|+00.39|+00.63)
 	)
 	:effect (and
@@ -2075,11 +2066,11 @@
 )
 
 (:action close_Drawer|+01.37|+00.77|+00.92
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_openable Drawer|+01.37|+00.77|+00.92)
 		(is_near c)
-		(location c Drawer|+01.37|+00.77|+00.92)
+		(location Drawer|+01.37|+00.77|+00.92 c)
 		(opened Drawer|+01.37|+00.77|+00.92)
 	)
 	:effect (and
@@ -2088,11 +2079,11 @@
 )
 
 (:action close_Cabinet|-00.91|+01.81|+02.11
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_openable Cabinet|-00.91|+01.81|+02.11)
 		(is_near c)
-		(location c Cabinet|-00.91|+01.81|+02.11)
+		(location Cabinet|-00.91|+01.81|+02.11 c)
 		(opened Cabinet|-00.91|+01.81|+02.11)
 	)
 	:effect (and
@@ -2101,11 +2092,11 @@
 )
 
 (:action close_Fridge|-01.00|+00.00|+00.12
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_openable Fridge|-01.00|+00.00|+00.12)
 		(is_near c)
-		(location c Fridge|-01.00|+00.00|+00.12)
+		(location Fridge|-01.00|+00.00|+00.12 c)
 		(opened Fridge|-01.00|+00.00|+00.12)
 	)
 	:effect (and
@@ -2114,11 +2105,11 @@
 )
 
 (:action close_Microwave|+01.63|+01.48|+01.65
-	:parameters (?c - cell)
+	:parameters ( ?c - cell)
 	:precondition (and
 		(is_openable Microwave|+01.63|+01.48|+01.65)
 		(is_near c)
-		(location c Microwave|+01.63|+01.48|+01.65)
+		(location Microwave|+01.63|+01.48|+01.65 c)
 		(opened Microwave|+01.63|+01.48|+01.65)
 	)
 	:effect (and

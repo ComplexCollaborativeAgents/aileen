@@ -21,7 +21,7 @@ class PDDLDomainGenerator(BaseGenerator):
         domain.set_requirements([":negative-preconditions", ":typing"])
         domain.set_types({"object": ["cell", "interactable"]})
         self.create_predicates()
-        self.create_functions()
+        #self.create_functions()
         self.create_actions(_current_state)
         #self.create_events(_current_state)
 
