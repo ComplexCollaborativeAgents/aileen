@@ -3,6 +3,8 @@ import time
 import settings
 import logging
 import jsonrpclib
+import os
+os.environ["JAVA_HOME"] = settings.JAVA_HOME
 
 
 def create_connection_with_world():
@@ -13,13 +15,10 @@ def create_connection_with_world():
 
 
 if __name__ == '__main__':
-
+   os.environ["JAVA_HOME"] = settings.JAVA_HOME
    world_server = create_connection_with_world()
    agent = SoarAgent(world_server=world_server)
    agent.register_output_callback(update, agent)
-
-
-
 
    agent.start()
    if settings.SOAR_DEBUG:

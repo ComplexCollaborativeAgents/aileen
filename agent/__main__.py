@@ -1,6 +1,12 @@
 import time
 
+<<<<<<< HEAD
 from agent.planning_agent.nyx_interface import PlanningAgent
+=======
+from agent.planning_agent.nyx_agent import PlanningAgent
+from agent import BaseAgent
+from AgentServer import AgentServer
+>>>>>>> 138823d2 (added server client integration for the instructor chat window)
 from world.WorldServer import WorldServer
 from BaseAgent import *
 import settings
@@ -17,11 +23,17 @@ def create_connection_with_world():
     server = jsonrpclib.jsonrpc.ServerProxy(url)
     return server
 
+<<<<<<< HEAD
 def initialize(world_server):
     world_server.execute_action({"action": 'Done'})
     event = world_server.execute_action({"action": 'Done'})
 
     return event
+=======
+def create_and_run_agent_server(agent):
+    server = AgentServer(agent)
+    server.run_in_background()
+>>>>>>> 138823d2 (added server client integration for the instructor chat window)
 
 def execute_planning_agent(world_server):
     agent = PlanningAgent()
@@ -74,10 +86,18 @@ def execute_keyboard_actions(world_server):
 
 if __name__ == '__main__':
     world_server = create_connection_with_world()
+    agent = Agent()
+    create_and_run_agent_server(agent)
     logger = logging.getLogger(__name__)
     coloredlogs.install(level='DEBUG', logger=logger)
+<<<<<<< HEAD
     # initialize(world_server)
     # time.sleep(2.0)
     execute_planning_agent(world_server)
+=======
+    while True:
+        pass
+    #execute_planning_agent(world_server)
+>>>>>>> 138823d2 (added server client integration for the instructor chat window)
     # execute_random_actions(world_server)
-    # execute_keyboard_actions(world_server)
+    #execute_keyboard_actions(world_server)
