@@ -1,0 +1,33 @@
+##!
+# @file
+#
+# @created smohan 20231103
+
+
+
+sp {action*propose*close
+    (state <s>    ^name aileen
+                  ^world.objects.object <obj>
+                  -^holding <any>)
+    (<obj>    ^object_type Fridge
+              ^is_interactable True
+              ^openable True
+              ^openness 1.0)
+-->
+    (<s>    ^operator <op> + >)
+    (<op>   ^name close
+            ^object <obj>)
+    }
+
+sp {action*apply*close
+    (state <s>    ^name aileen
+                  ^operator <op>
+                  ^io.output-link <ol>)
+    (<op>    ^name close
+             ^object.id <objid>)
+-->
+    (<ol>    ^action <act>)
+    (<act>    ^name close
+              ^id <objid>)
+    }
+

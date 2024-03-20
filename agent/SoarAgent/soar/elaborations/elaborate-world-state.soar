@@ -31,6 +31,21 @@ sp {aileen*elaborate*objects*attributes
     (<wobj>    ^<attr> <val>)
     }
 
+sp {aileen*elaborate*objects*update*attributes
+    :o-support
+    (state <s>    ^name aileen
+                  ^io.input-link <il>
+                  ^world.objects.object <wobj>)
+    (<il>    ^world.objects.object <obj>)
+    (<obj>    ^id <id>
+              ^{<attr> <> id <> position <> salient_materals} <val>)
+    (<wobj>   ^id <id>
+              ^<attr> <wval>)
+-->
+    (<wobj>    ^<attr> <wval> -
+               ^<attr> <val>)
+    }
+
 sp {aileen*elaborate*objects*position
     :o-support
     (state <s>    ^name aileen

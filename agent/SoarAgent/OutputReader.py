@@ -40,7 +40,19 @@ class OutputReader(object):
                 if child.GetValueAsString() == 'pick-up':
                     self._logger.debug('received pick-up')
                     self.process_pickup_command(commandID)
+<<<<<<< HEAD
 
+=======
+                if child.GetValueAsString() == 'open':
+                    self._logger.debug('received open')
+                    self.process_open_command(commandID)
+                if child.GetValueAsString() == 'close':
+                    self._logger.debug('received close')
+                    self.process_close_command(commandID)
+                if child.GetValueAsString() == 'put':
+                    self._logger.debug('received open')
+                    self.process_put_command(commandID)
+>>>>>>> 905d08ac (added put and close actions so that a full demonstration can be run)
 
     def process_goto_command(self, commandID):
         for i in range(0, commandID.GetNumberChildren()):
@@ -66,5 +78,26 @@ class OutputReader(object):
                 id = child.GetValueAsString()
         action = actions.PickObjectAction(_objectID=id).to_interface()
         self._logger.debug('requesting {}'.format(action))
+        self._world_server.execute_action(action)
+        commandID.AddStatusComplete()
+
+
+    def process_close_command(self, commandID):
+        for i in range(0, commandID.GetNumberChildren()):
+            child = commandID.GetChild(i)
+            if child.GetAttribute() == 'id':
+                id = child.GetValueAsString()
+        action = actions.CloseObjectAction(_objectID=id).to_interface()
+        self._logger.info('requesting {}'.format(action))
+        self._world_server.execute_action(action)
+        commandID.AddStatusComplete()
+
+    def process_put_command(self, commandID):
+        for i in range(0, commandID.GetNumberChildren()):
+            child = commandID.GetChild(i)
+            if child.GetAttribute() == 'id':
+                id = child.GetValueAsString()
+        action = actions.PutObjectAction(_objectID=id).to_interface()
+        self._logger.info('requesting {}'.format(action))
         self._world_server.execute_action(action)
         commandID.AddStatusComplete()
