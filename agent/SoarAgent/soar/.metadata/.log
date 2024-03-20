@@ -1,0 +1,133 @@
+!SESSION 2024-03-08 13:16:54.217 -----------------------------------------------
+eclipse.buildId=4.30.0.20231201-1200
+java.version=17.0.10
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=macosx, ARCH=aarch64, WS=cocoa, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os macosx -ws cocoa -arch aarch64 -product org.eclipse.epp.package.java.product
+
+!ENTRY ch.qos.logback.classic 1 0 2024-03-08 13:16:55.926
+!MESSAGE Activated before the state location was initialized. Retry after the state location is initialized.
+
+!ENTRY ch.qos.logback.classic 1 0 2024-03-08 13:17:25.539
+!MESSAGE Logback config file: /Users/e35201/EMBRACE/elaborate/agent/SoarAgent/soar/.metadata/.plugins/org.eclipse.m2e.logback/logback.2.2.1.20231030-1438.xml
+
+!ENTRY org.eclipse.jface 2 0 2024-03-08 13:17:26.315
+!MESSAGE Keybinding conflicts occurred.  They may interfere with normal accelerator operation.
+!SUBENTRY 1 org.eclipse.jface 2 0 2024-03-08 13:17:26.315
+!MESSAGE A conflict occurred for COMMAND+SHIFT+T:
+Binding(COMMAND+SHIFT+T,
+	ParameterizedCommand(Command(org.eclipse.jdt.ui.navigate.open.type,Open Type,
+		Open a type in a Java editor,
+		Category(org.eclipse.ui.category.navigate,Navigate,null,true),
+		WorkbenchHandlerServiceHandler("org.eclipse.jdt.ui.navigate.open.type"),
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+Binding(COMMAND+SHIFT+T,
+	ParameterizedCommand(Command(org.eclipse.lsp4e.symbolinworkspace,Go to Symbol in Workspace,
+		,
+		Category(org.eclipse.lsp4e.category,Language Servers,null,true),
+		WorkbenchHandlerServiceHandler("org.eclipse.lsp4e.symbolinworkspace"),
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+
+!ENTRY org.eclipse.ui.ide 4 0 2024-03-08 13:17:58.224
+!MESSAGE Could not import project located at /Users/e35201/EMBRACE/elaborate/agent/SoarAgent/soar
+!STACK 0
+org.eclipse.ui.internal.wizards.datatransfer.CouldNotImportProjectException: Could not import project located at /Users/e35201/EMBRACE/elaborate/agent/SoarAgent/soar
+	at org.eclipse.ui.internal.wizards.datatransfer.SmartImportJob.toExistingOrNewProject(SmartImportJob.java:564)
+	at org.eclipse.ui.internal.wizards.datatransfer.SmartImportJob.run(SmartImportJob.java:251)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+Caused by: org.eclipse.core.internal.resources.ResourceException: Invalid project description.
+	at org.eclipse.core.internal.resources.Project.checkDescription(Project.java:211)
+	at org.eclipse.core.internal.resources.Project.assertCreateRequirements(Project.java:95)
+	at org.eclipse.core.internal.resources.Project.create(Project.java:305)
+	at org.eclipse.core.internal.resources.Project.create(Project.java:291)
+	at org.eclipse.ui.internal.wizards.datatransfer.SmartImportJob.createOrImportProject(SmartImportJob.java:603)
+	at org.eclipse.ui.internal.wizards.datatransfer.SmartImportJob.toExistingOrNewProject(SmartImportJob.java:551)
+	... 2 more
+
+!ENTRY org.eclipse.equinox.p2.repository 2 0 2024-03-08 13:20:13.950
+!MESSAGE Server returned lastModified <= 0 for https://github.com/soartech/soaride/raw/master/com.soartech.soar.ide.update/content.jar
+
+!ENTRY org.eclipse.equinox.p2.repository 2 0 2024-03-08 13:20:35.221
+!MESSAGE Server returned lastModified <= 0 for https://github.com/soartech/soaride/raw/master/com.soartech.soar.ide.update/artifacts.jar
+
+!ENTRY org.eclipse.equinox.p2.artifact.repository 2 0 2024-03-08 13:20:41.948
+!MESSAGE No digest algorithm is available to verify download of osgi.bundle,com.soartech.soar.ide.help,2.0.13.
+
+!ENTRY org.eclipse.equinox.p2.artifact.repository 2 0 2024-03-08 13:20:41.948
+!MESSAGE No digest algorithm is available to verify download of org.eclipse.update.feature,com.soartech.soar.ide.feature,2.0.13.
+
+!ENTRY org.eclipse.equinox.p2.artifact.repository 2 0 2024-03-08 13:20:41.949
+!MESSAGE No digest algorithm is available to verify download of osgi.bundle,com.soartech.soar.ide.ui,2.0.13.
+
+!ENTRY org.eclipse.equinox.p2.artifact.repository 2 0 2024-03-08 13:20:41.949
+!MESSAGE No digest algorithm is available to verify download of osgi.bundle,com.soartech.soar.ide,2.0.13.
+
+!ENTRY org.eclipse.core.jobs 4 2 2024-03-08 13:20:52.904
+!MESSAGE An internal error occurred during: "Install download9".
+!STACK 0
+java.lang.NullPointerException: Cannot invoke "org.eclipse.osgi.signedcontent.SignedContentFactory.getSignedContent(java.io.File)" because "verifierFactory" is null
+	at org.eclipse.equinox.internal.p2.artifact.repository.SignatureVerifier.verifyContent(SignatureVerifier.java:84)
+	at org.eclipse.equinox.internal.p2.artifact.repository.SignatureVerifier.verify(SignatureVerifier.java:66)
+	at org.eclipse.equinox.internal.p2.artifact.repository.SignatureVerifier.close(SignatureVerifier.java:115)
+	at org.eclipse.equinox.internal.provisional.p2.artifact.repository.processing.ProcessingStep.close(ProcessingStep.java:93)
+	at org.eclipse.equinox.internal.p2.artifact.processors.checksum.MessageDigestProcessingStep.close(MessageDigestProcessingStep.java:58)
+	at org.eclipse.equinox.internal.p2.artifact.repository.simple.SimpleArtifactRepository.reportStatus(SimpleArtifactRepository.java:1263)
+	at org.eclipse.equinox.internal.p2.artifact.repository.simple.SimpleArtifactRepository.downloadArtifact(SimpleArtifactRepository.java:660)
+	at org.eclipse.equinox.internal.p2.artifact.repository.simple.SimpleArtifactRepository.getArtifact(SimpleArtifactRepository.java:796)
+	at org.eclipse.equinox.internal.p2.artifact.repository.MirrorRequest.getArtifact(MirrorRequest.java:329)
+	at org.eclipse.equinox.internal.p2.artifact.repository.MirrorRequest.transferSingle(MirrorRequest.java:299)
+	at org.eclipse.equinox.internal.p2.artifact.repository.MirrorRequest.transfer(MirrorRequest.java:232)
+	at org.eclipse.equinox.internal.p2.artifact.repository.MirrorRequest.perform(MirrorRequest.java:162)
+	at org.eclipse.equinox.internal.p2.artifact.repository.simple.SimpleArtifactRepository.getArtifact(SimpleArtifactRepository.java:778)
+	at org.eclipse.equinox.internal.p2.artifact.repository.simple.DownloadJob.run(DownloadJob.java:64)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+
+!ENTRY org.eclipse.core.jobs 4 2 2024-03-08 13:20:52.904
+!MESSAGE An internal error occurred during: "Install download0".
+!STACK 0
+java.lang.NullPointerException: Cannot invoke "org.eclipse.osgi.signedcontent.SignedContentFactory.getSignedContent(java.io.File)" because "verifierFactory" is null
+	at org.eclipse.equinox.internal.p2.artifact.repository.SignatureVerifier.verifyContent(SignatureVerifier.java:84)
+	at org.eclipse.equinox.internal.p2.artifact.repository.SignatureVerifier.verify(SignatureVerifier.java:66)
+	at org.eclipse.equinox.internal.p2.artifact.repository.SignatureVerifier.close(SignatureVerifier.java:115)
+	at org.eclipse.equinox.internal.provisional.p2.artifact.repository.processing.ProcessingStep.close(ProcessingStep.java:93)
+	at org.eclipse.equinox.internal.p2.artifact.processors.checksum.MessageDigestProcessingStep.close(MessageDigestProcessingStep.java:58)
+	at org.eclipse.equinox.internal.p2.artifact.repository.simple.SimpleArtifactRepository.reportStatus(SimpleArtifactRepository.java:1263)
+	at org.eclipse.equinox.internal.p2.artifact.repository.simple.SimpleArtifactRepository.downloadArtifact(SimpleArtifactRepository.java:660)
+	at org.eclipse.equinox.internal.p2.artifact.repository.simple.SimpleArtifactRepository.getArtifact(SimpleArtifactRepository.java:796)
+	at org.eclipse.equinox.internal.p2.artifact.repository.MirrorRequest.getArtifact(MirrorRequest.java:329)
+	at org.eclipse.equinox.internal.p2.artifact.repository.MirrorRequest.transferSingle(MirrorRequest.java:299)
+	at org.eclipse.equinox.internal.p2.artifact.repository.MirrorRequest.transfer(MirrorRequest.java:232)
+	at org.eclipse.equinox.internal.p2.artifact.repository.MirrorRequest.perform(MirrorRequest.java:162)
+	at org.eclipse.equinox.internal.p2.artifact.repository.simple.SimpleArtifactRepository.getArtifact(SimpleArtifactRepository.java:778)
+	at org.eclipse.equinox.internal.p2.artifact.repository.simple.DownloadJob.run(DownloadJob.java:64)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+
+!ENTRY org.eclipse.equinox.p2.engine 4 4 2024-03-08 13:20:52.907
+!MESSAGE An error occurred while collecting items to be installed
+!SUBENTRY 1 org.eclipse.equinox.p2.engine 4 0 2024-03-08 13:20:52.907
+!MESSAGE session context was:(profile=_Users_e35201_eclipse_java-2023-12_Eclipse.app_Contents_Eclipse, phase=org.eclipse.equinox.internal.p2.engine.phases.Collect, operand=, action=).
+!SUBENTRY 1 org.eclipse.equinox.p2.engine 4 0 2024-03-08 13:20:52.907
+!MESSAGE Attempt to access stopped agent: org.eclipse.equinox.internal.p2.core.ProvisioningAgent@6e2ea7af
+!STACK 0
+java.lang.IllegalStateException: Attempt to access stopped agent: org.eclipse.equinox.internal.p2.core.ProvisioningAgent@6e2ea7af
+	at org.eclipse.equinox.internal.p2.core.ProvisioningAgent.checkRunning(ProvisioningAgent.java:87)
+	at org.eclipse.equinox.internal.p2.core.ProvisioningAgent.getService(ProvisioningAgent.java:51)
+	at org.eclipse.equinox.p2.core.IProvisioningAgent.getService(IProvisioningAgent.java:86)
+	at org.eclipse.equinox.internal.p2.engine.DownloadManager.publishDownloadEvent(DownloadManager.java:137)
+	at org.eclipse.equinox.internal.p2.engine.DownloadManager.fetch(DownloadManager.java:128)
+	at org.eclipse.equinox.internal.p2.engine.DownloadManager.start(DownloadManager.java:98)
+	at org.eclipse.equinox.internal.p2.engine.phases.Collect.completePhase(Collect.java:124)
+	at org.eclipse.equinox.internal.p2.engine.Phase.postPerform(Phase.java:254)
+	at org.eclipse.equinox.internal.p2.engine.Phase.perform(Phase.java:105)
+	at org.eclipse.equinox.internal.p2.engine.PhaseSet.perform(PhaseSet.java:50)
+	at org.eclipse.equinox.internal.p2.engine.Engine.perform(Engine.java:95)
+	at org.eclipse.equinox.internal.p2.engine.Engine.perform(Engine.java:49)
+	at org.eclipse.equinox.p2.operations.ProvisioningSession.performProvisioningPlan(ProvisioningSession.java:175)
+	at org.eclipse.equinox.p2.operations.ProfileModificationJob.runModal(ProfileModificationJob.java:76)
+	at org.eclipse.equinox.p2.operations.ProvisioningJob.run(ProvisioningJob.java:188)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
