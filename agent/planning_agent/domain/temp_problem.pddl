@@ -7,102 +7,102 @@ CounterTop|-00.97|+00.97|+02.39 Drawer|-00.78|+00.77|+02.38 StoveBurner|-01.11|+
 x
 	y
 	z
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	)
+	(is_moveable Stool|-00.75|+00.01|+03.12)
+	(is_moveable Toaster|-01.00|+00.93|+02.56)
+	(is_moveable GarbageCan|+01.45|-00.03|+02.91)
+	(is_moveable Microwave|+01.63|+01.48|+01.65)
+	(is_moveable CoffeeMachine|+01.69|+00.93|+02.45)
+	(is_openable Drawer|-00.78|+00.77|+02.38)
+	(is_openable Drawer|+01.37|+00.77|+02.39)
+	(is_openable Cabinet|+01.22|+01.39|+00.59)
+	(is_openable Cabinet|+01.50|+02.11|+01.16)
+	(is_openable Cabinet|+01.22|+02.01|+00.59)
+	(is_openable Cabinet|+01.22|+00.39|+02.11)
+	(is_openable Cabinet|+01.22|+00.55|+00.59)
+	(is_openable Cabinet|-00.91|+02.11|+01.16)
+	(is_openable Cabinet|-00.63|+00.39|+00.63)
+	(is_openable Cabinet|-00.91|+02.05|-00.33)
+	(is_openable Cabinet|-00.91|+02.11|+00.58)
+	(is_openable Cabinet|-00.91|+02.11|+02.08)
+	(is_openable Cabinet|-00.91|+02.11|+01.21)
+	(is_openable Cabinet|+01.50|+02.11|+02.08)
+	(is_openable Cabinet|+01.50|+02.11|+01.21)
+	(is_openable Cabinet|+01.50|+01.81|+02.69)
+	(is_openable Cabinet|+01.50|+01.81|+02.10)
+	(is_openable Cabinet|-00.63|+00.39|+02.11)
+	(is_openable Cabinet|-00.91|+01.81|+02.70)
+	(is_openable Drawer|-00.78|+00.77|+00.92)
+	(is_openable Cabinet|+01.22|+00.39|+00.63)
+	(is_openable Drawer|+01.37|+00.77|+00.92)
+	(is_openable Cabinet|-00.91|+01.81|+02.11)
+	(is_openable Fridge|-01.00|+00.00|+00.12)
+	(is_openable Microwave|+01.63|+01.48|+01.65)
+	(is_pickable Lettuce|+01.46|+01.01|+01.68)
+	(is_pickable SoapBottle|+01.67|+00.93|+01.11)
+	(is_pickable Bread|-00.92|+00.99|+02.27)
+	(is_pickable Fork|+01.35|+00.74|+02.50)
+	(is_pickable Tomato|+01.44|+00.99|+00.84)
+	(is_pickable Bowl|-01.06|+01.49|+00.88)
+	(is_pickable Pot|-00.82|+00.93|+00.82)
+	(is_pickable Spatula|+01.34|+00.93|+02.40)
+	(is_pickable Knife|+01.36|+00.74|+00.87)
+	(is_pickable SaltShaker|+01.67|+00.93|+02.05)
+	(is_pickable Apple|+01.41|+00.98|+02.13)
+	(is_pickable PepperShaker|+01.60|+00.93|+02.16)
+	(is_pickable ButterKnife|+01.37|+00.74|+02.24)
+	(is_pickable Potato|-00.76|+00.96|+02.36)
+	(is_pickable Plate|+01.38|+01.06|+00.01)
+	(is_pickable DishSponge|+01.51|+00.84|+01.37)
+	(is_pickable Egg|+01.32|+00.96|+01.75)
+	(is_pickable Cup|+01.31|+00.93|+00.78)
+	(is_pickable Pan|+01.38|+01.74|+00.39)
+	(is_pickable Spoon|+01.41|+00.74|+02.43)
+	(is_pickable Mug|+01.46|+00.93|+01.09)
+	(is_receptacle CounterTop|-00.97|+00.97|+02.39)
+	(is_receptacle Drawer|-00.78|+00.77|+02.38)
+	(is_receptacle StoveBurner|-01.11|+00.92|+01.47)
+	(is_receptacle Drawer|+01.37|+00.77|+02.39)
+	(is_receptacle Stool|-00.75|+00.01|+03.12)
+	(is_receptacle CounterTop|+01.51|+00.97|+02.31)
+	(is_receptacle Cabinet|+01.22|+01.39|+00.59)
+	(is_receptacle Cabinet|+01.50|+02.11|+01.16)
+	(is_receptacle Cabinet|+01.22|+02.01|+00.59)
+	(is_receptacle Cabinet|+01.22|+00.39|+02.11)
+	(is_receptacle Cabinet|+01.22|+00.55|+00.59)
+	(is_receptacle Cabinet|-00.91|+02.11|+01.16)
+	(is_receptacle Cabinet|-00.63|+00.39|+00.63)
+	(is_receptacle Cabinet|-00.91|+02.05|-00.33)
+	(is_receptacle Cabinet|-00.91|+02.11|+00.58)
+	(is_receptacle Cabinet|-00.91|+02.11|+02.08)
+	(is_receptacle Cabinet|-00.91|+02.11|+01.21)
+	(is_receptacle Cabinet|+01.50|+02.11|+02.08)
+	(is_receptacle Cabinet|+01.50|+02.11|+01.21)
+	(is_receptacle Cabinet|+01.50|+01.81|+02.69)
+	(is_receptacle Cabinet|+01.50|+01.81|+02.10)
+	(is_receptacle Cabinet|-00.63|+00.39|+02.11)
+	(is_receptacle Cabinet|-00.91|+01.81|+02.70)
+	(is_receptacle Drawer|-00.78|+00.77|+00.92)
+	(is_receptacle StoveBurner|-01.11|+00.92|+01.87)
+	(is_receptacle CounterTop|-00.97|+00.97|+00.92)
+	(is_receptacle Cabinet|+01.22|+00.39|+00.63)
+	(is_receptacle Floor|+01.23|+00.00|-00.84)
+	(is_receptacle Sink|+01.54|+00.87|+01.64)
+	(is_receptacle StoveBurner|-00.83|+00.92|+01.87)
+	(is_receptacle StoveBurner|-00.83|+00.92|+01.47)
+	(is_receptacle Drawer|+01.37|+00.77|+00.92)
+	(is_receptacle Cabinet|-00.91|+01.81|+02.11)
+	(is_receptacle Fridge|-01.00|+00.00|+00.12)
+	(is_receptacle Toaster|-01.00|+00.93|+02.56)
+	(is_receptacle GarbageCan|+01.45|-00.03|+02.91)
+	(is_receptacle Microwave|+01.63|+01.48|+01.65)
+	(is_receptacle Bowl|-01.06|+01.49|+00.88)
+	(is_receptacle Pot|-00.82|+00.93|+00.82)
+	(is_receptacle CoffeeMachine|+01.69|+00.93|+02.45)
+	(is_receptacle Sink|+01.54|+00.87|+01.64|SinkBasin)
+	(is_receptacle Plate|+01.38|+01.06|+00.01)
+	(is_receptacle Cup|+01.31|+00.93|+00.78)
+	(is_receptacle Pan|+01.38|+01.74|+00.39)
+	(is_receptacle Mug|+01.46|+00.93|+01.09))
 (:goal (and
 (and
 		(in Bread|-00.92|+00.99|+02.27 Fridge|-01.00|+00.00|+00.12)
