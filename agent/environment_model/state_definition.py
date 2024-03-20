@@ -45,7 +45,10 @@ class DomainPredicate(Predicate):
 
             prop_string += f"{temp.strip()} - {prop}"
 
-        return f"({self.name} {prop_string})"
+        if self.name == "":
+            return f"({prop_string})"
+        else:
+            return f"({self.name} {prop_string})"
 
 
 class GroundedPredicate(Predicate):
@@ -77,11 +80,11 @@ class GroundedPredicate(Predicate):
                     prop_string += " " + val
 
             predicate = f"({self.name} {prop_string.strip()}"
-            predicate = predicate.strip()
-            predicate += ")"
+            predicate = predicate.strip() + ")"
+            fin_predicate = predicate
 
         if self.is_negation:
-            fin_predicate = f"(not ({predicate}))"
+            fin_predicate = f"(not {predicate})"
 
         return fin_predicate
 

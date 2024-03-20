@@ -7,7 +7,7 @@ class Action():
         self.pddl_name = "done"
         # self.conditions = self.get_conditions()
         self.separator = "\n\t\t"
-        self.pddl_action_string = "(:action {NAME}\n\t:parameters ({PARAMETERS})\n\t:precondition (and\n\t\t({PRECONDITIONS})\n\t)\n\t:effect (and\n\t\t({EFFECTS})\n\t)\n)"
+        self.pddl_action_string = "(:action {NAME}\n\t:parameters {PARAMETERS}\n\t:precondition (and\n\t\t{PRECONDITIONS}\n\t)\n\t:effect (and\n\t\t{EFFECTS}\n\t)\n)"
 
     def get_conditions(self):
         conditions = {
@@ -173,14 +173,16 @@ class PickObjectAction(Action):
         preconditions = list()
         for cond in self.true_conditions:
             domain_pred = self.environment.predicates[cond]
-            pred = Predicate(domain_pred.name, [self.objectID])
+            pred = GroundedPredicate(domain_pred.name, domain_pred.properties, self.groundings)
             preconditions.append(pred)
 
         dom_near = self.environment.predicates["near"]
         dom_location = self.environment.predicates["location"]
         dom_holding = self.environment.predicates["holding"]
-        near = GroundedPredicate(dom_near.name, dom_near.properties, self.groundings)
-        location = GroundedPredicate(dom_location.name, dom_location.properties, self.groundings)
+        near = Predicate(dom_near.name, [self.groundings["cell"]])
+        groundings = dict(self.groundings)
+        groundings["cell"] = "?c"
+        location = GroundedPredicate(dom_location.name, dom_location.properties, groundings)
         not_holding = GroundedPredicate(dom_holding.name, dom_holding.properties, self.groundings, False, True)
 
         preconditions.extend([near, location, not_holding])
@@ -404,12 +406,9 @@ class OpenObjectAction(Action):
         dom_opened = self.environment.predicates["opened"]
         near = GroundedPredicate(dom_near.name, dom_near.properties, self.groundings)
         location = GroundedPredicate(dom_location.name, dom_location.properties, self.groundings)
-        print(str(location))
         not_opened = GroundedPredicate(dom_opened.name, dom_opened.properties, self.groundings, False, True)
 
         preconditions.extend([near, location, not_opened])
-
-        print(str([str(p) for p in preconditions]))
 
         return preconditions
 
