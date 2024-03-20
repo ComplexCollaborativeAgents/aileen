@@ -1,0 +1,22 @@
+##!
+# @file
+#
+# @created smohan 20231030
+
+sp {topstate*propose*init-agent
+    (state <s>    ^superstate nil
+                  -^name aileen)
+-->
+    (<s>    ^operator <op> +!)
+    (<op>    ^name initialize-agent)
+    }
+
+sp {topstate*apply*init-agent*name
+    (state <s>    ^superstate nil
+                  ^operator <op>)
+    (<op>    ^name initialize-agent)
+-->
+    (<s>    ^name aileen
+            ^world <w>)
+    (<w>    ^objects <obj>)
+    }

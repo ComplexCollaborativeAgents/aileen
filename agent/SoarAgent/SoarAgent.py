@@ -140,8 +140,17 @@ class SoarAgent(object):
     def get_number_of_commands(self):
         return self._agent.GetNumberCommands()
 
+    def destroy_wme_on_list(self):
+        # logging.debug("[soar_agent] :: wmes to be destroyed {}".format(self._wmes_to_delete))
+        if len(self._wmes_to_delete) > 0:
+            for wme in self._wmes_to_delete:
+                if wme is not None:
+                    # logging.debug("[soar_agent] :: destroying wme {}".format(wme.GetValueAsString()))
+                    self._agent.DestroyWME(wme)
+            self._wmes_to_delete = []
+
     def delete_all_children(self, id):
-        # logging.debug("[input_writer] :: deleting children of {}".format(id.GetValueAsString()))
+        logging.debug("[input_writer] :: deleting children of {}".format(id.GetValueAsString()))
         if id.GetNumberChildren() is not None:
             for i in range(0, id.GetNumberChildren()):
                 child = id.GetChild(i)
@@ -154,7 +163,7 @@ def update(mid, this_agent, agent, message):
     this_agent.stop_agent_if_requested()
     this_agent._output_reader.read_output()
     this_agent._input_writer.generate_input()
-    #this_agent.destroy_wme_on_list()
+    this_agent.destroy_wme_on_list()
 
 
 def find_free_port():
