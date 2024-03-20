@@ -92,20 +92,8 @@ if __name__ == '__main__':
     create_and_run_agent_server(agent)
     logger = logging.getLogger(__name__)
     coloredlogs.install(level='DEBUG', logger=logger)
-<<<<<<< HEAD
-<<<<<<< HEAD
     # initialize(world_server)
     # time.sleep(2.0)
     execute_planning_agent(world_server)
-=======
     while True:
         pass
-    #execute_planning_agent(world_server)
->>>>>>> 138823d2 (added server client integration for the instructor chat window)
-=======
-    while True:
-        pass
-    #execute_planning_agent(world_server)
->>>>>>> main
-    # execute_random_actions(world_server)
-    #execute_keyboard_actions(world_server)

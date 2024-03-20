@@ -481,8 +481,6 @@ class CloseObjectAction(Action):
         interface = super().to_interface()
         interface["objectId"] = self.objectID
         interface["forceAction"] = self.force_action
-
-<<<<<<< HEAD
         return interface
 
 
@@ -504,6 +502,3 @@ class GetInteractablePoses(Action):
         interface["objectId"] = self.objectID
         interface["standings"] = [self.standing]
         return interface
-=======
-        return interface
->>>>>>> 905d08ac (added put and close actions so that a full demonstration can be run)
