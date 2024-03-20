@@ -7,6 +7,7 @@ ROOT_PATH = path.join(path.dirname(path.dirname(path.abspath(__file__))))
 
 ## SOAR
 SOAR_PATH = path.join(OS_ROOT_PATH, 'Library', 'Soar-Release-9.6.2', 'SoarSuite', 'SoarSuite_9.6.2-Multiplatform', 'bin')
+SOAR_DEBUGGER_PATH = path.join(OS_ROOT_PATH, 'Library', 'Soar-Release-9.6.2', 'SoarSuite', 'SoarSuite_9.6.2-Multiplatform', 'bin', 'SoarJavaDebugger.jar')
 SOAR_AGENT_PATH = path.join(ROOT_PATH, 'agent', 'SoarAgent', 'soar', 'load.soar')
 SOAR_AGENT_NAME = 'aileen-elaborate'
 SOAR_DEBUG = True

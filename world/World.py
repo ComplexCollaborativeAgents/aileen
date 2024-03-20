@@ -34,23 +34,23 @@ class World:
         #self.display_frame(self.get_topdown_map_view())
         return event.metadata
 
-    # def display_frame(self, im, wait=None, height=896, title=None):
-    #     def rgb_to_bgr(f):
-    #         return np.stack([f[:, :, 2], f[:, :, 1], f[:, :, 0]], axis=-1).astype(np.uint8)
-    #
-    #     ready_ims = []
-    #
-    #     im = rgb_to_bgr(im)
-    #     im = cv2.resize(
-    #         im,
-    #         (int(round(height * im.shape[1] / im.shape[0])), height),
-    #         interpolation=cv2.INTER_NEAREST,
-    #     )
-    #
-    #     cv2.imshow("Top View", im)
-    #     cv2.setWindowProperty("Top View", cv2.WND_PROP_TOPMOST, 1)
-    #     cv2.setWindowTitle("Top View", title or "view")
-    #     cv2.waitKey(1) & 0xFF == ord('0')
+    def display_frame(self, im, wait=None, height=896, title=None):
+        def rgb_to_bgr(f):
+            return np.stack([f[:, :, 2], f[:, :, 1], f[:, :, 0]], axis=-1).astype(np.uint8)
+
+        ready_ims = []
+
+        im = rgb_to_bgr(im)
+        im = cv2.resize(
+            im,
+            (int(round(height * im.shape[1] / im.shape[0])), height),
+            interpolation=cv2.INTER_NEAREST,
+        )
+
+        cv2.imshow("Top View", im)
+        cv2.setWindowProperty("Top View", cv2.WND_PROP_TOPMOST, 1)
+        cv2.setWindowTitle("Top View", title or "view")
+        cv2.waitKey(1) & 0xFF == ord('0')
 
     def get_topdown_map_view(self):
         """Visualize a top-down map view of the environment

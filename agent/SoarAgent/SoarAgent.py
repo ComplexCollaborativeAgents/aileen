@@ -71,7 +71,8 @@ class SoarAgent(object):
         self._agent.LoadProductions(path)
 
     def run_soar_java_debugger(self):
-        self._agent.SpawnDebugger(self._kernel.GetListenerPort())
+        print(settings.SOAR_DEBUGGER_PATH)
+        self._agent.SpawnDebugger(self._kernel.GetListenerPort(), jarpath=settings.SOAR_DEBUGGER_PATH)
 
     def register_output_callback(self, function, caller_object=None):
         self._agent.RegisterForRunEvent(sml.smlEVENT_AFTER_OUTPUT_PHASE, function, caller_object, True)
