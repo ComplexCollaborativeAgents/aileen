@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soaragent>
+  <startfile path="load.soar" />
+  <members>
+    <member path="" />
+    <member path="initialize-agent" />
+    <member path="elaborations" />
+    <member path="action" />
+    <member path="action/primitive" />
+  </members>
+</soaragent>
+

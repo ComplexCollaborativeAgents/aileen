@@ -1,0 +1,8 @@
+
+source "initialize-agent/load.soar"
+
+source "init-agent.soar"
+
+source "elaborations/load.soar"
+
+source "action/load.soar"

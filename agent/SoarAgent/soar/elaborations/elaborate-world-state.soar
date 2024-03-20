@@ -1,0 +1,83 @@
+##!
+# @file
+#
+# @created smohan 20231030
+
+sp {aileen*elaborate*objects*copy
+    :o-support
+    (state <s>    ^name aileen
+                  ^io.input-link <il>
+                  ^world.objects <wobjs>)
+    (<il>    ^world.objects.object <obj>)
+    (<obj>    ^id <id>)
+   -{(<wobjs>    ^object <wobj>)
+    (<wobj>    ^id <id>)}
+-->
+    (<wobjs>    ^object <obj-new>)
+    (<obj-new>    ^id <id>)
+    }
+
+sp {aileen*elaborate*objects*attributes
+    :o-support
+    (state <s>    ^name aileen
+                  ^io.input-link <il>
+                  ^world.objects.object <wobj>)
+    (<il>    ^world.objects.object <obj>)
+    (<obj>    ^id <id>
+              ^{<attr> <> id <> position <> salient_materials} <val>)
+    (<wobj>    ^id <id>
+               -^<attr> <val>)
+-->
+    (<wobj>    ^<attr> <val>)
+    }
+
+sp {aileen*elaborate*objects*position
+    :o-support
+    (state <s>    ^name aileen
+                  ^world.objects.object <obj>)
+-->
+    (<obj>    ^position <p>)
+    (<p>    ^x 0
+            ^y 0
+            ^z 0)
+    }
+
+sp {aileen*elaborate*objects*position*update
+    :o-support
+    (state <s>    ^name aileen
+                  ^io.input-link <il>
+                  ^world.objects.object <wobj>)
+    (<il>    ^world.objects.object <obj>)
+    (<obj>    ^id <id>
+              ^position <p>)
+    (<wobj>    ^id <id>
+               ^position <wp>)
+    (<wp>    ^x <oldx>
+             ^y <oldy>
+             ^z <oldz>)
+    (<p>     ^x <x>
+             ^y <y>
+             ^z <z>)
+-->
+    (<wp> ^x <oldx> -
+          ^x <x>
+          ^y <oldy> -
+          ^y <y>
+          ^z <oldz> -
+          ^z <z>)
+    }
+
+
+
+sp {aileen*elaborate*objects*remove
+    :o-support
+    (state <s>    ^name aileen
+                  ^io.input-link <il>
+                  ^world.objects <wobjs>)
+    -{(<il>    ^world.objects.object <obj>)
+    (<obj>    ^id <id>)}
+    (<wobjs>    ^object <wobj>)
+    (<wobj>    ^id <id>)
+-->
+    (<wobjs>    ^object  <wobj> -)
+    }
