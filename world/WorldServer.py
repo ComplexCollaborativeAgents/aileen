@@ -23,7 +23,7 @@ class WorldServer:
 
 
         def execute_action(action):
-            self._logger.error("serving action request: {}".format(action))
+            self._logger.info("serving action request: {}".format(action))
             return self._world.execute_action(action)
 
         def get_reachable_positions():
@@ -39,6 +39,13 @@ class WorldServer:
         self._server.register_function(get_reachable_positions, "get_reachable_positions")
         self._server.register_function(get_reachable_positions, "get_recent_event")
 
+        def get_interactable_pose(object_id):
+            self._logger.info("serving get interactable pose request for object {}".format(object_id))
+            return self._world.get_interactable_pose(object_id)
+
+
+        self._server.register_function(execute_action, "execute_action")
+        self._server.register_function(get_interactable_pose, "get_interactable_pose")
 
     def run(self):
         while True:

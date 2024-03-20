@@ -1,4 +1,6 @@
 import logging, coloredlogs
+import random
+
 from ai2thor.controller import Controller
 import cv2
 import numpy as np
@@ -50,7 +52,6 @@ class World:
     #     cv2.setWindowTitle("Top View", title or "view")
     #     cv2.waitKey(1) & 0xFF == ord('0')
 
-
     def get_topdown_map_view(self):
         """Visualize a top-down map view of the environment
         # Parameters
@@ -80,3 +81,10 @@ class World:
             action="GetReachablePositions"
         )
         return positions.metadata["actionReturn"]
+    def get_interactable_pose(self, object_id):
+        command = dict(action="GetInteractablePoses", objectId=object_id, standings=['True'])
+        event = self._controller.step(**command)
+        pose = random.choice(event.metadata['actionReturn'])
+        position = dict(x=pose['x'],y=pose['y'],z=pose['z'])
+        chosen_pose = dict(position=position, rotation=pose['rotation'], horizon=pose['horizon'], standing=pose['standing'])
+        return chosen_pose

@@ -40,9 +40,6 @@ class OutputReader(object):
                 if child.GetValueAsString() == 'pick-up':
                     self._logger.debug('received pick-up')
                     self.process_pickup_command(commandID)
-<<<<<<< HEAD
-
-=======
                 if child.GetValueAsString() == 'open':
                     self._logger.debug('received open')
                     self.process_open_command(commandID)
@@ -52,7 +49,6 @@ class OutputReader(object):
                 if child.GetValueAsString() == 'put':
                     self._logger.debug('received open')
                     self.process_put_command(commandID)
->>>>>>> 905d08ac (added put and close actions so that a full demonstration can be run)
 
     def process_goto_command(self, commandID):
         for i in range(0, commandID.GetNumberChildren()):
@@ -68,6 +64,13 @@ class OutputReader(object):
                                 _rotation=possible_pose['rotation'],
                                 _horizon=possible_pose['horizon'],
                                 _standing=possible_pose['standing']).to_interface()
+        oid = child.GetValueAsString()
+        pose = self._world_server.get_interactable_pose(oid)
+        self._logger.info("received pose: {}".format(pose))
+        action = actions.TeleportAction(_position=pose['position'],
+                                        _rotation=pose['rotation'],
+                                        _horizon=pose['horizon'],
+                                        _standing=pose['horizon']).to_interface()
         self._world_server.execute_action(action)
         commandID.AddStatusComplete()
 
@@ -78,6 +81,17 @@ class OutputReader(object):
                 id = child.GetValueAsString()
         action = actions.PickObjectAction(_objectID=id).to_interface()
         self._logger.debug('requesting {}'.format(action))
+        self._logger.info('requesting {}'.format(action))
+        self._world_server.execute_action(action)
+        commandID.AddStatusComplete()
+
+    def process_open_command(self, commandID):
+        for i in range(0, commandID.GetNumberChildren()):
+            child = commandID.GetChild(i)
+            if child.GetAttribute() == 'id':
+                id = child.GetValueAsString()
+        action = actions.OpenObjectAction(_objectID=id).to_interface()
+        self._logger.info('requesting {}'.format(action))
         self._world_server.execute_action(action)
         commandID.AddStatusComplete()
 
