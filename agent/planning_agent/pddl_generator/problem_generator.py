@@ -9,12 +9,13 @@ class PDDLProblemGenerator(BaseGenerator):
         self.domain_name = name[1] # at 0th index there is problem name and 1st index position we have domain name
         self.environment = EnvironmentState()
         self.robot_name = "thor"
+        self.prune_objects = True
 
 
-    def generate(self, world_server, _current_state, goal_condition):
+    def generate(self, world_server, _current_state, goal_condition, required_objects = list()):
         self.parser = ThorStateParser(world_server)
         problem = PDDLProblem(self.name, self.domain_name)
-        self.objects = self.get_objects(_current_state)
+        self.objects = self.get_objects(_current_state, required_objects)
         self.initial_state = self.get_initial_state(_current_state)
 
         problem.set_objects(self.objects)
@@ -35,8 +36,24 @@ class PDDLProblemGenerator(BaseGenerator):
 
         return initial_state
 
-    def get_objects(self, _current_state):
-        obj_ids = self.parser.get_object_ids(_current_state)
+    def get_objects(self, _current_state, _required_objects: List):
+        obj_ids = list()
+        types_added = set()
+        if self.prune_objects and len(_required_objects) > 0:
+            objects = self.parser.get_object_ids_by_type(_current_state)
+
+            for _type in objects.keys():
+                for r_obj in _required_objects:
+                    if _type in r_obj.lower() and _type not in types_added:
+                        obj_ids.extend(objects[_type])
+                        types_added.add(_type)
+
+        else:
+            obj_ids = self.parser.get_object_ids(_current_state)
+            self.prune_objects
+
+        self.obj_ids = obj_ids
+
         cells = list()
 
         for obj_id in obj_ids:
@@ -57,10 +74,23 @@ class PDDLProblemGenerator(BaseGenerator):
 
         return predicates
 
+    def prune_list_objects(self, all_objects):
+        objects = list()
+        all_objects = set(all_objects)
+        if self.prune_objects:
+            for obj_id in self.obj_ids:
+                if obj_id in all_objects:
+                    objects.append(obj_id)
+        else:
+            objects = all_objects
+
+        return objects
+
 
     def get_movable_objects(self, _current_state):
         predicates = list()
-        objs = self.parser.get_moveable_object_ids(_current_state)
+        all_objs = self.parser.get_moveable_object_ids(_current_state)
+        objs = self.prune_list_objects(all_objs)
 
         for obj_id in objs:
             domain_pred = self.environment.predicates["moveable"]
@@ -72,7 +102,8 @@ class PDDLProblemGenerator(BaseGenerator):
 
     def get_openable_objects(self, _current_state):
         predicates = list()
-        objs = self.parser.get_openable_object_ids(_current_state)
+        all_objs = self.parser.get_openable_object_ids(_current_state)
+        objs = self.prune_list_objects(all_objs)
 
         for obj_id in objs:
             domain_pred = self.environment.predicates["openable"]
@@ -84,7 +115,8 @@ class PDDLProblemGenerator(BaseGenerator):
 
     def get_pickable_objects(self, _current_state):
         predicates = list()
-        objs = self.parser.get_pickable_object_ids(_current_state)
+        all_objs = self.parser.get_pickable_object_ids(_current_state)
+        objs = self.prune_list_objects(all_objs)
 
         for obj_id in objs:
             domain_pred = self.environment.predicates["pickable"]
@@ -96,7 +128,8 @@ class PDDLProblemGenerator(BaseGenerator):
 
     def get_receptacle_objects(self, _current_state):
         predicates = list()
-        objs = self.parser.get_receptacle_object_ids(_current_state)
+        all_objs = self.parser.get_receptacle_object_ids(_current_state)
+        objs = self.prune_list_objects(all_objs)
 
         for obj_id in objs:
             domain_pred = self.environment.predicates["receptacle"]
@@ -120,9 +153,10 @@ class PDDLProblemGenerator(BaseGenerator):
         preds = list()
         reachability_preds = list()
         for cell in self.objects["cell"]:
-            domain_location = self.environment.predicates["location"]
-            location_pred = GroundedPredicate(domain_location.name, domain_location.properties, {"cell": cell, "interactable": cell.split("_")[1]})
-            preds.append(location_pred)
+            if self.robot_name not in cell:
+                domain_location = self.environment.predicates["location"]
+                location_pred = GroundedPredicate(domain_location.name, domain_location.properties, {"cell": cell, "interactable": cell.split("_")[1]})
+                preds.append(location_pred)
 
             domain_reachability = self.environment.predicates["reachable"]
             reachable_pred = GroundedPredicate(domain_reachability.name, domain_reachability.properties, {"cell": cell})

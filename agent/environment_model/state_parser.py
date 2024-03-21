@@ -37,7 +37,7 @@ class ThorStateParser:
         obj_ids_type = dict()
 
         for obj in objects:
-            _type = obj["objectType"]
+            _type = obj["objectType"].lower()
             if _type not in obj_ids_type:
                 obj_ids_type[_type] = list()
 

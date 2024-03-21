@@ -3,6 +3,7 @@ from agent.environment_model.actions import *
 from agent.planning_agent.pddl_generator.domain_generator import PDDLDomainGenerator
 from agent.planning_agent.pddl_generator.problem_generator import PDDLProblemGenerator
 from agent.capabilities.llm_translator.translate import convert_nl_to_pddl
+from agent.planning_agent.nyx import nyx
 import time
 
 class PlanningAgent(Agent):
@@ -51,9 +52,32 @@ class PlanningAgent(Agent):
     def plan(self, world, current_state, goal_condition: str = ""):
         domain_path = "agent/planning_agent/domain/temp_domain.pddl"
         problem_path = "agent/planning_agent/domain/temp_problem.pddl"
+        plan_file_path = "agent/planning_agent/domain/plans/plan1_temp_problem.pddl"
         domain_name = "ai_thor"
+        object_types = ["bread", "fridge"]
         domain_generator = PDDLDomainGenerator(domain_path, domain_name)
-        domain = domain_generator.generate(world, current_state)
+        domain = domain_generator.generate(world, current_state, object_types)
 
         problem_generator = PDDLProblemGenerator(problem_path, ["bread_in_refigerator", domain_name])
-        problem = problem_generator.generate(world, current_state, goal_condition)
+        problem = problem_generator.generate(world, current_state, goal_condition, object_types)
+
+        nyx.runner(domain_generator.path, problem_generator.path, ['-vv'])
+        plan = self.extract_verbose_plan(plan_file_path)
+
+        print(plan)
+
+
+    def extract_verbose_plan(self, plan_file):
+        output = open(plan_file).readlines()
+
+        plan = list()
+        for line in output:
+            line = line.strip()
+            if line[-2:] == "]]":
+                continue
+            elif line[-1] == "]":
+                arr = line.split("\t")
+                action = arr[-2]
+                plan.append(action)
+
+        return plan

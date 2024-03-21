@@ -110,7 +110,7 @@ class PDDLDomain:
 
 
 class PDDLProblem():
-    TEMPLATE = "(define (problem {PROBLEM_NAME})\n(domain {DOMAIN_NAME})\n(:objects\n{OBJECTS})\n(:init\n{INITIAL_STATE})\n(:goal (and\n{GOAL_CONDITION}\n)\n)\n)"
+    TEMPLATE = "(define (problem {PROBLEM_NAME})\n(:domain {DOMAIN_NAME})\n\n(:objects{OBJECTS}\n)\n\n(:init\n\t{INITIAL_STATE}\n)\n\n(:goal (and\n\t\t{GOAL_CONDITION}\n\t)\n)\n)"
 
 
     def __init__(self, problem_name:str, domain_name:str):
