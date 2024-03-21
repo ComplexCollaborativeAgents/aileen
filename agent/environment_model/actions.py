@@ -91,40 +91,46 @@ class TeleportAction(Action):
             pred = Predicate(domain_pred.name, ["to"])
             preconditions.append(pred)
 
-        dom_cell_x = self.environment.functions["cell_x"]
-        dom_cell_y = self.environment.functions["cell_y"]
-        dom_robot_x = self.environment.functions["robot_x"]
-        dom_robot_y = self.environment.functions["robot_y"]
-        cell_x_from = Predicate(dom_cell_x.name, ["from"])
-        cell_y_from = Predicate(dom_cell_y.name, ["from"])
+        dom_robot = self.environment.predicates["robot"]
+        #dom_cell_x = self.environment.functions["cell_x"]
+        #dom_cell_y = self.environment.functions["cell_y"]
+        #dom_robot_x = self.environment.functions["robot_x"]
+        #dom_robot_y = self.environment.functions["robot_y"]
+        #cell_x_from = Predicate(dom_cell_x.name, ["from"])
+        #cell_y_from = Predicate(dom_cell_y.name, ["from"])
 
-        robot_cell_x_from = GroundedPredicate(dom_robot_x.name, [], {dom_robot_x.name: cell_x_from}, True, False, "=")
-        robot_cell_y_from = GroundedPredicate(dom_robot_y.name, [], {dom_robot_y.name: cell_y_from}, True, False, "=")
+        robot_from = Predicate(dom_robot.name, ["from"])
+        # robot_cell_y_from = GroundedPredicate(dom_robot_y.name, [], {dom_robot_y.name: cell_y_from}, True, False, "=")
 
-        preconditions.extend([robot_cell_x_from, robot_cell_y_from])
+        preconditions.extend([robot_from])
 
         return preconditions
 
 
     def get_pddl_effects(self):
-        dom_cell_x = self.environment.functions["cell_x"]
-        dom_cell_y = self.environment.functions["cell_y"]
-        dom_robot_x = self.environment.functions["robot_x"]
-        dom_robot_y = self.environment.functions["robot_y"]
-        dom_prev_robot_x = self.environment.functions["prev_robot_x"]
-        dom_prev_robot_y = self.environment.functions["prev_robot_y"]
+        dom_robot = self.environment.predicates["robot"]
+        robot_to = Predicate(dom_robot.name, ["to"])
+        robot_not_from = Predicate(dom_robot.name, ["from"], True)
 
-        cell_x_from = Predicate(dom_cell_x.name, ["from"])
-        cell_y_from = Predicate(dom_cell_y.name, ["from"])
-        cell_x_to = Predicate(dom_cell_x.name, ["to"])
-        cell_y_to = Predicate(dom_cell_y.name, ["to"])
+        #dom_cell_x = self.environment.functions["cell_x"]
+        #dom_cell_y = self.environment.functions["cell_y"]
+        #dom_robot_x = self.environment.functions["robot_x"]
+        #dom_robot_y = self.environment.functions["robot_y"]
+        #dom_prev_robot_x = self.environment.functions["prev_robot_x"]
+        #dom_prev_robot_y = self.environment.functions["prev_robot_y"]
 
-        robot_cell_x_to = GroundedPredicate(dom_robot_x.name, [], {dom_robot_x.name: cell_x_to}, True, False, "assign")
-        robot_cell_y_to = GroundedPredicate(dom_robot_y.name, [], {dom_robot_y.name: cell_y_to}, True, False, "assign")
-        prev_robot_cell_x_from = GroundedPredicate(dom_prev_robot_x.name, [], {dom_prev_robot_x.name: cell_x_from}, True, False, "assign")
-        prev_robot_cell_y_from = GroundedPredicate(dom_prev_robot_y.name, [], {dom_prev_robot_y.name: cell_y_from}, True, False, "assign")
+        #cell_x_from = Predicate(dom_cell_x.name, ["from"])
+        #cell_y_from = Predicate(dom_cell_y.name, ["from"])
+        #cell_x_to = Predicate(dom_cell_x.name, ["to"])
+        #cell_y_to = Predicate(dom_cell_y.name, ["to"])
 
-        return [prev_robot_cell_x_from, prev_robot_cell_y_from, robot_cell_x_to, robot_cell_y_to]
+        #robot_cell_x_to = GroundedPredicate(dom_robot_x.name, [], {dom_robot_x.name: cell_x_to}, True, False, "assign")
+        #robot_cell_y_to = GroundedPredicate(dom_robot_y.name, [], {dom_robot_y.name: cell_y_to}, True, False, "assign")
+        #prev_robot_cell_x_from = GroundedPredicate(dom_prev_robot_x.name, [], {dom_prev_robot_x.name: cell_x_from}, True, False, "assign")
+        #prev_robot_cell_y_from = GroundedPredicate(dom_prev_robot_y.name, [], {dom_prev_robot_y.name: cell_y_from}, True, False, "assign")
+
+        #return [prev_robot_cell_x_from, prev_robot_cell_y_from, robot_cell_x_to, robot_cell_y_to]
+        return [robot_to, robot_not_from]
 
 
     def set_action_parameters(self, _position, _rotation, _horizon=0, _standing=True):
@@ -176,34 +182,38 @@ class PickObjectAction(Action):
             pred = GroundedPredicate(domain_pred.name, domain_pred.properties, self.groundings)
             preconditions.append(pred)
 
-        dom_near = self.environment.predicates["near"]
+        #dom_near = self.environment.predicates["near"]
+        dom_robot = self.environment.predicates["robot"]
         dom_location = self.environment.predicates["location"]
         dom_holding = self.environment.predicates["holding"]
-        near = Predicate(dom_near.name, [self.groundings["cell"]])
+        #near = Predicate(dom_near.name, [self.groundings["cell"]])
         groundings = dict(self.groundings)
         groundings["cell"] = "?c"
+        robot_location = Predicate(dom_robot.name, [self.groundings["cell"]])
         location = GroundedPredicate(dom_location.name, dom_location.properties, groundings)
         not_holding = GroundedPredicate(dom_holding.name, dom_holding.properties, self.groundings, False, True)
 
-        preconditions.extend([near, location, not_holding])
+        preconditions.extend([robot_location, location, not_holding])
 
         return preconditions
 
     def get_pddl_effects(self):
         dom_holding = self.environment.predicates["holding"]
         dom_location = self.environment.predicates["location"]
-        dom_location_x = self.environment.functions["location_x"]
-        dom_location_y = self.environment.functions["location_y"]
-        dom_robot_x = self.environment.functions["robot_x"]
-        dom_robot_y = self.environment.functions["robot_y"]
+        #dom_location_x = self.environment.functions["location_x"]
+        #dom_location_y = self.environment.functions["location_y"]
+        #dom_robot_x = self.environment.functions["robot_x"]
+        #dom_robot_y = self.environment.functions["robot_y"]
         holding = GroundedPredicate(dom_holding.name, dom_holding.properties, self.groundings, False, False)
-        not_location = GroundedPredicate(dom_holding.name, dom_holding.properties, self.groundings, False, True)
-        self.groundings[dom_location_x.name] =  dom_robot_x.get_predicate()
-        self.groundings[dom_location_y.name] =  dom_robot_y.get_predicate()
-        location_x = GroundedPredicate(dom_location_x.name, dom_location_x.properties, self.groundings)
-        location_y = GroundedPredicate(dom_location_y.name, dom_location_y.properties, self.groundings)
+        groundings = dict(self.groundings)
+        groundings["cell"] = "?c"
+        not_location = GroundedPredicate(dom_location.name, dom_location.properties, groundings, False, True)
+        #self.groundings[dom_location_x.name] =  dom_robot_x.get_predicate()
+        #self.groundings[dom_location_y.name] =  dom_robot_y.get_predicate()
+        #location_x = GroundedPredicate(dom_location_x.name, dom_location_x.properties, self.groundings)
+        #location_y = GroundedPredicate(dom_location_y.name, dom_location_y.properties, self.groundings)
 
-        return [holding, not_location, location_x, location_y]
+        return [holding, not_location]
 
 
     def to_interface(self):
@@ -236,8 +246,10 @@ class PutObjectAction(Action):
 
 
     def get_action_parameters(self):
-        self.groundings = {"cell": "c", "interactable": self.objectID}
-        parameters = DomainPredicate("", ["cell"], self.groundings)
+        self.groundings = {"cell": "?c", "interactable": self.objectID}
+        groundings = dict(self.groundings)
+        groundings["cell"] = "c"
+        parameters = DomainPredicate("", ["cell"], groundings)
 
         return parameters
 
@@ -249,32 +261,34 @@ class PutObjectAction(Action):
             pred = Predicate(domain_pred.name, [self.objectID])
             preconditions.append(pred)
 
-        dom_near = self.environment.predicates["near"]
+        #dom_near = self.environment.predicates["near"]
+        dom_robot = self.environment.predicates["robot"]
         dom_location = self.environment.predicates["location"]
         dom_holding = self.environment.predicates["holding"]
-        near = GroundedPredicate(dom_near.name, dom_near.properties, self.groundings)
-        location = GroundedPredicate(dom_location.name, dom_location.properties, self.groundings)
-        not_holding = GroundedPredicate(dom_holding.name, dom_holding.properties, self.groundings, False, True)
+        #near = GroundedPredicate(dom_near.name, dom_near.properties, self.groundings)
+        robot_location = Predicate(dom_robot.name, ["c"])
+        not_location = GroundedPredicate(dom_location.name, dom_location.properties, self.groundings, False, True)
+        holding = GroundedPredicate(dom_holding.name, dom_holding.properties, self.groundings, False, False)
 
-        preconditions.extend([near, location, not_holding])
+        preconditions.extend([robot_location, not_location, holding])
 
         return preconditions
 
     def get_pddl_effects(self):
         dom_holding = self.environment.predicates["holding"]
         dom_location = self.environment.predicates["location"]
-        dom_location_x = self.environment.functions["location_x"]
-        dom_location_y = self.environment.functions["location_y"]
-        dom_robot_x = self.environment.functions["robot_x"]
-        dom_robot_y = self.environment.functions["robot_y"]
-        holding = GroundedPredicate(dom_holding.name, dom_holding.properties, self.groundings, False, False)
-        not_location = GroundedPredicate(dom_holding.name, dom_holding.properties, self.groundings, False, True)
-        self.groundings[dom_location_x.name] = dom_robot_x.get_predicate()
-        self.groundings[dom_location_y.name] = dom_robot_y.get_predicate()
-        location_x = GroundedPredicate(dom_location_x.name, dom_location_x.properties, self.groundings)
-        location_y = GroundedPredicate(dom_location_y.name, dom_location_y.properties, self.groundings)
+        #dom_location_x = self.environment.functions["location_x"]
+        #dom_location_y = self.environment.functions["location_y"]
+        #dom_robot_x = self.environment.functions["robot_x"]
+        #dom_robot_y = self.environment.functions["robot_y"]
+        not_holding = GroundedPredicate(dom_holding.name, dom_holding.properties, self.groundings, False, True)
+        location = GroundedPredicate(dom_location.name, dom_location.properties, self.groundings, False, False)
+        #self.groundings[dom_location_x.name] = dom_robot_x.get_predicate()
+        #self.groundings[dom_location_y.name] = dom_robot_y.get_predicate()
+        #location_x = GroundedPredicate(dom_location_x.name, dom_location_x.properties, self.groundings)
+        #location_y = GroundedPredicate(dom_location_y.name, dom_location_y.properties, self.groundings)
 
-        return [holding, not_location, location_x, location_y]
+        return [not_holding, location]
 
 
     def to_interface(self):
@@ -301,17 +315,32 @@ class PutInsideObjectAction(PutObjectAction):
         self.objectID2 = _object1
 
     def get_action_parameters(self):
-        self.groundings = {"cell": "c", "interactable": ["p", self.objectID]}
+        self.groundings = {"cell": "?c", "interactable": "?p"}
         parameters = DomainPredicate("", ["interactable", "cell"], {"interactable": "p", "cell": "c"})
+
+        return parameters
 
 
     def get_pddl_preconditions(self):
-        preconditions = super().get_pddl_preconditions()
+        self.get_conditions()
+        preconditions = list()
+        for cond in self.true_conditions:
+            domain_pred = self.environment.predicates[cond]
+            pred = Predicate(domain_pred.name, [self.objectID])
+            preconditions.append(pred)
+
+        dom_robot = self.environment.predicates["robot"]
+        dom_location = self.environment.predicates["location"]
+        dom_holding = self.environment.predicates["holding"]
+        robot_location = Predicate(dom_robot.name, ["c"])
+        not_location = GroundedPredicate(dom_location.name, dom_location.properties, self.groundings, False, True)
+        holding = GroundedPredicate(dom_holding.name, dom_holding.properties, self.groundings, False, False)
+
         dom_opened = self.environment.predicates["opened"]
         grounding = {"cell": "c", "interactable": self.objectID}
         opened = GroundedPredicate(dom_opened.name, dom_opened.properties, grounding, False, False)
-        preconditions.append(opened)
 
+        preconditions.extend([robot_location, not_location, holding, opened])
         return preconditions
 
 
@@ -319,7 +348,7 @@ class PutInsideObjectAction(PutObjectAction):
         effects = super().get_pddl_effects()
 
         dom_in = self.environment.predicates["in"]
-        grounding = {"interactable": ["p", self.objectID]}
+        grounding = {"interactable": [self.objectID, "?p"]}
         _in = GroundedPredicate(dom_in.name, dom_in.properties, grounding, False, False)
         effects.append(_in)
 
@@ -341,13 +370,15 @@ class PutOnObjectAction(PutObjectAction):
         self.objectID2 = _object1
 
     def get_action_parameters(self):
-        self.groundings = {"cell": "c", "interactable": ["p", self.objectID]}
+        self.groundings = {"cell": "?c", "interactable": "?p"}
         parameters = DomainPredicate("", ["interactable", "cell"], {"interactable": "p", "cell": "c"})
+
+        return parameters
 
 
     def get_pddl_preconditions(self):
         preconditions = super().get_pddl_preconditions()
-        dom_opened = self.environment.predicates["opened"]
+        dom_opened = self.environment.predicates["clear"]
         grounding = {"cell": "c", "interactable": self.objectID}
         opened = GroundedPredicate(dom_opened.name, dom_opened.properties, grounding, False, False)
         preconditions.append(opened)
@@ -388,8 +419,10 @@ class OpenObjectAction(Action):
 
 
     def get_action_parameters(self):
-        self.groundings = {"cell": "c", "interactable": self.objectID}
-        parameters = DomainPredicate("", ["cell"], self.groundings)
+        self.groundings = {"cell": "?c", "interactable": self.objectID}
+        groundings = dict(self.groundings)
+        groundings["cell"] = "c"
+        parameters = DomainPredicate("", ["cell"], groundings)
 
         return parameters
 
@@ -401,14 +434,16 @@ class OpenObjectAction(Action):
             pred = GroundedPredicate(domain_pred.name, domain_pred.properties, self.groundings)
             preconditions.append(pred)
 
-        dom_near = self.environment.predicates["near"]
+        dom_robot = self.environment.predicates["robot"]
+        #dom_near = self.environment.predicates["near"]
         dom_location = self.environment.predicates["location"]
         dom_opened = self.environment.predicates["opened"]
-        near = GroundedPredicate(dom_near.name, dom_near.properties, self.groundings)
+        robot_location = Predicate(dom_robot.name, ["c"])
+        #near = GroundedPredicate(dom_near.name, dom_near.properties, self.groundings)
         location = GroundedPredicate(dom_location.name, dom_location.properties, self.groundings)
         not_opened = GroundedPredicate(dom_opened.name, dom_opened.properties, self.groundings, False, True)
 
-        preconditions.extend([near, location, not_opened])
+        preconditions.extend([robot_location, location, not_opened])
 
         return preconditions
 
@@ -446,8 +481,10 @@ class CloseObjectAction(Action):
         self.force_action = _force_action
 
     def get_action_parameters(self):
-        self.groundings = {"cell": "c", "interactable": self.objectID}
-        parameters = DomainPredicate("", ["cell"], self.groundings)
+        self.groundings = {"cell": "?c", "interactable": self.objectID}
+        groundings = dict(self.groundings)
+        groundings["cell"] = "c"
+        parameters = DomainPredicate("", ["cell"], groundings)
 
         return parameters
 
@@ -459,14 +496,16 @@ class CloseObjectAction(Action):
             pred = GroundedPredicate(domain_pred.name, domain_pred.properties, self.groundings)
             preconditions.append(pred)
 
-        dom_near = self.environment.predicates["near"]
+        dom_robot = self.environment.predicates["robot"]
+        #dom_near = self.environment.predicates["near"]
         dom_location = self.environment.predicates["location"]
         dom_opened = self.environment.predicates["opened"]
-        near = GroundedPredicate(dom_near.name, dom_near.properties, self.groundings)
+        robot_location = Predicate(dom_robot.name, ["c"])
+        #near = GroundedPredicate(dom_near.name, dom_near.properties, self.groundings)
         location = GroundedPredicate(dom_location.name, dom_location.properties, self.groundings)
         opened = GroundedPredicate(dom_opened.name, dom_opened.properties, self.groundings, False, False)
 
-        preconditions.extend([near, location, opened])
+        preconditions.extend([robot_location, location, opened])
 
         return preconditions
 
