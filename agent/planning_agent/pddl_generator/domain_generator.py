@@ -1,6 +1,6 @@
 from agent.planning_agent.pddl_generator.base_generator import BaseGenerator, PDDLDomain
 from agent.environment_model.actions import TeleportAction, PickObjectAction, PutObjectAction, PutInsideObjectAction, OpenObjectAction, CloseObjectAction
-from agent.environment_model.events import NearEvent, RemoveNearEvent
+#from agent.environment_model.events import NearEvent, RemoveNearEvent
 from agent.environment_model.state_definition import EnvironmentState
 from agent.environment_model.state_parser import ThorStateParser
 
@@ -122,12 +122,12 @@ class PDDLDomainGenerator(BaseGenerator):
         return actions
 
 
-    def create_near_event(self):
-        event = NearEvent()
-        return [event]
-
-
-    def create_remove_near_event(self):
-        event = RemoveNearEvent()
-        return [event]
+    # def create_near_event(self):
+    #     event = NearEvent()
+    #     return [event]
+    #
+    #
+    # def create_remove_near_event(self):
+    #     event = RemoveNearEvent()
+    #     return [event]
 
