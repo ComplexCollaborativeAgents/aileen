@@ -6,6 +6,7 @@
     <member path="initialize-agent" />
     <member path="elaborations" />
     <member path="action" />
+    <member path="action/primitive" />
     <member path="action/primitive/goto.soar" />
     <member path="action/primitive/load.soar" />
     <member path="action/primitive/pickup.soar" />

@@ -54,7 +54,17 @@ class OutputReader(object):
         for i in range(0, commandID.GetNumberChildren()):
             child = commandID.GetChild(i)
             if child.GetAttribute() == 'id':
-                oid = child.GetValueAsString()
+                id = child.GetValueAsString()
+        action_def = actions.GetInteractablePoses(_objectID=id).to_interface()
+        self._logger.debug('requesting {}'.format(action_def))
+        metadata = self._world_server.execute_action(action_def)
+        possible_pose = random.choice(metadata['actionReturn'])
+        position = dict(x=possible_pose['x'],y=possible_pose['y'],z=possible_pose['z'])
+        action = actions.TeleportAction(_position=position,
+                                _rotation=possible_pose['rotation'],
+                                _horizon=possible_pose['horizon'],
+                                _standing=possible_pose['standing']).to_interface()
+        oid = child.GetValueAsString()
         pose = self._world_server.get_interactable_pose(oid)
         self._logger.info("received pose: {}".format(pose))
         action = actions.TeleportAction(_position=pose['position'],
@@ -70,6 +80,7 @@ class OutputReader(object):
             if child.GetAttribute() == 'id':
                 id = child.GetValueAsString()
         action = actions.PickObjectAction(_objectID=id).to_interface()
+        self._logger.debug('requesting {}'.format(action))
         self._logger.info('requesting {}'.format(action))
         self._world_server.execute_action(action)
         commandID.AddStatusComplete()

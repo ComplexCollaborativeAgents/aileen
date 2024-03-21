@@ -195,16 +195,31 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
+<<<<<<< HEAD
+.*.*.sw* # vim files removed
+
+=======
 # End of https://www.gitignore.io/api/python,pycharm+all
+>>>>>>> main
 *.jpg
 *.mov
 *.png
 *.idea/*
 /.metadata/
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> main
 .jpg
 .mov
 .png
 
 .*.*.sw* # vim files removed
 *__pycache__*
+<<<<<<< HEAD
 *.metadata/*
+>>>>>>> 138823d2 (added server client integration for the instructor chat window)
+=======
+*.metadata/*
+>>>>>>> main
