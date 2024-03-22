@@ -33,6 +33,7 @@ def create_and_run_agent_server(agent):
 
 def execute_planning_agent(world_server):
     agent = PlanningAgent(world_server)
+<<<<<<< HEAD
     action = None
     event = initialize(world_server)
     while True:
@@ -42,6 +43,18 @@ def execute_planning_agent(world_server):
         event = world_server.execute_action(action)
         print(event["agent"])
         print(event["errorMessage"])
+=======
+    agent.run()
+    action = None
+    # event = initialize(world_server)
+    # while True:
+    #     action = agent.get_next_action(world_server, event, goal)
+    #     if action is None:
+    #         break
+    #     event = world_server.execute_action(action)
+    #     print(event["agent"])
+    #     print(event["errorMessage"])
+>>>>>>> 573edea8 (added code to integrated with the NL interface)
 
 
 def execute_random_actions(world_server):
@@ -82,10 +95,8 @@ def execute_keyboard_actions(world_server):
 
 if __name__ == '__main__':
     world_server = create_connection_with_world()
-    agent = Agent()
+    agent = PlanningAgent(world_server)
     create_and_run_agent_server(agent)
     logger = logging.getLogger(__name__)
     coloredlogs.install(level='DEBUG', logger=logger)
-    while True:
-        pass
-    execute_planning_agent(world_server)
+    agent.run()

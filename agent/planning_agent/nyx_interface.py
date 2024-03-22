@@ -10,12 +10,18 @@ import time
 
 
 class PlanningAgent(Agent):
-    def __init__(self, server):
+
+    def __init__(self, world_server):
         super().__init__()
+        self._current_state = dict()
         self.current_plan = list()
         self.has_planned = False
-        self.server = server
+        self.server = self._world = world_server
         self.reachable_positions = self.server.get_reachable_positions()
+        self._goal = None
+        self._world = world_server
+        self._logger = logging.getLogger(__name__)
+        coloredlogs.install(level='DEBUG', logger=self._logger)
 
     def get_next_action(self, current_state = None, goal_condition: str = ""):
         can_plan = True
@@ -147,3 +153,66 @@ class PlanningAgent(Agent):
         param_obj = action.split(" ")[1]
 
         return self.get_grounded_obj_id(param_obj)
+
+    def set_goal(self, goal):
+        self._goal = goal
+
+    def run(self):
+        self._current_state = self._world.execute_action({"action": 'Done'})
+        while not self._goal:
+            self._current_state = self._world.execute_action({"action": 'Done'})
+            #print('running')
+            pass
+
+        while self._goal:
+            self._logger.debug("Assigned a goal; planning")
+            self._current_state = self._world.execute_action({"action": 'Done'})
+            action = self.get_next_action(self._world, event, self._goal)
+            if action is None:
+                break
+            event = self._world.execute_action(action)
+            print(event["agent"])
+            print(event["errorMessage"])
+
+    def process_utterance(self, utterance):
+        json_utterance = super().process_utterance(utterance)
+        print(json_utterance)
+        if json_utterance['INTENT'] == 'request':
+            goal = self.ground_utterance(json_utterance)
+            self._logger.debug('generated goal: {}'.format(goal))
+            self.set_goal(goal)
+
+    def ground_utterance(self, json_utterance):
+        for key in json_utterance:
+            if key != 'INTENT':
+                action = json_utterance[key]
+
+        grounded_objects = {}
+        grounded_relations = {}
+        type = action['TYPE']
+        for key in action:
+            if 'obj' in key:
+                grounded_objects[key] = self.ground_object(action[key])
+        for key in action:
+            if 'rel' in key:
+                grounded_relations[key] = self.ground_relation(action[key], grounded_objects)
+
+        return grounded_relations['rel:0']
+
+
+
+    def ground_object(self, obj_json):
+        self._logger.debug("grounding object: {}".format(obj_json))
+        for obj_instance in self._current_state["objects"]:
+            if obj_instance['objectType'].lower() == obj_json['TYPE'].lower():
+                self._logger.debug("found object instance: {}".format(obj_instance['objectId']))
+                return obj_instance['objectId']
+
+
+
+    def ground_relation(self, rel_json, grounded_objects):
+        self._logger.debug("grounding relation: {}".format(rel_json))
+        rel_instance = "({} {} {})".format(rel_json['TYPE'],
+                                           grounded_objects[rel_json['ARG1']],
+                                           grounded_objects[rel_json['ARG2']])
+        return rel_instance
