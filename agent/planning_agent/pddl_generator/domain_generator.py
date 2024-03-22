@@ -157,7 +157,6 @@ class PDDLDomainGenerator(BaseGenerator):
 
         return actions
 
-
     #def create_near_event(self):
     #    event = NearEvent()
     #    return [event]
@@ -166,4 +165,5 @@ class PDDLDomainGenerator(BaseGenerator):
     #def create_remove_near_event(self):
     #    event = RemoveNearEvent()
     #    return [event]
+
 
