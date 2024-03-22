@@ -34,6 +34,10 @@ class WorldServer:
             event = self._world.get_recent_event()
             return event
 
+        def get_interactable_pose(object_id):
+            event = self._world.get_interactable_pose(object_id)
+            return event
+
 
         self._server.register_function(execute_action, "execute_action")
         self._server.register_function(get_reachable_positions, "get_reachable_positions")
