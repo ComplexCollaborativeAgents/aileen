@@ -1,15 +1,8 @@
 import time
-
-<<<<<<< HEAD
 from agent.planning_agent.nyx_interface import PlanningAgent
-=======
-from agent.planning_agent.nyx_agent import PlanningAgent
 from agent import BaseAgent
 from AgentServer import AgentServer
-<<<<<<< HEAD
->>>>>>> 138823d2 (added server client integration for the instructor chat window)
-=======
->>>>>>> 138823d2 (added server client integration for the instructor chat window)
+
 from world.WorldServer import WorldServer
 from BaseAgent import *
 import settings
