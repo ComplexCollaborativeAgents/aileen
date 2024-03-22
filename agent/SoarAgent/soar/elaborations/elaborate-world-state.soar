@@ -97,6 +97,7 @@ sp {aileen*elaborate*objects*remove
     (<wobjs>    ^object  <wobj> -)
     }
 
+
 sp {aileen*elaborate*holding
     (state <s>    ^name aileen
                   ^world.objects.object <obj>)

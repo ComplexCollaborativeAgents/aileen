@@ -2,6 +2,7 @@ import logging, coloredlogs
 from agent.environment_model import actions
 import random
 
+
 class OutputReader(object):
     def __init__(self, world_server, soar_agent):
         self._world_server = world_server
@@ -18,7 +19,6 @@ class OutputReader(object):
             if commandName == 'action':
                 self.process_action_description(commandID)
                 pass
-
             if commandName == 'language':
                 self.process_language_command(commandID)
 
@@ -31,6 +31,7 @@ class OutputReader(object):
         for i in range(0, commandID.GetNumberChildren()):
             child = commandID.GetChild(i)
             if child.GetAttribute() == 'name':
+
                 # if child.GetValueAsString() == 'teleport':
                 #     self._logger.debug('received teleport command')
                 #     self.process_teleport_command(commandID)
@@ -40,9 +41,6 @@ class OutputReader(object):
                 if child.GetValueAsString() == 'pick-up':
                     self._logger.debug('received pick-up')
                     self.process_pickup_command(commandID)
-<<<<<<< HEAD
-
-=======
                 if child.GetValueAsString() == 'open':
                     self._logger.debug('received open')
                     self.process_open_command(commandID)
@@ -52,7 +50,6 @@ class OutputReader(object):
                 if child.GetValueAsString() == 'put':
                     self._logger.debug('received open')
                     self.process_put_command(commandID)
->>>>>>> 905d08ac (added put and close actions so that a full demonstration can be run)
 
     def process_goto_command(self, commandID):
         for i in range(0, commandID.GetNumberChildren()):

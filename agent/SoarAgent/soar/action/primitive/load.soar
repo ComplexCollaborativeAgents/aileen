@@ -6,12 +6,12 @@
 source "goto.soar"
 
 source "pickup.soar"
-<<<<<<< HEAD
-=======
 
 source "open.soar"
 
 source "put.soar"
 
 source "close.soar"
->>>>>>> 905d08ac (added put and close actions so that a full demonstration can be run)
+
+source "proposals.soar"
+

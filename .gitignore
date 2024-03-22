@@ -202,8 +202,6 @@ dmypy.json
 *.png
 *.idea/*
 /.metadata/
-<<<<<<< HEAD
-=======
 .jpg
 .mov
 .png
@@ -211,4 +209,4 @@ dmypy.json
 .*.*.sw* # vim files removed
 *__pycache__*
 *.metadata/*
->>>>>>> 138823d2 (added server client integration for the instructor chat window)
+
