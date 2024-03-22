@@ -96,4 +96,3 @@ if __name__ == '__main__':
     while True:
         pass
     execute_planning_agent(world_server)
-
