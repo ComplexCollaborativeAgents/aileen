@@ -6,7 +6,7 @@ import numpy as np
 class World:
     def __init__(self):
         self._controller = Controller(
-            agentMode="default",
+            agentMode="default1",
             visibilityDistance=1.5,
             scene="FloorPlan12",
 
@@ -24,6 +24,10 @@ class World:
 
         self._logger = logging.getLogger(__name__)
         coloredlogs.install(level='DEBUG', logger=self._logger)
+<<<<<<< HEAD
+=======
+        #self.execute_action(dict(action='Done'))
+>>>>>>> 905d08ac (added put and close actions so that a full demonstration can be run)
 
         #self.execute_action(dict(action='Done'))
     def execute_action(self, action):

@@ -14,4 +14,3 @@ source "put.soar"
 source "close.soar"
 
 source "proposals.soar"
-
