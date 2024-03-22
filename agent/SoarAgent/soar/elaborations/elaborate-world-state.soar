@@ -83,7 +83,6 @@ sp {aileen*elaborate*objects*position*update
     }
 
 
-
 sp {aileen*elaborate*objects*remove
     :o-support
     (state <s>    ^name aileen
@@ -96,7 +95,6 @@ sp {aileen*elaborate*objects*remove
 -->
     (<wobjs>    ^object  <wobj> -)
     }
-
 
 sp {aileen*elaborate*holding
     (state <s>    ^name aileen

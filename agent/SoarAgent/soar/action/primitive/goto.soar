@@ -19,7 +19,7 @@ sp {action*propose*goto*apple
 
 sp {action*apply*goto
     (state <s>    ^name aileen
-                  ^operator <op> 
+                  ^operator <op>
                   ^io.output-link <ol>)
     (<op>    ^name go-to
              ^object.id <objid>)
