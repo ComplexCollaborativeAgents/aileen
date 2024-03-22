@@ -71,8 +71,7 @@ class SoarAgent(object):
         self._agent.LoadProductions(path)
 
     def run_soar_java_debugger(self):
-        print(settings.SOAR_DEBUGGER_PATH)
-        self._agent.SpawnDebugger(self._kernel.GetListenerPort(), jarpath=settings.SOAR_DEBUGGER_PATH)
+        self._agent.SpawnDebugger(self._kernel.GetListenerPort())
 
     def register_output_callback(self, function, caller_object=None):
         self._agent.RegisterForRunEvent(sml.smlEVENT_AFTER_OUTPUT_PHASE, function, caller_object, True)
@@ -158,6 +157,8 @@ class SoarAgent(object):
                 # logging.debug(
                 #     "[soar_agent] :: added {} {} {} child wme to destroy list".format(i, child.GetAttribute(),child.GetValueAsString()))
 
+    def process_utterance(self, utterance):
+        self._input_writer.process_utterance(utterance)
 
 def update(mid, this_agent, agent, message):
     this_agent.stop_agent_if_requested()

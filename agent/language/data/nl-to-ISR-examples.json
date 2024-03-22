@@ -2,51 +2,99 @@
         "language": "Put the bread in the cabinet",
         "semantics": {
             "INTENT": "request",
-            "action:0": {"TYPE": "put",
-                         "obj:0": {"TYPE":"bread", "SPEC": "unique"},
-                         "obj:1": {"TYPE": "cabinet", "SPEC": "unique"},
-                         "rel:0": {"TYPE": "in", "ARG1": "obj:0", "ARG2": "obj:1"}}
+            "CONTENT": {"action:0": {"TYPE": "put",
+                                     "obj:0": {"TYPE":"bread", "SPEC": "unique"},
+                                     "obj:1": {"TYPE": "cabinet", "SPEC": "unique"},
+                                     "rel:0": {"TYPE": "in", "ARG1": "obj:0", "ARG2": "obj:1"}}
+            }
         }
     },
     {
         "language": "Can you put the clean bowl in the cabinet?",
         "semantics": {
             "INTENT": "request",
-            "action:0": {"TYPE": "put",
-                         "obj:0": {"SPEC": "unique", "PROP": "clean", "TYPE": "bowl"},
-                         "obj:1": {"SPEC": "unique", "TYPE": "fridge"},
-                         "rel:0": {"TYPE": "in", "ARG1": "obj:0", "ARG2": "obj:1"}}
+            "CONTENT": {
+              "action:0": {
+                "TYPE": "put",
+                "obj:0": {
+                  "SPEC": "unique",
+                  "PROP": "clean",
+                  "TYPE": "bowl"
+                },
+                "obj:1": {
+                  "SPEC": "unique",
+                  "TYPE": "fridge"
+                },
+                "rel:0": {
+                  "TYPE": "in",
+                  "ARG1": "obj:0",
+                  "ARG2": "obj:1"
+                }
+              }
+            }
         }
     },
     {
         "language": "Please clean a mug.",
         "semantics": {
             "INTENT": "request",
-            "action:0": {"TYPE": "clean",
-                         "obj:0": {"SPEC": "any", "TYPE": "mug"}}
+            "CONTENT": {
+              "action:0": {
+                "TYPE": "clean",
+                "obj:0": {
+                  "SPEC": "any",
+                  "TYPE": "mug"
+                }
+              }
+            }
         }
     },
     {
         "language": "This is a large mug.",
         "semantics": {
             "INTENT": "inform",
-            "stat:0": {"obj:0": {"SPEC": "deixis", "PROP": "large", "TYPE": "mug"}}
+            "CONTENT": {
+              "stat:0": {"obj:0": {"SPEC": "deixis", "PROP": "large", "TYPE": "mug"}}
+            }
         }
     },
     {
         "language": "This is a large clean plate.",
         "semantics": {
             "INTENT": "inform",
-            "stat:0": {"obj:0": {"SPEC": "deixis", "PROP": "clean", "PROP": "large", "type": "plate"}}
+            "CONTENT": {
+              "stat:0": {
+                "obj:0": {
+                  "SPEC": "deixis",
+                  "PROP": "clean",
+                  "PROP": "large",
+                  "type": "plate"
+                }
+              }
+            }
         }
     },
     {
         "language": "There is an apple in the fruit basket.",
         "semantics": {
             "INTENT": "inform",
-            "stat:0": {"obj:0": {"SPEC": "any", "type": "apple"},
-                       "obj:1": {"SPEC": "unique", "type": "fruit basket"},
-                       "rel:1": {"TYPE": "in", "ARG1": "obj:0", "ARG2": "obj:2"}}
+            "CONTENT": {
+              "stat:0": {
+                "obj:0": {
+                  "SPEC": "any",
+                  "type": "apple"
+                },
+                "obj:1": {
+                  "SPEC": "unique",
+                  "type": "fruit basket"
+                },
+                "rel:1": {
+                  "TYPE": "in",
+                  "ARG1": "obj:0",
+                  "ARG2": "obj:2"
+                }
+              }
+            }
         }
     }
 ]

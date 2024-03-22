@@ -29,3 +29,7 @@ class AgentServer:
         self._thread = Thread(target=self.run)
         self._thread.daemon = True
         self._thread.start()
+
+def create_and_run_agent_server(agent):
+    server = AgentServer(agent)
+    server.run_in_background()

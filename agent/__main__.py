@@ -25,10 +25,6 @@ def initialize(world_server):
 def create_and_run_agent_server(agent):
     server = AgentServer(agent)
     server.run_in_background()
-def create_and_run_agent_server(agent):
-    server = AgentServer(agent)
-    server.run_in_background()
-
 def execute_planning_agent(world_server):
     agent = PlanningAgent(world_server)
     agent.run()
