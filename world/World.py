@@ -6,7 +6,7 @@ import numpy as np
 class World:
     def __init__(self):
         self._controller = Controller(
-            agentMode="default1",
+            agentMode="default",
             visibilityDistance=1.5,
             scene="FloorPlan12",
 
@@ -24,10 +24,6 @@ class World:
 
         self._logger = logging.getLogger(__name__)
         coloredlogs.install(level='DEBUG', logger=self._logger)
-<<<<<<< HEAD
-=======
-        #self.execute_action(dict(action='Done'))
->>>>>>> 905d08ac (added put and close actions so that a full demonstration can be run)
 
         #self.execute_action(dict(action='Done'))
     def execute_action(self, action):
@@ -52,7 +48,6 @@ class World:
     #     cv2.imshow("Top View", im)
     #     cv2.setWindowProperty("Top View", cv2.WND_PROP_TOPMOST, 1)
     #     cv2.setWindowTitle("Top View", title or "view")
-    #     cv2.waitKey(1) & 0xFF == ord('0')
 
 
     def get_topdown_map_view(self):
