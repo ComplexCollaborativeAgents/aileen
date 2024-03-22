@@ -1,3 +1,4 @@
+import math
 from agent.environment_model.state_definition import EnvironmentState, Predicate, GroundedPredicate, DomainPredicate
 
 class Action():
@@ -147,6 +148,63 @@ class TeleportAction(Action):
             "horizon": self.horizon,
             "standing": self.standing
         }
+
+
+class TeleportGroundingAction(TeleportAction):
+    def __init__(self, parser, current_state, positions, _obj):
+        """Action to find a location near an object """
+        self.parser = parser
+        position, rotation = self.get_reachable_position(current_state, positions, _obj)
+        super().__init__(position, rotation)
+
+
+    def get_reachable_position(self, current_state, positions, obj_id):
+        obj_center = self.get_center_position(current_state, obj_id)
+        position = self.get_closest_position(obj_center, positions)
+        rot = self.get_rotation(obj_center['x'], obj_center['z'], position['x'], position['z'])
+        rotation = {
+            'x': 0,
+            'y': rot,
+            'z': 0
+        }
+
+        return position, rotation
+
+
+    def get_center_position(self, current_state, obj_id):
+        center = self.parser.get_object_center(obj_id, current_state)
+
+        return center
+
+
+    def get_closest_position(self, center, positions):
+        min_distance = 1000
+        min_position = positions[0]
+        x1 = center['x']
+        z1 = center['z']
+        for pos in positions:
+            distance = self.get_distance(x1, z1, pos['x'], pos['z'])
+
+            if distance < min_distance:
+                min_distance = distance
+                min_position = pos
+
+        return min_position
+
+
+    def get_distance(self, x1, z1, x2, z2):
+        return math.sqrt((x2 - x1)**2 + (z2 - z1)**2)
+
+
+    def get_rotation(self, x1, z1, x2, z2):
+        slope = (x2 - x1)/(z2 - z1)
+        degrees = math.degrees(math.atan(slope))
+
+        if degrees < 0:
+            degrees += 360
+
+        return degrees
+
 
 class PickObjectAction(Action):
     def __init__(self, _objectID, _force_action=False, _manualInteract=False):

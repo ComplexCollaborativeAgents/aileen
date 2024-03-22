@@ -24,11 +24,11 @@ def initialize(world_server):
     return event
 
 def execute_planning_agent(world_server):
-    agent = PlanningAgent()
+    agent = PlanningAgent(world_server)
     action = None
     event = initialize(world_server)
     while True:
-        action = agent.get_next_action(world_server, event, goal)
+        action = agent.get_next_action(event, goal)
         if action is None:
             break
         event = world_server.execute_action(action)

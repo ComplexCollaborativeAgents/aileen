@@ -80,3 +80,12 @@ class World:
             action="GetReachablePositions"
         )
         return positions.metadata["actionReturn"]
+
+
+    def get_interactable_poses(self, obj_id):
+        poses = self._controller.step(
+            action = "GetInteractablePoses",
+            objectId = obj_id
+        )
+
+        return poses.metadata["actionReturn"]

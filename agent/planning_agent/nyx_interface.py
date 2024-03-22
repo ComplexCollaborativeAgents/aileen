@@ -4,15 +4,20 @@ from agent.planning_agent.pddl_generator.domain_generator import PDDLDomainGener
 from agent.planning_agent.pddl_generator.problem_generator import PDDLProblemGenerator
 from agent.capabilities.llm_translator.translate import convert_nl_to_pddl
 from agent.planning_agent.nyx import nyx
+from agent.environment_model.actions import *
+from agent.environment_model.state_parser import ThorStateParser
 import time
 
+
 class PlanningAgent(Agent):
-    def __init__(self):
+    def __init__(self, server):
         super().__init__()
         self.current_plan = list()
         self.has_planned = False
+        self.server = server
+        self.reachable_positions = self.server.get_reachable_positions()
 
-    def get_next_action(self, world, current_state = None, goal_condition: str = ""):
+    def get_next_action(self, current_state = None, goal_condition: str = ""):
         can_plan = True
         if len(self.current_plan) == 0 and not self.has_planned:
             time.sleep(2.0)
@@ -28,7 +33,7 @@ class PlanningAgent(Agent):
                 return None
 
             pred_goal_condition = convert_nl_to_pddl(goal_condition)
-            self.current_plan = self.plan(world, current_state, pred_goal_condition)
+            self.current_plan = self.plan(current_state, pred_goal_condition)
             self.has_planned = True
 
         if len(self.current_plan) == 0:
@@ -49,22 +54,27 @@ class PlanningAgent(Agent):
         constructed_plan = [teleport_bread, pick_bread, teleport_fridge, open_refrigerator, put_bread, close_refrigerator, done]
         return constructed_plan"""
 
-    def plan(self, world, current_state, goal_condition: str = ""):
+    def plan(self, current_state, goal_condition: str = ""):
+        self.current_state = current_state
+        self.parser = ThorStateParser(self.server)
         domain_path = "agent/planning_agent/domain/temp_domain.pddl"
         problem_path = "agent/planning_agent/domain/temp_problem.pddl"
         plan_file_path = "agent/planning_agent/domain/plans/plan1_temp_problem.pddl"
         domain_name = "ai_thor"
         object_types = ["bread", "fridge"]
         domain_generator = PDDLDomainGenerator(domain_path, domain_name)
-        domain = domain_generator.generate(world, current_state, object_types)
+        domain = domain_generator.generate(self.server, current_state, object_types)
 
         problem_generator = PDDLProblemGenerator(problem_path, ["bread_in_refigerator", domain_name])
-        problem = problem_generator.generate(world, current_state, goal_condition, object_types)
+        problem = problem_generator.generate(self.server, current_state, goal_condition, object_types)
+        self.objects = problem.objects["interactable"]
 
         nyx.runner(domain_generator.path, problem_generator.path, ['-vv'])
-        plan = self.extract_verbose_plan(plan_file_path)
+        interim_plan = self.extract_verbose_plan(plan_file_path)
 
-        print(plan)
+        plan = self.translate_plan(interim_plan)
+
+        return plan
 
 
     def extract_verbose_plan(self, plan_file):
@@ -81,3 +91,59 @@ class PlanningAgent(Agent):
                 plan.append(action)
 
         return plan
+
+
+    def translate_plan(self, plan):
+        translated_plan = list()
+        for action in plan:
+            if "teleport" in action:
+                to_obj = self.get_grounded_obj_id(action.split(" ")[2].split("_")[1])
+                t_action = TeleportGroundingAction(self.parser, self.current_state, self.reachable_positions, to_obj)
+
+            elif "pick" in action:
+                obj = self.get_action_object(action)
+                t_action = PickObjectAction(obj)
+
+            elif "put_inside" in action:
+                obj2 = self.get_action_object(action)
+                obj1 = self.get_action_param_object(action)
+                t_action = PutInsideObjectAction(obj1, obj2)
+
+            elif "put_on" in action:
+                obj2 = self.get_action_object(action)
+                obj1 = self.get_action_param_object(action)
+                t_action = PutOnObjectAction(obj1, obj2)
+
+            elif "put" in action:
+                obj = self.get_action_action(action)
+                t_action = PutObjectAction(obj)
+
+            elif "open" in action:
+                obj = self.get_action_object(action)
+                t_action = OpenObjectAction(obj)
+
+            elif "close" in action:
+                obj = self.get_action_object(action)
+                t_action = CloseObjectAction(obj)
+
+            translated_plan.append(t_action)
+        return translated_plan
+
+
+    def get_grounded_obj_id(self, given_obj):
+        for obj in self.objects:
+            if obj.lower() == given_obj:
+                return obj
+
+
+    def get_action_object(self, action):
+        temp = action.split(" ")[0]
+        action_obj = temp.split("_")[0]
+
+        return self.get_grounded_obj_id(action_obj)
+
+
+    def get_action_param_object(self, action):
+        param_obj = action.split(" ")[1]
+
+        return self.get_grounded_obj_id(param_obj)

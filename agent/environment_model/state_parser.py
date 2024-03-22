@@ -32,6 +32,14 @@ class ThorStateParser:
 
         return None
 
+    def get_object_center(self, objectID, _event=None):
+        obj = self.get_object(objectID, _event)
+
+        if obj is not None:
+            return obj["axisAlignedBoundingBox"]["center"]
+
+        return None
+
     def get_object_ids_by_type(self, _event=None):
         objects = self.get_objects(_event)
         obj_ids_type = dict()
