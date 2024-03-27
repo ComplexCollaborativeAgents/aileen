@@ -101,27 +101,32 @@ class PlanningAgent(Agent):
 
     def translate_plan(self, plan):
         translated_plan = list()
+        _holding = False
         for action in plan:
             if "teleport" in action:
                 to_obj = self.get_grounded_obj_id(action.split(" ")[2].split("_")[1])
-                t_action = TeleportGroundingAction(self.parser, self.current_state, self.reachable_positions, to_obj)
+                t_action = TeleportGroundingAction(self.parser, self.current_state, self.reachable_positions, to_obj, _holding)
 
             elif "pick" in action:
                 obj = self.get_action_object(action)
+                _holding = True
                 t_action = PickObjectAction(obj)
 
             elif "put_inside" in action:
                 obj2 = self.get_action_object(action)
                 obj1 = self.get_action_param_object(action)
+                _holding = False
                 t_action = PutInsideObjectAction(obj1, obj2)
 
             elif "put_on" in action:
                 obj2 = self.get_action_object(action)
                 obj1 = self.get_action_param_object(action)
+                _holding = False
                 t_action = PutOnObjectAction(obj1, obj2)
 
             elif "put" in action:
                 obj = self.get_action_action(action)
+                _holding = False
                 t_action = PutObjectAction(obj)
 
             elif "open" in action:
@@ -144,7 +149,7 @@ class PlanningAgent(Agent):
 
     def get_action_object(self, action):
         temp = action.split(" ")[0]
-        action_obj = temp.split("_")[0]
+        action_obj = temp.split("_")[-1]
 
         return self.get_grounded_obj_id(action_obj)
 

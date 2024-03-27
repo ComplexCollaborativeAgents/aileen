@@ -151,9 +151,11 @@ class TeleportAction(Action):
 
 
 class TeleportGroundingAction(TeleportAction):
-    def __init__(self, parser, current_state, positions, _obj):
+    def __init__(self, parser, current_state, positions, _obj, _holding = False):
         """Action to find a location near an object """
         self.parser = parser
+        self.closest_distance = 0.5
+        self.holding = _holding
         position, rotation = self.get_reachable_position(current_state, positions, _obj)
         super().__init__(position, rotation)
 
@@ -182,10 +184,14 @@ class TeleportGroundingAction(TeleportAction):
         min_position = positions[0]
         x1 = center['x']
         z1 = center['z']
+        closes_distance = self.closes_distance
+        if self.holding:
+            closest_distance = 1.0
+
         for pos in positions:
             distance = self.get_distance(x1, z1, pos['x'], pos['z'])
 
-            if distance < min_distance:
+            if distance < min_distance and distance > closest_distance:
                 min_distance = distance
                 min_position = pos
 

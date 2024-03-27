@@ -18,11 +18,13 @@ def create_connection_with_world():
     logging.info("connecting to world server at host: {}, port: {}".format(settings.WORLD_HOST, settings.WORLD_PORT))
     server = jsonrpclib.jsonrpc.ServerProxy(url)
     return server
+
 def initialize(world_server):
     world_server.execute_action({"action": 'Done'})
     event = world_server.execute_action({"action": 'Done'})
 
     return event
+
 def create_and_run_agent_server(agent):
     server = AgentServer(agent)
     server.run_in_background()
