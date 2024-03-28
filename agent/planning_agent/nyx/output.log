@@ -1,0 +1,62 @@
+
+
+===== NYX Planning Configuration ================
+
+	* domain: ../domain/temp_domain.pddl
+	* problem: ../domain/temp_problem.pddl
+	* config file: None
+	* search algorithm: BFS
+	* time discretisation: 0.1
+	* time horizon: 1000
+	* depth limit: 1000
+	* timeout: 1800s
+
+	* model parse time: 0.0008s
+
+=================================================
+
+
+
+
+
+
+
+
+
+
+=================================================
+
+
+===== Solution Info =============================
+
+	* time: 0.004
+	* explored states: 125
+	* plan length: 6 (6)
+	* plan duration: 0.0
+	* plan metric:  6.000
+
+===== Plan ======================================
+	Plan File: ../domain/plans/plan1_temp_problem.pddl
+
+     0.000:	teleport(c_thor, c_bread|-00.92|+00.99|+02.27)	[0.0]
+     0.000:	pickup_bread|-00.92|+00.99|+02.27(c_bread|-00.92|+00.99|+02.27)	[0.0]
+     0.000:	teleport(c_bread|-00.92|+00.99|+02.27, c_fridge|-01.00|+00.00|+00.12)	[0.0]
+     0.000:	open_fridge|-01.00|+00.00|+00.12(c_fridge|-01.00|+00.00|+00.12)	[0.0]
+     0.000:	put_inside_fridge|-01.00|+00.00|+00.12(bread|-00.92|+00.99|+02.27, c_fridge|-01.00|+00.00|+00.12)	[0.0]
+     0.000:	close_fridge|-01.00|+00.00|+00.12(c_fridge|-01.00|+00.00|+00.12)	[0.0]
+
+=================================================
+
+
+=================================================
+
+
+===== Search Summary ============================
+
+		Time: 0.004
+		States Explored: 125
+		Goals Reached: 1
+		Best Plan Metric:  6.000
+
+=================================================
+
