@@ -1,5 +1,5 @@
 from agent.planning_agent.pddl_generator.base_generator import BaseGenerator, PDDLDomain
-from agent.environment_model.actions import TeleportAction, PickObjectAction, PutObjectAction, PutInsideObjectAction, OpenObjectAction, CloseObjectAction
+from agent.environment_model.actions import TeleportAction, PickObjectAction, PutObjectAction, PutInsideObjectAction, PutOnObjectAction, OpenObjectAction, CloseObjectAction
 #from agent.environment_model.events import NearEvent, RemoveNearEvent
 from agent.environment_model.state_definition import EnvironmentState
 from agent.environment_model.state_parser import ThorStateParser
@@ -130,6 +130,17 @@ class PDDLDomainGenerator(BaseGenerator):
         for obj_id in objects:
             # object1 will be grounded by the domain
             action = PutInsideObjectAction("", obj_id)
+            actions.append(action)
+
+        return actions
+
+    def create_put_on_actions(self, _current_state):
+        all_objects = self.parser.get_receptacle_object_ids(_current_state)
+        objects = self.prune_list_objects(all_objects)
+        actions = list()
+
+        for obj_id in objects:
+            action = PutOnObjcetAction("", obj_id)
             actions.append(action)
 
         return actions

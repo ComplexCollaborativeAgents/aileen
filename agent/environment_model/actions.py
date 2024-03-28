@@ -163,12 +163,15 @@ class TeleportGroundingAction(TeleportAction):
     def get_reachable_position(self, current_state, positions, obj_id):
         obj_center = self.get_center_position(current_state, obj_id)
         position = self.get_closest_position(obj_center, positions)
+        print(f"positions object {obj_center}, robot {position}")
         rot = self.get_rotation(obj_center['x'], obj_center['z'], position['x'], position['z'])
         rotation = {
             'x': 0,
             'y': rot,
             'z': 0
         }
+
+        print("final position and rotation  ", position, rotation)
 
         return position, rotation
 
@@ -184,7 +187,7 @@ class TeleportGroundingAction(TeleportAction):
         min_position = positions[0]
         x1 = center['x']
         z1 = center['z']
-        closes_distance = self.closes_distance
+        closest_distance = self.closest_distance
         if self.holding:
             closest_distance = 1.0
 
@@ -203,11 +206,14 @@ class TeleportGroundingAction(TeleportAction):
 
 
     def get_rotation(self, x1, z1, x2, z2):
-        slope = (x2 - x1)/(z2 - z1)
+        slope = (x1 - x2)/(z1 - z2)
         degrees = math.degrees(math.atan(slope))
 
         if degrees < 0:
-            degrees += 360
+            if x2 > x1:
+                degrees += 360
+            else:
+                degrees += 180.0
 
         return degrees
 
@@ -397,14 +403,15 @@ class PutInsideObjectAction(PutObjectAction):
         dom_location = self.environment.predicates["location"]
         dom_holding = self.environment.predicates["holding"]
         robot_location = Predicate(dom_robot.name, ["c"])
-        not_location = GroundedPredicate(dom_location.name, dom_location.properties, self.groundings, False, True)
+        # not_location = GroundedPredicate(dom_location.name, dom_location.properties, self.groundings, False, True)
+        groundings = {"cell": "?c", "interactable": self.objectID}
+        location = GroundedPredicate(dom_location.name, dom_location.properties, groundings, False, False)
         holding = GroundedPredicate(dom_holding.name, dom_holding.properties, self.groundings, False, False)
 
         dom_opened = self.environment.predicates["opened"]
-        grounding = {"cell": "c", "interactable": self.objectID}
-        opened = GroundedPredicate(dom_opened.name, dom_opened.properties, grounding, False, False)
+        opened = GroundedPredicate(dom_opened.name, dom_opened.properties, groundings, False, False)
 
-        preconditions.extend([robot_location, not_location, holding, opened])
+        preconditions.extend([robot_location, location, holding, opened])
         return preconditions
 
 
@@ -443,8 +450,9 @@ class PutOnObjectAction(PutObjectAction):
     def get_pddl_preconditions(self):
         preconditions = super().get_pddl_preconditions()
         dom_opened = self.environment.predicates["clear"]
-        grounding = {"cell": "c", "interactable": self.objectID}
-        opened = GroundedPredicate(dom_opened.name, dom_opened.properties, grounding, False, False)
+        groundings = {"cell": "?c", "interactable": self.objectID}
+        opened = GroundedPredicate(dom_opened.name, dom_opened.properties, groundings, False, False)
+        location = GroundedPredicate(dom_location.name, dom_location.properties, groundings, False, False)
         preconditions.append(opened)
 
         return preconditions
@@ -462,7 +470,7 @@ class PutOnObjectAction(PutObjectAction):
 
 
 class OpenObjectAction(Action):
-    def __init__(self, _objectID, _openness=1, _force_action=False):
+    def __init__(self, _objectID, _openness=1, _force_action=True):
         super().__init__()
         self.name = "OpenObject"
         self.pddl_name = f"open_{_objectID}"

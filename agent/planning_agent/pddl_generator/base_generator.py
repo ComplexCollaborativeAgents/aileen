@@ -7,6 +7,12 @@ class BaseGenerator():
     def __init__(self, _path: str, name :str):
         self.path = path.join(ROOT_PATH, _path)
         self.name = name
+        self.reset_file()
+
+
+    def reset_file(self):
+        if path.exists(self.path):
+            open(self.path, 'w').close()
 
     def generate(self, **kwargs):
         raise NotImplementedError()
@@ -165,4 +171,25 @@ class PDDLProblem():
 
         with open(file_name, "w") as f:
             f.write(problem)
+
+class PDDLInitialState():
+    def __init__(self):
+        self.objects = dict()
+        self.initial_state = list()
+
+
+    def set_objects(self, _objects: Dict):
+        self.objects = _objects
+
+
+    def get_objects(self):
+        return self.objects
+
+
+    def set_initial_state(self, initial_state: List):
+        self.initial_state = initial_state
+
+
+    def get_initial_state(self):
+        return self.initial_state
 

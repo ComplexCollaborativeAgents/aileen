@@ -1,6 +1,6 @@
 import random
 import logging, coloredlogs
-from language.Interpreter import Interpreter
+from agent.language.Interpreter import Interpreter
 
 ACTION_MOVE_RIGHT = "MoveRight"
 ACTION_MOVE_LEFT = "MoveLeft"
