@@ -1,20 +1,30 @@
 [  {
-        "language": "Put the bread in the cabinet",
+        "language": "Place the mug in the cabinet",
         "semantics": {
             "INTENT": "request",
-            "action:0": {"TYPE": "put",
-                         "obj:0": {"TYPE":"bread", "SPEC": "unique"},
+            "action:0": {"TYPE": "find-and-put-task",
+                         "obj:0": {"TYPE":"mug", "SPEC": "unique"},
                          "obj:1": {"TYPE": "cabinet", "SPEC": "unique"},
                          "rel:0": {"TYPE": "in", "ARG1": "obj:0", "ARG2": "obj:1"}}
         }
     },
     {
-        "language": "Can you put the clean bowl in the cabinet?",
+        "language": "Can you put the dirty mug in the dishwasher?",
         "semantics": {
             "INTENT": "request",
-            "action:0": {"TYPE": "put",
-                         "obj:0": {"SPEC": "unique", "PROP": "clean", "TYPE": "bowl"},
-                         "obj:1": {"SPEC": "unique", "TYPE": "fridge"},
+            "action:0": {"TYPE": "find-and-put-task",
+                         "obj:0": {"SPEC": "unique", "PROP": "dirty", "TYPE": "mug"},
+                         "obj:1": {"SPEC": "unique", "TYPE": "dishwasher"},
+                         "rel:0": {"TYPE": "in", "ARG1": "obj:0", "ARG2": "obj:1"}}
+        }
+    },
+  {
+        "language": "Please move the clean mug to the cabinet.",
+        "semantics": {
+            "INTENT": "request",
+            "action:0": {"TYPE": "find-and-put-task",
+                         "obj:0": {"SPEC": "unique", "TYPE": "mug", "PROP":  "clean"},
+                         "obj:1": {"SPEC": "unique", "TYPE": "cabinet"},
                          "rel:0": {"TYPE": "in", "ARG1": "obj:0", "ARG2": "obj:1"}}
         }
     },

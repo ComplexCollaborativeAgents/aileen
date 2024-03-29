@@ -1,11 +1,12 @@
-import time
+import sys, settings
+sys.path.append(settings.NYX_HOME)
 from agent.planning_agent.nyx_interface import PlanningAgent
 from agent.agent_server import AgentServer
 from world.WorldServer import WorldServer
 from agent.base_agent import *
-import settings
 import jsonrpclib
 import logging, coloredlogs
+import sys
 
 logger = logging.getLogger(__name__)
 coloredlogs.install(level='DEBUG', logger=logger)

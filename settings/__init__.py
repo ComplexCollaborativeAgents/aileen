@@ -4,6 +4,9 @@ CI = 'GITLAB_CI' in os.environ
 OS_ROOT_PATH = path.abspath(os.sep)
 ROOT_PATH = path.join(path.dirname(path.dirname(path.abspath(__file__))))
 
+## Nyx
+NYX_HOME = path.join(ROOT_PATH, 'agent', 'planning_agent', 'nyx')
+
 
 ## SOAR
 SOAR_PATH = path.join(OS_ROOT_PATH, 'Library', 'Soar-Release-9.6.2', 'SoarSuite', 'SoarSuite_9.6.2-Multiplatform', 'bin')

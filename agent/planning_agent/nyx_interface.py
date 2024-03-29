@@ -5,6 +5,7 @@ from agent.planning_agent.pddl_generator.problem_generator import PDDLProblemGen
 from agent.planning_agent.nyx import nyx
 from agent.environment_model.actions import *
 from agent.environment_model.state_parser import ThorStateParser
+from random import randint
 import time
 
 
@@ -82,7 +83,6 @@ class PlanningAgent(Agent):
 
     def extract_verbose_plan(self, plan_file):
         output = open(plan_file).readlines()
-
         plan = list()
         for line in output:
             line = line.strip()
@@ -181,6 +181,8 @@ class PlanningAgent(Agent):
             goal = self.ground_utterance(json_utterance)
             self._logger.debug('generated goal: {}'.format(goal))
             self.set_goal(goal)
+        if self._goal:
+            return "OK."
 
     def ground_utterance(self, json_utterance):
         for key in json_utterance:
@@ -199,10 +201,16 @@ class PlanningAgent(Agent):
             if 'rel' in key:
                 grounded_relations[key] = self.ground_relation(action[key], grounded_objects)
 
+        self.elaborate_relations(grounded_objects, grounded_relations)
         self.required_obj_types = required_types
-        return grounded_relations['rel:0']
+        return self.compile_relations(grounded_relations)
 
-
+    def compile_relations(self,ground_relations):
+        compilation = "(and {})"
+        clauses = ""
+        for rel in ground_relations:
+            clauses = clauses + " " + ground_relations[rel]
+        return compilation.format(clauses)
 
     def ground_object(self, obj_json):
         self._logger.debug("grounding object: {}".format(obj_json))
@@ -219,3 +227,15 @@ class PlanningAgent(Agent):
                                            grounded_objects[rel_json['ARG2']],
                                            grounded_objects[rel_json['ARG1']])
         return rel_instance
+
+    def elaborate_relations(self, grounded_objects, grounded_relations):
+        ### if grounded relations contain objects that are openable, add close predicate to revert them to their default state
+
+        for object in grounded_objects:
+            obj_id = grounded_objects[object]
+            for w_object in self._current_state["objects"]:
+                if w_object['objectId'] == obj_id:
+                    if w_object['openable']:
+                        key = "rel:{}".format(randint(100,1000))
+                        grounded_relations[key] = "(closed {})".format(obj_id)
+        print(grounded_relations)
