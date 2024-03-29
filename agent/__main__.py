@@ -1,12 +1,12 @@
 import time
 from agent.planning_agent.nyx_interface import PlanningAgent
-from agent import BaseAgent
-from AgentServer import AgentServer
+from agent.agent_server import AgentServer
 from world.WorldServer import WorldServer
-from BaseAgent import *
+from agent.base_agent import *
 import settings
 import jsonrpclib
 import logging, coloredlogs
+
 logger = logging.getLogger(__name__)
 coloredlogs.install(level='DEBUG', logger=logger)
 
@@ -22,21 +22,26 @@ def initialize(world_server):
     world_server.execute_action({"action": 'Done'})
     event = world_server.execute_action({"action": 'Done'})
     return event
+
 def create_and_run_agent_server(agent):
     server = AgentServer(agent)
     server.run_in_background()
+
+def create_and_run_agent_server(agent):
+    server = AgentServer(agent)
+    server.run_in_background()
+
 def execute_planning_agent(world_server):
     agent = PlanningAgent(world_server)
-    agent.run()
     action = None
-    # event = initialize(world_server)
-    # while True:
-    #     action = agent.get_next_action(world_server, event, goal)
-    #     if action is None:
-    #         break
-    #     event = world_server.execute_action(action)
-    #     print(event["agent"])
-    #     print(event["errorMessage"])
+    event = initialize(world_server)
+    while True:
+        action = agent.get_next_action(event, goal)
+        if action is None:
+            break
+        event = world_server.execute_action(action)
+        print(event["agent"])
+        print(event["errorMessage"])
 
 
 def execute_random_actions(world_server):
@@ -82,8 +87,3 @@ if __name__ == '__main__':
     logger = logging.getLogger(__name__)
     coloredlogs.install(level='DEBUG', logger=logger)
     agent.run()
-    # initialize(world_server)
-    # time.sleep(2.0)
-    #execute_planning_agent(world_server)
-    while True:
-        pass

@@ -30,6 +30,10 @@ class WorldServer:
             positions = self._world.get_reachable_positions()
             return positions
 
+        def get_interactable_poses(obj_id):
+            poses = self._world.get_interactable_poses(obj_id)
+            return poses
+
         def get_recent_event():
             event = self._world.get_recent_event()
             return event
@@ -41,7 +45,8 @@ class WorldServer:
 
         self._server.register_function(execute_action, "execute_action")
         self._server.register_function(get_reachable_positions, "get_reachable_positions")
-        self._server.register_function(get_reachable_positions, "get_recent_event")
+        self._server.register_function(get_interactable_poses, "get_interactable_poses")
+        self._server.register_function(get_recent_event, "get_recent_event")
 
         def get_interactable_pose(object_id):
             self._logger.info("serving get interactable pose request for object {}".format(object_id))

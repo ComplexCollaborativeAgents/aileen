@@ -15,8 +15,6 @@ def create_connection_with_world():
    return server
 
 
-
-
 if __name__ == '__main__':
    os.environ["JAVA_HOME"] = settings.JAVA_HOME
    os.environ["SOAR_HOME"] = settings.SOAR_PATH

@@ -32,12 +32,29 @@ class ThorStateParser:
 
         return None
 
+    def get_object_center(self, objectID, _event=None):
+        obj = self.get_object(objectID, _event)
+
+        if obj is not None:
+            return obj["axisAlignedBoundingBox"]["center"]
+
+        return None
+
+    def get_object_y_dimension(self, objectID, _event=None):
+        obj = self.get_object(objectID, _event)
+
+        if obj is not None:
+            center = obj["axisAlignedBoundingBox"]["center"]["y"]
+            size = obj["axisAlignedBoundingBox"]["size"]["y"]
+
+            return (center + size/2, center - size/2)
+
     def get_object_ids_by_type(self, _event=None):
         objects = self.get_objects(_event)
         obj_ids_type = dict()
 
         for obj in objects:
-            _type = obj["objectType"]
+            _type = obj["objectType"].lower()
             if _type not in obj_ids_type:
                 obj_ids_type[_type] = list()
 

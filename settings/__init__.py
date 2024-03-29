@@ -16,8 +16,6 @@ SOAR_SLEEP_TIME = 0.001
 ##JAVA
 JAVA_HOME = path.join(OS_ROOT_PATH, 'opt', 'homebrew', 'opt', 'openjdk@11', 'bin')
 
-
-
 WORLD_HOST = 'localhost'
 WORLD_PORT = 30000
 AGENT_HOST = 'localhost'

@@ -2,10 +2,11 @@ from typing import List, Dict, Union
 
 
 class Predicate():
-    def __init__(self, _name: str , _props: List[str]):
+    def __init__(self, _name: str , _props: List[str], is_not: bool = False):
         self.print_name = _name
         self.name = _name.lower() # adding because the name in the nyx are lower cased
         self.properties = _props
+        self.is_not = is_not
 
     
     def get_predicate(self):
@@ -17,7 +18,12 @@ class Predicate():
         for prop in self.properties:
             properties += "?" + prop + " "
 
-        return f"({self.name} {properties.strip()})"
+        pred = f"({self.name} {properties.strip()})"
+        if self.is_not:
+            pred = f"(not {pred})"
+
+        return pred
+
 
 
 class DomainPredicate(Predicate):
@@ -43,23 +49,23 @@ class DomainPredicate(Predicate):
             else:
                 temp = f"?{self.lifted_variables[prop]}"
 
-            prop_string += f"{temp.strip()} - {prop}"
+            prop_string += f" {temp.strip()} - {prop}"
 
         if self.name == "":
-            return f"({prop_string})"
+            return f"({prop_string.strip()})"
         else:
-            return f"({self.name} {prop_string})"
+            return f"({self.name}{prop_string})"
 
 
 class GroundedPredicate(Predicate):
     def __init__(self, _name: str, _props: List[str], _values: Dict[str, Union[float, str, Predicate]], is_numeric = False, is_not = False, symbol: str = "="):
-        super().__init__(_name, _props)
+        super().__init__(_name, _props, is_not)
         self.values = _values
         self.is_numeric = is_numeric
         self.is_negation = is_not
         self.symbol = symbol
 
-    
+
     def get_predicate(self):
         return super().__str__()
 
@@ -154,10 +160,10 @@ class EnvironmentState(State):
             p = DomainPredicate(name, ["interactable"], {"interactable": "p"})
             self.predicates[prop] = p
 
-        near = DomainPredicate("is_near", ["cell"], {"cell": "c"})
-        self.predicates["near"] = near
+        #near = DomainPredicate("is_near", ["cell"], {"cell": "c"})
+        #self.predicates["near"] = near
 
-        location = DomainPredicate("location", ["cell", "interactable"], {"cell": "c", "interactable": "p"})
+        location = DomainPredicate("location", ["interactable", "cell"], {"cell": "c", "interactable": "p"})
         self.predicates["location"] = location
 
         holding = DomainPredicate("holding", ["interactable"], {"interactable": "p"})
@@ -172,8 +178,11 @@ class EnvironmentState(State):
         _on = DomainPredicate("on", ["interactable"], {"interactable": ["p1", "p2"]})
         self.predicates["on"] = _on
 
-        closed = DomainPredicate("closed", ["interactable"], {"interactable": "p"})
-        self.predicates["closed"] = closed
+        clear = DomainPredicate("clear", ["interactable"], {"interactable": "p"})
+        self.predicates["clear"] = clear
+
+        robot_location = DomainPredicate("robot_location", ["cell"], {"cell": "c"})
+        self.predicates["robot"] = robot_location
 
 
     def set_functions(self):

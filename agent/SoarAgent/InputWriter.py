@@ -2,7 +2,6 @@ from agent.environment_model.actions import Action
 import logging, coloredlogs
 from agent.language.Interpreter import Interpreter
 
-
 class InputWriter(object):
     def __init__(self, world_server, soar_agent):
         self._world_server = world_server
@@ -23,6 +22,17 @@ class InputWriter(object):
         metadata = self._world_server.execute_action(Action().to_interface())
         objects_list = metadata['objects']
         self.add_objects_to_working_memory(objects_list)
+#        positions = self._world_server.execute_action(action="GetReachablePositions")["actionReturn"]
+#        self.add_reachable_positions_to_working_memory(positions)
+
+    def add_reachable_positions_to_working_memory(self, positions):
+        self._soar_agent.delete_all_children(self._positions_link)
+        for position in positions:
+            position_id = self._positions_link.CreateIdWME("position")
+            position_id.CreateFloatWME("x", position['x'])
+            position_id.CreateFloatWME("y", position['y'])
+            position_id.CreateFloatWME("z", position['z'])
+
 
         if self._language_input:
             self.add_language_to_input_link()

@@ -7,13 +7,19 @@ class BaseGenerator():
     def __init__(self, _path: str, name :str):
         self.path = path.join(ROOT_PATH, _path)
         self.name = name
+        self.reset_file()
+
+
+    def reset_file(self):
+        if path.exists(self.path):
+            open(self.path, 'w').close()
 
     def generate(self, **kwargs):
         raise NotImplementedError()
 
 
 class PDDLDomain:
-    TEMPLATE = "(define (domain {NAME})\n(:requirements\n{REQUIREMENTS}\n)\n\n(:types\n{TYPES}\n)\n\n(:predicates\n{PREDICATES}\n)\n\n(:functions\n{FUNCTIONS}\n)\n\n{ACTIONS}\n\n{PROCESSES}\n\n{EVENTS}\n)"
+    TEMPLATE = "(define (domain {NAME})\n\n(:requirements\n{REQUIREMENTS}\n)\n\n(:types\n{TYPES}\n)\n\n(:predicates\n{PREDICATES}\n)\n\n(:functions\n{FUNCTIONS}\n)\n\n{ACTIONS}\n\n{PROCESSES}\n\n{EVENTS}\n)"
     
     def __init__(self, name):
         self.name = name
@@ -50,7 +56,7 @@ class PDDLDomain:
 
 
     def set_types(self, _types: Dict):
-        self.types = dict()
+        self.types = _types
 
 
     def get_types(self):
@@ -110,7 +116,7 @@ class PDDLDomain:
 
 
 class PDDLProblem():
-    TEMPLATE = "(define (problem {PROBLEM_NAME})\n(domain {DOMAIN_NAME})\n(:objects\n{OBJECTS})\n(:init\n{INITIAL_STATE})\n(:goal (and\n{GOAL_CONDITION}\n)\n)\n)"
+    TEMPLATE = "(define (problem {PROBLEM_NAME})\n(:domain {DOMAIN_NAME})\n\n(:objects{OBJECTS}\n)\n\n(:init\n\t{INITIAL_STATE}\n)\n\n(:goal (and\n\t\t{GOAL_CONDITION}\n\t)\n)\n)"
 
 
     def __init__(self, problem_name:str, domain_name:str):
@@ -165,4 +171,25 @@ class PDDLProblem():
 
         with open(file_name, "w") as f:
             f.write(problem)
+
+class PDDLInitialState():
+    def __init__(self):
+        self.objects = dict()
+        self.initial_state = list()
+
+
+    def set_objects(self, _objects: Dict):
+        self.objects = _objects
+
+
+    def get_objects(self):
+        return self.objects
+
+
+    def set_initial_state(self, initial_state: List):
+        self.initial_state = initial_state
+
+
+    def get_initial_state(self):
+        return self.initial_state
 

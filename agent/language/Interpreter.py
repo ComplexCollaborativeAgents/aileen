@@ -49,8 +49,3 @@ class Interpreter:
         json_string = to_json(generated_string)
         return json_string
 
-
-if __name__ == '__main__':
-    interpreter = Interpreter()
-    json = interpreter.interpret("put the apple in the fridge")
-    print(json)
