@@ -619,3 +619,4 @@ class GetInteractablePoses(Action):
         interface["objectId"] = self.objectID
         interface["standings"] = [self.standing]
         return interface
+

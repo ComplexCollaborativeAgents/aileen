@@ -12,5 +12,3 @@ source "open.soar"
 source "put.soar"
 
 source "close.soar"
-
-source "proposals.soar"

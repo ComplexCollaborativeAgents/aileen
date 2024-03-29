@@ -18,7 +18,7 @@ sp {action*propose*pick-up
 
 sp {action*apply*pick-up
     (state <s>    ^name aileen
-                  ^operator <op>
+                  ^operator <op> 
                   ^io.output-link <ol>)
     (<op>    ^name pick-up
              ^object.id <objid>)

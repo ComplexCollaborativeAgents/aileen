@@ -21,7 +21,6 @@ def create_connection_with_world():
 def initialize(world_server):
     world_server.execute_action({"action": 'Done'})
     event = world_server.execute_action({"action": 'Done'})
-
     return event
 
 def create_and_run_agent_server(agent):

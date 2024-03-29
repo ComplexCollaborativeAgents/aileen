@@ -1,17 +1,21 @@
 from agent.environment_model.actions import Action
 import logging, coloredlogs
+from agent.language.Interpreter import Interpreter
 
 class InputWriter(object):
     def __init__(self, world_server, soar_agent):
         self._world_server = world_server
         self._soar_agent = soar_agent
         self._logger = logging.getLogger(__name__)
+        self._language_input = None
+        self._interpreter = Interpreter()
         coloredlogs.install(level='DEBUG', logger=self._logger)
         if soar_agent:
             self._input_link = soar_agent.get_input_link()
             self._world_link = self._input_link.CreateIdWME("world")
             self._objects_link = self._world_link.CreateIdWME("objects")
             self._positions_link = self._world_link.CreateIdWME("reachable-positions")
+            self._language_link = self._input_link.CreateIdWME("language")
         pass
 
     def generate_input(self):
@@ -29,6 +33,34 @@ class InputWriter(object):
             position_id.CreateFloatWME("y", position['y'])
             position_id.CreateFloatWME("z", position['z'])
 
+
+        if self._language_input:
+            self.add_language_to_input_link()
+
+#        positions = self._world_server.execute_action(action="GetReachablePositions")["actionReturn"]
+#        self.add_reachable_positions_to_working_memory(positions)
+
+    def add_language_to_input_link(self):
+        #self._language_link.createStringWME('intent', 'new')
+        # content_id = self._language_link.createIdWME('content')
+        # for structures in self._language_input['CONTENT']:
+        #     pass
+        pass
+
+
+    def add_reachable_positions_to_working_memory(self, positions):
+        self._soar_agent.delete_all_children(self._positions_link)
+        for position in positions:
+            position_id = self._positions_link.CreateIdWME("position")
+            position_id.CreateFloatWME("x", position['x'])
+            position_id.CreateFloatWME("y", position['y'])
+            position_id.CreateFloatWME("z", position['z'])
+
+    def process_utterance(self, utterance):
+        self._logger.debug("processing utterance: {}".format(utterance))
+        utterance_semantics = self._interpreter.interpret(utterance)
+        self._language_input = utterance_semantics
+        self._logger.debug("extracted semantics: {}".format(utterance_semantics))
 
     def add_objects_to_working_memory(self, objects_list):
         self._soar_agent.delete_all_children(self._objects_link)

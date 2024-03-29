@@ -197,20 +197,10 @@ dmypy.json
 
 .*.*.sw* # vim files removed
 
+# End of https://www.gitignore.io/api/python,pycharm+all
 *.jpg
 *.mov
 *.png
 *.idea/*
-/.metadata/
-.jpg
-.mov
-.png
-
-.*.*.sw* # vim files removed
-*__pycache__*
-<<<<<<< HEAD
 *.metadata/*
 
-=======
-*.metadata/*
->>>>>>> 138823d2 (added server client integration for the instructor chat window)

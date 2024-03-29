@@ -48,3 +48,4 @@ class Interpreter:
         generated_string = self._chain.invoke({"input": nl_string})
         json_string = to_json(generated_string)
         return json_string
+

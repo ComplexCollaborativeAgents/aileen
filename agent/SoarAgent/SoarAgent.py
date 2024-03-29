@@ -157,6 +157,8 @@ class SoarAgent(object):
                 # logging.debug(
                 #     "[soar_agent] :: added {} {} {} child wme to destroy list".format(i, child.GetAttribute(),child.GetValueAsString()))
 
+    def process_utterance(self, utterance):
+        self._input_writer.process_utterance(utterance)
 
 def update(mid, this_agent, agent, message):
     this_agent.stop_agent_if_requested()

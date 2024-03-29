@@ -9,17 +9,15 @@ import time
 
 
 class PlanningAgent(Agent):
-
     def __init__(self, world_server):
         super().__init__()
         self._current_state = dict()
         self.current_plan = list()
         self.required_obj_types = list()
         self.has_planned = False
-        self.server = self._world = world_server
-        self.reachable_positions = self.server.get_reachable_positions()
-        self._goal = None
         self._world = world_server
+        self.reachable_positions = self._world.get_reachable_positions()
+        self._goal = None
         self._logger = logging.getLogger(__name__)
         coloredlogs.install(level='DEBUG', logger=self._logger)
 
@@ -62,16 +60,16 @@ class PlanningAgent(Agent):
 
     def plan(self, current_state, goal_condition: str = ""):
         self.current_state = current_state
-        self.parser = ThorStateParser(self.server)
+        self.parser = ThorStateParser(self._world)
         domain_path = "agent/planning_agent/domain/temp_domain.pddl"
         problem_path = "agent/planning_agent/domain/temp_problem.pddl"
         plan_file_path = "agent/planning_agent/domain/plans/plan1_temp_problem.pddl"
         domain_name = "ai_thor"
         domain_generator = PDDLDomainGenerator(domain_path, domain_name)
-        domain = domain_generator.generate(self.server, current_state, self.required_obj_types)
+        domain = domain_generator.generate(self._world, current_state, self.required_obj_types)
 
-        problem_generator = PDDLProblemGenerator(problem_path, ["bread_in_refigerator", domain_name])
-        problem = problem_generator.generate(self.server, current_state, goal_condition, self.required_obj_types)
+        problem_generator = PDDLProblemGenerator(problem_path, ["temp-problem", domain_name])
+        problem = problem_generator.generate(self._world, current_state, goal_condition, self.required_obj_types)
         self.objects = problem.objects["interactable"]
 
         nyx.runner(domain_generator.path, problem_generator.path, ['-vv'])
