@@ -47,30 +47,30 @@ cell interactable - object
 	)
 )
 
-(:action pickup_Bread|-00.92|+00.99|+02.27
+(:action pickup_Apple|+01.41|+00.98|+02.13
 	:parameters (?c - cell)
 	:precondition (and
-		(is_pickable Bread|-00.92|+00.99|+02.27)
+		(is_pickable Apple|+01.41|+00.98|+02.13)
 		(robot_location ?c)
-		(location Bread|-00.92|+00.99|+02.27 ?c)
-		(not (holding Bread|-00.92|+00.99|+02.27))
+		(location Apple|+01.41|+00.98|+02.13 ?c)
+		(not (holding Apple|+01.41|+00.98|+02.13))
 	)
 	:effect (and
-		(holding Bread|-00.92|+00.99|+02.27)
-		(not (location Bread|-00.92|+00.99|+02.27 ?c))
+		(holding Apple|+01.41|+00.98|+02.13)
+		(not (location Apple|+01.41|+00.98|+02.13 ?c))
 	)
 )
 
-(:action put_Bread|-00.92|+00.99|+02.27
+(:action put_Apple|+01.41|+00.98|+02.13
 	:parameters (?c - cell)
 	:precondition (and
 		(robot_location ?c)
-		(not (location Bread|-00.92|+00.99|+02.27 ?c))
-		(holding Bread|-00.92|+00.99|+02.27)
+		(not (location Apple|+01.41|+00.98|+02.13 ?c))
+		(holding Apple|+01.41|+00.98|+02.13)
 	)
 	:effect (and
-		(not (holding Bread|-00.92|+00.99|+02.27))
-		(location Bread|-00.92|+00.99|+02.27 ?c)
+		(not (holding Apple|+01.41|+00.98|+02.13))
+		(location Apple|+01.41|+00.98|+02.13 ?c)
 	)
 )
 
@@ -78,7 +78,7 @@ cell interactable - object
 	:parameters (?p - interactable ?c - cell)
 	:precondition (and
 		(robot_location ?c)
-		(not (location ?p ?c))
+		(location Fridge|-01.00|+00.00|+00.12 ?c)
 		(holding ?p)
 		(opened Fridge|-01.00|+00.00|+00.12)
 	)

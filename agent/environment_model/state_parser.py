@@ -40,6 +40,15 @@ class ThorStateParser:
 
         return None
 
+    def get_object_y_dimension(self, objectID, _event=None):
+        obj = self.get_object(objectID, _event)
+
+        if obj is not None:
+            center = obj["axisAlignedBoundingBox"]["center"]["y"]
+            size = obj["axisAlignedBoundingBox"]["size"]["y"]
+
+            return (center + size/2, center - size/2)
+
     def get_object_ids_by_type(self, _event=None):
         objects = self.get_objects(_event)
         obj_ids_type = dict()

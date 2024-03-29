@@ -156,14 +156,16 @@ class TeleportGroundingAction(TeleportAction):
         self.parser = parser
         self.closest_distance = 0.5
         self.holding = _holding
-        position, rotation = self.get_reachable_position(current_state, positions, _obj)
-        super().__init__(position, rotation)
+        position, rotation, horizon = self.get_reachable_position(current_state, positions, _obj)
+        super().__init__(position, rotation, horizon)
 
 
     def get_reachable_position(self, current_state, positions, obj_id):
-        obj_center = self.get_center_position(current_state, obj_id)
+        obj_center = self.parser.get_object_center(obj_id, current_state)
         position = self.get_closest_position(obj_center, positions)
-        print(f"positions object {obj_center}, robot {position}")
+        obj_y = self.parser.get_object_y_dimension(obj_id, current_state)
+
+        horizon = self.get_horizon_angle(position["y"], obj_y)
         rot = self.get_rotation(obj_center['x'], obj_center['z'], position['x'], position['z'])
         rotation = {
             'x': 0,
@@ -171,15 +173,9 @@ class TeleportGroundingAction(TeleportAction):
             'z': 0
         }
 
-        print("final position and rotation  ", position, rotation)
+        print(f"robot -- {position}, obj center -- {obj_center}, y dim -- {obj_y}, {rotation}, horizon -- {horizon}")
 
-        return position, rotation
-
-
-    def get_center_position(self, current_state, obj_id):
-        center = self.parser.get_object_center(obj_id, current_state)
-
-        return center
+        return position, rotation, horizon
 
 
     def get_closest_position(self, center, positions):
@@ -216,6 +212,17 @@ class TeleportGroundingAction(TeleportAction):
                 degrees += 180.0
 
         return degrees
+
+    def get_horizon_angle(self, y_rob, y_obj):
+        angle = 0
+        if y_obj[0] - y_rob < 0.05:
+            angle = 60
+        elif y_obj[0] - y_rob < 0.07 and y_obj[1] - y_rob < 0.05:
+            angle = 30
+        elif y_obj[1] - y_rob > 0.22:
+            angle = -30
+
+        return angle
 
 
 class PickObjectAction(Action):
