@@ -164,7 +164,7 @@ class PlanningAgent(Agent):
         self._current_state = self._world.execute_action(done.to_interface())
         self._current_state = self._world.execute_action(done.to_interface())
         while not self._goal:
-            #print('running')
+                #print('running')
             pass
 
         self._logger.debug(f"Assigned a goal; planning; GOAL = {self._goal}")
@@ -237,5 +237,5 @@ class PlanningAgent(Agent):
                 if w_object['objectId'] == obj_id:
                     if w_object['openable']:
                         key = "rel:{}".format(randint(100,1000))
-                        grounded_relations[key] = "(closed {})".format(obj_id)
+                        grounded_relations[key] = "(not (opened {}))".format(obj_id)
         print(grounded_relations)
