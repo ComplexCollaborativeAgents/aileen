@@ -16,7 +16,7 @@ class Interpreter:
     def __init__(self):
         os.environ['OPENAI_API_KEY'] = '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'
         self._prompt = self.create_interpretation_few_shot_prompt()
-        self._gpt_model = ChatOpenAI(model_name='gpt-3.5-turbo-0613')
+        self._gpt_model = ChatOpenAI(model_name='gpt-4o-mini')
         self._output_parser = StrOutputParser()
         self._chain = self._prompt | self._gpt_model | self._output_parser
         pass
