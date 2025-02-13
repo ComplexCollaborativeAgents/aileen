@@ -7,6 +7,7 @@ from agent.environment_model.actions import *
 from agent.environment_model.state_parser import ThorStateParser
 from random import randint
 import time
+from pathlib import Path
 
 
 class PlanningAgent(Agent):
@@ -60,6 +61,7 @@ class PlanningAgent(Agent):
         return constructed_plan"""
 
     def plan(self, current_state, goal_condition: str = ""):
+        print(Path.cwd())
         self.current_state = current_state
         self.parser = ThorStateParser(self._world)
         domain_path = "agent/planning_agent/domain/temp_domain.pddl"
@@ -82,7 +84,8 @@ class PlanningAgent(Agent):
 
 
     def extract_verbose_plan(self, plan_file):
-        output = open(plan_file).readlines()
+        #output = open(plan_file).readlines()
+        output = open("planning_agent/domain/plans/plan1_temp_problem.pddl").readlines()
         plan = list()
         for line in output:
             line = line.strip()
@@ -163,17 +166,20 @@ class PlanningAgent(Agent):
         done = Action()
         self._current_state = self._world.execute_action(done.to_interface())
         self._current_state = self._world.execute_action(done.to_interface())
-        while not self._goal:
-                #print('running')
-            pass
+        while True:
+            while not self._goal:
+                    #print('running')
+                pass
 
-        self._logger.debug(f"Assigned a goal; planning; GOAL = {self._goal}")
-        while self._goal:
-            action = self.get_next_action(self._current_state, self._goal)
-            if action is None:
-                break
-            self._current_state = self._world.execute_action(action)
-            print(self._current_state["errorMessage"])
+            self._logger.debug(f"Assigned a goal; planning; GOAL = {self._goal}")
+            while self._goal:
+                action = self.get_next_action(self._current_state, self._goal)
+                if action is None:
+                    self._goal = None
+                    self.has_planned = False
+                    break
+                self._current_state = self._world.execute_action(action)
+                print(self._current_state["errorMessage"])
 
     def process_utterance(self, utterance):
         json_utterance = super().process_utterance(utterance)
@@ -213,7 +219,7 @@ class PlanningAgent(Agent):
         return compilation.format(clauses)
 
     def ground_object(self, obj_json):
-        self._logger.debug("grounding object: {}".format(obj_json))
+        #self._logger.debug("grounding object: {}, in {}".format(obj_json, self._current_state))
         for obj_instance in self._current_state["objects"]:
             if obj_instance['objectType'].lower() == obj_json['TYPE'].lower():
                 self._logger.debug("found object instance: {}".format(obj_instance['objectId']))
