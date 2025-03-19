@@ -1,5 +1,5 @@
 # AILEEN
-AILEEN is an embodied agent integrated with AI-Thor. It implements as hybrid AI architecture and brings large language models together with AI planning frameworks.
+AILEEN is an embodied agent integrated with [AI2-Thor](https://ai2thor.allenai.org). It implements as hybrid AI architecture and brings large language models together with AI planning frameworks.
 
 Relevant materials:
 [ICAPS 2024 paper](https://openreview.net/forum?id=62frmxeAPp) | [Demonstration Video](https://drive.google.com/file/d/13XoLwNj8V5YnO5YavilxhbEbGf3UtXjk/view)
